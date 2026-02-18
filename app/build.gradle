@@ -21,7 +21,7 @@ dependencies {
     runtimeOnly project(':integration-elva77')
 
     implementation "co.elastic.logging:logback-ecs-encoder"
-    implementation "com.google.guava:guava-gwt"
+    implementation "com.google.guava:guava-gwt:33.0.0-jre"
     implementation "org.mapstruct:mapstruct"
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
