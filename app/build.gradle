@@ -1,5 +1,10 @@
 plugins {
-    id 'org.springframework.boot' version '3.3.4'
+    alias(libs.plugins.org.cyclonedx.bom)
+    alias(libs.plugins.org.springframework.boot)
+}
+
+tasks.named('bootJar') {
+    archiveFileName.set('app.jar')
 }
 
 def applicationDir = "${rootProject.projectDir}/devops/dev"
@@ -15,9 +20,9 @@ dependencies {
     runtimeOnly project(':integration-fakehsa')
     runtimeOnly project(':integration-elva77')
 
-    implementation "co.elastic.logging:logback-ecs-encoder:${logbackEcsEncoderVersion}"
-    implementation "com.google.guava:guava-gwt:${guavaVersion}"
-    implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+    implementation "co.elastic.logging:logback-ecs-encoder"
+    implementation "com.google.guava:guava-gwt"
+    implementation "org.mapstruct:mapstruct"
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation "org.springframework.boot:spring-boot-starter-data-redis"
@@ -27,17 +32,12 @@ dependencies {
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+    annotationProcessor "org.mapstruct:mapstruct-processor"
     annotationProcessor 'org.projectlombok:lombok'
-    annotationProcessor "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructBindingVersion}"
+    annotationProcessor "org.projectlombok:lombok-mapstruct-binding"
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
-
-tasks.named('test') {
-    useJUnitPlatform {
-    }
 }
 
 bootRun {

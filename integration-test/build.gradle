@@ -1,5 +1,3 @@
-apply plugin: "java-test-fixtures"
-
 dependencies {
     implementation project(':app')
     implementation project(':integration-api')
@@ -13,12 +11,14 @@ dependencies {
     testImplementation 'io.github.microcks:microcks-testcontainers:0.2.3'
 }
 
+test {
+    enabled = false
+}
+
 testing {
     suites {
         integrationTest(JvmTestSuite) {
-            testType = TestSuiteType.INTEGRATION_TEST
-            description = 'Runs integration tests.'
-            group = 'verification'
+            useJUnitJupiter()
 
             sources {
                 java {
