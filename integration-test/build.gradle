@@ -8,7 +8,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-test'
-    testImplementation 'io.github.microcks:microcks-testcontainers:0.2.3'
+    testImplementation 'io.github.microcks:microcks-testcontainers'
 }
 
 test {
@@ -36,6 +36,10 @@ testing {
             targets.all {
                 testTask.configure {
                     shouldRunAfter(test)
+                    jvmArgs += [
+                            "-javaagent:${configurations.mockitoAgent.asPath}",
+                            "-Xshare:off"
+                    ]
                 }
             }
         }

@@ -1,11 +1,9 @@
 package se.inera.intyg.intygproxyservice.integration.elva77.client;
 
-import static se.inera.intyg.intygproxyservice.integration.api.elva77.Elva77Constants.ELVA77_PROFILE_ACTIVE;
 import static se.inera.intyg.intygproxyservice.logging.MdcLogConstants.EVENT_TYPE_ACCESSED;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.intygproxyservice.integration.api.elva77.Elva77Request;
 import se.inera.intyg.intygproxyservice.integration.api.elva77.Elva77Response;
@@ -17,7 +15,6 @@ import se.mkv.itintegration.getuserprofileresponder.v2.GetUserProfileType;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-@Profile(ELVA77_PROFILE_ACTIVE)
 public class Elva77Client {
 
   private final GetUserProfileResponderInterface getUserProfileResponderInterface;
