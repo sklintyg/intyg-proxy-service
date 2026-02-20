@@ -1,4 +1,5 @@
 plugins {
+    alias(libs.plugins.com.github.ben.manes.versions)
     alias(libs.plugins.org.cyclonedx.bom)
     alias(libs.plugins.org.springframework.boot)
     alias(libs.plugins.org.sonarqube)
@@ -27,7 +28,6 @@ allprojects {
 
 subprojects {
     apply plugin: 'jacoco'
-    apply plugin: 'io.spring.dependency-management'
 
     java {
         toolchain {
@@ -95,6 +95,12 @@ subprojects {
 }
 
 reporting {
+    reports {
+        integrationTestAggregateTestReport(AggregateTestReport) {
+            testSuiteName = 'integrationTest'
+        }
+    }
+
     subprojects.collect { subproject -> subproject.name }.each { subprojectName ->
         dependencies { testReportAggregation project(":${subprojectName}") }
     }
