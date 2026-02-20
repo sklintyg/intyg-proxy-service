@@ -19,13 +19,11 @@ dependencies {
     runtimeOnly project(':integration-fakehsa')
     runtimeOnly project(':integration-elva77')
 
-    implementation "co.elastic.logging:logback-ecs-encoder"
     implementation "com.google.guava:guava-gwt"
     implementation "org.mapstruct:mapstruct"
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation "org.springframework.boot:spring-boot-starter-data-redis"
-    implementation "org.springframework.session:spring-session-data-redis"
 
     compileOnly 'org.projectlombok:lombok'
 
@@ -51,7 +49,6 @@ tasks.register("appRunDebug") {
         bootRun.configure {
             jvmArgs = [
                     "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=18021",
-                    "-Dlogging.config=${rootProject.projectDir}/devops/dev/config/logback-spring.xml"
             ]
         }
     }
@@ -60,10 +57,5 @@ tasks.register("appRunDebug") {
 
 tasks.register("appRun") {
     println("######## Running in normal mode ########")
-    doFirst {
-        bootRun.configure {
-            jvmArgs = ["-Dlogging.config=${rootProject.projectDir}/devops/dev/config/logback-spring.xml"]
-        }
-    }
     finalizedBy("bootRun")
 }
