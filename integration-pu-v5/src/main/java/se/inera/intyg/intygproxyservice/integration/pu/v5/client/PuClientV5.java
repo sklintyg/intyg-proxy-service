@@ -1,6 +1,5 @@
 package se.inera.intyg.intygproxyservice.integration.pu.v5.client;
 
-import static se.inera.intyg.intygproxyservice.integration.api.constants.PuConstants.PU_PROFILE_V5;
 import static se.inera.intyg.intygproxyservice.integration.pu.v5.configuration.configuration.PuConstants.CODE_COORDINATION_NUMBER;
 import static se.inera.intyg.intygproxyservice.integration.pu.v5.configuration.configuration.PuConstants.CODE_PERSONAL_ID;
 import static se.inera.intyg.intygproxyservice.integration.pu.v5.configuration.configuration.PuConstants.COORDINATION_NUMBER_MONTH_INDEX;
@@ -11,7 +10,6 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.intygproxyservice.integration.api.pu.PuPersonsRequest;
 import se.inera.intyg.intygproxyservice.integration.api.pu.PuPersonsResponse;
@@ -26,7 +24,6 @@ import se.riv.strategicresourcemanagement.persons.person.v5.LookupProfileType;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-@Profile(PU_PROFILE_V5)
 public class PuClientV5 {
 
   private final GetPersonsForProfileResponderInterface getPersonsForProfileResponderInterface;

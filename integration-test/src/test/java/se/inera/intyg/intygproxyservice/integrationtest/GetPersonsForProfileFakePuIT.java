@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static se.inera.intyg.intygproxyservice.integration.api.constants.PuConstants.FAKE_PU_PROFILE;
 
+import java.io.IOException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +15,18 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.GenericContainer;
 import se.inera.intyg.intygproxyservice.integrationtest.util.ApiUtil;
+import se.inera.intyg.intygproxyservice.integrationtest.util.Containers;
 import se.inera.intyg.intygproxyservice.person.dto.PersonRequest;
 
 @ActiveProfiles({"integration-test", FAKE_PU_PROFILE})
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class GetPersonsForProfileFakePuIT {
+
+  private static final GenericContainer<?> redisContainer = Containers.getRedisContainer();
 
   @LocalServerPort
   private int port;
@@ -29,6 +37,16 @@ class GetPersonsForProfileFakePuIT {
   @Autowired
   public GetPersonsForProfileFakePuIT(TestRestTemplate restTemplate) {
     this.restTemplate = restTemplate;
+  }
+
+  @DynamicPropertySource
+  static void configureProperties(DynamicPropertyRegistry registry) {
+    Containers.configureRedisProperties(registry);
+  }
+
+  @AfterEach
+  void tearDown() throws IOException, InterruptedException {
+    redisContainer.execInContainer("redis-cli", "flushall");
   }
 
   @BeforeEach

@@ -12,7 +12,3 @@ dependencies {
     testRuntimeOnly 'org.slf4j:slf4j-simple'
     annotationProcessor 'org.projectlombok:lombok'
 }
-
-tasks.named('test') {
-    useJUnitPlatform()
-}

@@ -3,7 +3,6 @@ package se.inera.intyg.intygproxyservice.integrationtest;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static se.inera.intyg.intygproxyservice.config.RedisConfig.PERSON_CACHE;
-import static se.inera.intyg.intygproxyservice.integration.api.constants.PuConstants.PU_PROFILE_V5;
 import static se.inera.intyg.intygproxyservice.integrationtest.TestDataPatient.ATHENA_REACT_ANDERSSON;
 import static se.inera.intyg.intygproxyservice.integrationtest.TestDataPatient.ATHENA_REACT_ANDERSSON_DTO;
 import static se.inera.intyg.intygproxyservice.integrationtest.TestDataPatient.DECEASED_TEST_INDICATED_PERSON;
@@ -11,19 +10,15 @@ import static se.inera.intyg.intygproxyservice.integrationtest.TestDataPatient.L
 import static se.inera.intyg.intygproxyservice.integrationtest.TestDataPatient.PROTECTED_PERSON;
 import static se.inera.intyg.intygproxyservice.integrationtest.TestDataPatient.PROTECTED_PERSON_DTO;
 import static se.inera.intyg.intygproxyservice.integrationtest.TestDataPatient.TOLVAN;
-import static se.inera.intyg.intygproxyservice.integrationtest.util.Containers.REDIS_CONTAINER;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import io.github.microcks.testcontainers.MicrocksContainer;
 import java.io.IOException;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -31,9 +26,9 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.output.Slf4jLogConsumer;
-import org.testcontainers.utility.DockerImageName;
 import se.inera.intyg.intygproxyservice.common.HashUtility;
 import se.inera.intyg.intygproxyservice.integration.api.pu.PuResponse;
 import se.inera.intyg.intygproxyservice.integrationtest.util.ApiUtil;
@@ -43,9 +38,11 @@ import se.inera.intyg.intygproxyservice.person.dto.PersonRequest;
 import se.inera.intyg.intygproxyservice.person.dto.PersonsRequest;
 import se.inera.intyg.intygproxyservice.person.dto.StatusDTOType;
 
-@ActiveProfiles({"integration-test", PU_PROFILE_V5, "dev"})
+@ActiveProfiles({"integration-test", "dev"})
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class GetPersonsForProfileV5IT {
+
+  private static final GenericContainer<?> redisContainer = Containers.getRedisContainer();
 
   @LocalServerPort
   private int port;
@@ -58,31 +55,15 @@ class GetPersonsForProfileV5IT {
     this.restTemplate = restTemplate;
   }
 
-  @BeforeAll
-  static void beforeAll() {
-    Containers.ensureRunning();
-    final var microcks = new MicrocksContainer(
-        DockerImageName.parse("quay.io/microcks/microcks-uber:1.8.1"))
-        .withMainArtifacts("soapui/GetPersonsForProfileResponder-5.0.xml");
-
-    final var redis = new GenericContainer<>(
-        DockerImageName.parse("redis:6.0.9-alpine")
-    ).withExposedPorts(6379);
-
-    microcks.start();
-    microcks.followOutput(new Slf4jLogConsumer(LoggerFactory.getLogger("MicrocksContainerLogs")));
-
-    redis.start();
-
-    System.setProperty("integration.pu.getpersonsforprofile.endpoint",
-        microcks.getSoapMockEndpoint("GetPersonsForProfile", "5.0")
-    );
-    System.setProperty("integration.pu.cache.seconds", "86400");
+  @DynamicPropertySource
+  static void configureProperties(DynamicPropertyRegistry registry) {
+    Containers.configurePuProperties(registry);
+    Containers.configureRedisProperties(registry);
   }
 
   @AfterEach
   void tearDown() throws IOException, InterruptedException {
-    REDIS_CONTAINER.execInContainer("redis-cli", "flushall");
+    redisContainer.execInContainer("redis-cli", "flushall");
   }
 
   @BeforeEach
@@ -169,7 +150,7 @@ class GetPersonsForProfileV5IT {
       final var cacheString = objectMapper.writeValueAsString(cachedPuResponse)
           .replace("\"", "\\\"");
 
-      REDIS_CONTAINER.execInContainer(
+      redisContainer.execInContainer(
           "redis-cli",
           "set",
           String.format("%s::%s", PERSON_CACHE,
@@ -283,7 +264,7 @@ class GetPersonsForProfileV5IT {
       final var cacheString = objectMapper.writeValueAsString(cachedPuResponse)
           .replace("\"", "\\\"");
 
-      REDIS_CONTAINER.execInContainer(
+      redisContainer.execInContainer(
           "redis-cli",
           "set",
           String.format("%s::%s", PERSON_CACHE,

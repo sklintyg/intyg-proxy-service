@@ -1,7 +1,13 @@
-pluginManagement {
+dependencyResolutionManagement {
     repositories {
         mavenLocal()
+        maven { url = "https://nexus.drift.inera.se/repository/it-public/" }
         gradlePluginPortal()
+    }
+    versionCatalogs {
+        libs {
+            from("se.inera.intyg.bom:catalog:${settings.ext.intygBomVersion}")
+        }
     }
 }
 
@@ -9,7 +15,6 @@ rootProject.name = 'intyg-proxy-service'
 
 include 'app'
 include 'integration-api'
-include 'integration-pu'
 include 'integration-pu-v5'
 include 'integration-fakepu'
 include 'integration-hsa'

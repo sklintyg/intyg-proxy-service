@@ -5,7 +5,7 @@ public class MdcLogConstants {
   private MdcLogConstants() {
 
   }
-  
+
   public static final String EVENT_ACTION = "event.action";
   public static final String EVENT_CATEGORY = "event.category";
   public static final String EVENT_CATEGORY_API = "[api]";
@@ -25,7 +25,4 @@ public class MdcLogConstants {
 
   public static final String EVENT_TYPE_ACCESSED = "accessed";
   public static final String EVENT_TYPE_CHANGE = "change";
-  public static final String EVENT_TYPE_CREATION = "creation";
-  public static final String EVENT_TYPE_DELETION = "deletion";
-  public static final String EVENT_TYPE_INFO = "info";
 }

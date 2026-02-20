@@ -1,5 +1,10 @@
 plugins {
-    id 'org.springframework.boot' version '3.3.4'
+    alias(libs.plugins.org.cyclonedx.bom)
+    alias(libs.plugins.org.springframework.boot)
+}
+
+tasks.named('bootJar') {
+    archiveFileName.set('app.jar')
 }
 
 def applicationDir = "${rootProject.projectDir}/devops/dev"
@@ -8,36 +13,28 @@ dependencies {
     implementation project(':integration-api')
     implementation project(':logging')
     runtimeOnly project(':integration-common')
-    runtimeOnly project(':integration-pu')
     runtimeOnly project(':integration-pu-v5')
     runtimeOnly project(':integration-fakepu')
     runtimeOnly project(':integration-hsa')
     runtimeOnly project(':integration-fakehsa')
     runtimeOnly project(':integration-elva77')
 
-    implementation "co.elastic.logging:logback-ecs-encoder:${logbackEcsEncoderVersion}"
-    implementation "com.google.guava:guava-gwt:${guavaVersion}"
-    implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+    implementation "com.google.guava:guava-gwt"
+    implementation "org.mapstruct:mapstruct"
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation "org.springframework.boot:spring-boot-starter-data-redis"
-    implementation "org.springframework.session:spring-session-data-redis"
 
     compileOnly 'org.projectlombok:lombok'
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+    annotationProcessor "org.mapstruct:mapstruct-processor"
     annotationProcessor 'org.projectlombok:lombok'
-    annotationProcessor "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructBindingVersion}"
+    annotationProcessor "org.projectlombok:lombok-mapstruct-binding"
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
-
-tasks.named('test') {
-    useJUnitPlatform {
-    }
 }
 
 bootRun {
@@ -52,7 +49,6 @@ tasks.register("appRunDebug") {
         bootRun.configure {
             jvmArgs = [
                     "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=18021",
-                    "-Dlogging.config=${rootProject.projectDir}/devops/dev/config/logback-spring.xml"
             ]
         }
     }
@@ -61,10 +57,5 @@ tasks.register("appRunDebug") {
 
 tasks.register("appRun") {
     println("######## Running in normal mode ########")
-    doFirst {
-        bootRun.configure {
-            jvmArgs = ["-Dlogging.config=${rootProject.projectDir}/devops/dev/config/logback-spring.xml"]
-        }
-    }
     finalizedBy("bootRun")
 }
