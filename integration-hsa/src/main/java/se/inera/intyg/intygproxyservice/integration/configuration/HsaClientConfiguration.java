@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.intygproxyservice.integration.configuration;
 
 import lombok.RequiredArgsConstructor;
@@ -51,74 +69,59 @@ public class HsaClientConfiguration {
   private String handleCertificationPersonEndpoint;
 
   @Bean
-  public GetCredentialsForPersonIncludingProtectedPersonResponderInterface getCredentialInformation() {
+  public GetCredentialsForPersonIncludingProtectedPersonResponderInterface
+      getCredentialInformation() {
     return webServiceClientFactory.create(
         GetCredentialsForPersonIncludingProtectedPersonResponderInterface.class,
-        getCredentialInformationEndpoint
-    );
+        getCredentialInformationEndpoint);
   }
 
   @Bean
   public GetHospLastUpdateResponderInterface getLastUpdate() {
     return webServiceClientFactory.create(
-        GetHospLastUpdateResponderInterface.class,
-        getLastUpdateEndpoint
-    );
+        GetHospLastUpdateResponderInterface.class, getLastUpdateEndpoint);
   }
 
   @Bean
-  public GetEmployeeIncludingProtectedPersonResponderInterface getEmployeeIncludingProtectedPerson() {
+  public GetEmployeeIncludingProtectedPersonResponderInterface
+      getEmployeeIncludingProtectedPerson() {
     return webServiceClientFactory.create(
         GetEmployeeIncludingProtectedPersonResponderInterface.class,
-        getEmployeeIncludingProtectedPersonEndpoint
-    );
+        getEmployeeIncludingProtectedPersonEndpoint);
   }
 
   @Bean
   public GetHealthCareUnitResponderInterface getHealthCareUnitResponderInterface() {
     return webServiceClientFactory.create(
-        GetHealthCareUnitResponderInterface.class,
-        getHealthCareUnitEndpoint
-    );
+        GetHealthCareUnitResponderInterface.class, getHealthCareUnitEndpoint);
   }
 
   @Bean
   public GetHealthCareUnitMembersResponderInterface getHealthCareUnitMembersResponderInterface() {
     return webServiceClientFactory.create(
-        GetHealthCareUnitMembersResponderInterface.class,
-        getHealthCareUnitMembersEndpoint
-    );
+        GetHealthCareUnitMembersResponderInterface.class, getHealthCareUnitMembersEndpoint);
   }
 
   @Bean
   public GetHealthCareProviderResponderInterface getHealthCareProviderResponderInterface() {
     return webServiceClientFactory.create(
-        GetHealthCareProviderResponderInterface.class,
-        getHealthCareProviderEndpoint
-    );
+        GetHealthCareProviderResponderInterface.class, getHealthCareProviderEndpoint);
   }
 
   @Bean
   public GetUnitResponderInterface getUnitResponderInterface() {
-    return webServiceClientFactory.create(
-        GetUnitResponderInterface.class,
-        getUnitEndpoint
-    );
+    return webServiceClientFactory.create(GetUnitResponderInterface.class, getUnitEndpoint);
   }
 
   @Bean
   public GetHospCredentialsForPersonResponderInterface getCredentialsForPerson() {
     return webServiceClientFactory.create(
-        GetHospCredentialsForPersonResponderInterface.class,
-        getCredentialsForPersonEndpoint
-    );
+        GetHospCredentialsForPersonResponderInterface.class, getCredentialsForPersonEndpoint);
   }
 
   @Bean
   public HandleHospCertificationPersonResponderInterface getHandleCertificationPersonInterface() {
     return webServiceClientFactory.create(
-        HandleHospCertificationPersonResponderInterface.class,
-        handleCertificationPersonEndpoint
-    );
+        HandleHospCertificationPersonResponderInterface.class, handleCertificationPersonEndpoint);
   }
 }

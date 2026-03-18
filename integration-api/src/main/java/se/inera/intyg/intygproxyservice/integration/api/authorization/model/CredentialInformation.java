@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.integration.api.authorization.model;
 
 import java.util.ArrayList;
@@ -31,27 +30,21 @@ public class CredentialInformation {
   String givenName;
   String middleAndSurName;
   String personHsaId;
-  @Builder.Default
-  List<String> healthCareProfessionalLicence = new ArrayList<>();
+  @Builder.Default List<String> healthCareProfessionalLicence = new ArrayList<>();
   String personalPrescriptionCode;
-  @Builder.Default
-  List<String> groupPrescriptionCode = new ArrayList<>();
-  @Builder.Default
-  List<NursePrescriptionRight> nursePrescriptionRight = new ArrayList<>();
-  @Builder.Default
-  List<HsaSystemRole> hsaSystemRole = new ArrayList<>();
-  @Builder.Default
-  List<String> paTitleCode = new ArrayList<>();
+  @Builder.Default List<String> groupPrescriptionCode = new ArrayList<>();
+  @Builder.Default List<NursePrescriptionRight> nursePrescriptionRight = new ArrayList<>();
+  @Builder.Default List<HsaSystemRole> hsaSystemRole = new ArrayList<>();
+  @Builder.Default List<String> paTitleCode = new ArrayList<>();
   Boolean protectedPerson;
-  @Builder.Default
-  List<Commission> commission = new ArrayList<>();
+  @Builder.Default List<Commission> commission = new ArrayList<>();
   Boolean feignedPerson;
-  @Builder.Default
-  List<String> healthCareProfessionalLicenceCode = new ArrayList<>();
+  @Builder.Default List<String> healthCareProfessionalLicenceCode = new ArrayList<>();
+
   @Builder.Default
   List<HCPSpecialityCodes> healthCareProfessionalLicenceSpeciality = new ArrayList<>();
-  @Builder.Default
-  List<String> occupationalCode = new ArrayList<>();
+
+  @Builder.Default List<String> occupationalCode = new ArrayList<>();
   String personalIdentity;
   String healthcareProfessionalLicenseIdentityNumber;
 }

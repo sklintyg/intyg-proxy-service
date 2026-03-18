@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.intygproxyservice.person.service;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -41,38 +59,23 @@ class PersonsServiceTest {
   private static final PersonDTO PERSON_DTO_1 = PersonDTO.builder().build();
   private static final PersonDTO PERSON_DTO_2 = PersonDTO.builder().build();
 
-  private static final PuResponse PERSON_RESPONSE_1 = PuResponse.found(
-      Person.builder()
-          .personnummer(PersonId.of(PERSON_ID_1))
-          .build()
-  );
-  private static final PuResponse PERSON_RESPONSE_2 = PuResponse.found(
-      Person.builder()
-          .personnummer(PersonId.of(PERSON_ID_2))
-          .build()
-  );
-  private static final PuResponse NOT_FOUND = PuResponse.notFound(
-      PERSON_ID_1
-  );
+  private static final PuResponse PERSON_RESPONSE_1 =
+      PuResponse.found(Person.builder().personnummer(PersonId.of(PERSON_ID_1)).build());
+  private static final PuResponse PERSON_RESPONSE_2 =
+      PuResponse.found(Person.builder().personnummer(PersonId.of(PERSON_ID_2)).build());
+  private static final PuResponse NOT_FOUND = PuResponse.notFound(PERSON_ID_1);
 
-  @Mock
-  private ObjectMapper objectMapper;
-  @Mock
-  private PuService puService;
-  @Mock
-  private CacheManager cacheManager;
-  @Mock
-  private Cache cache;
-  @Mock
-  private PersonDTOMapper personDTOMapper;
+  @Mock private ObjectMapper objectMapper;
+  @Mock private PuService puService;
+  @Mock private CacheManager cacheManager;
+  @Mock private Cache cache;
+  @Mock private PersonDTOMapper personDTOMapper;
 
-  @InjectMocks
-  private PersonsService personsService;
+  @InjectMocks private PersonsService personsService;
 
   @BeforeEach
   void setup() {
-    when(cacheManager.getCache(RedisConfig.PERSON_CACHE))
-        .thenReturn(cache);
+    when(cacheManager.getCache(RedisConfig.PERSON_CACHE)).thenReturn(cache);
   }
 
   @Nested
@@ -80,8 +83,7 @@ class PersonsServiceTest {
 
     @BeforeEach
     void setup() {
-      when(personDTOMapper.toDTO(PERSON_RESPONSE_1.person()))
-          .thenReturn(PERSON_DTO_1);
+      when(personDTOMapper.toDTO(PERSON_RESPONSE_1.person())).thenReturn(PERSON_DTO_1);
       when(cache.get(HashUtility.hash(PERSON_ID_1), String.class))
           .thenReturn(PERSON_RESPONSE_1.toString());
       try {
@@ -94,11 +96,9 @@ class PersonsServiceTest {
 
     @Test
     void shouldNotMakeCallToPuServiceIfAllIdsAreInCache() {
-      final var response = personsService.findPersons(
-          PersonsRequest.builder()
-              .personIds(List.of(PERSON_ID_1))
-              .build()
-      );
+      final var response =
+          personsService.findPersons(
+              PersonsRequest.builder().personIds(List.of(PERSON_ID_1)).build());
 
       verify(puService, times(0)).findPersons(any());
       assertEquals(PERSON_DTO_1, response.getPersons().getFirst().getPerson());
@@ -107,85 +107,56 @@ class PersonsServiceTest {
     @Test
     void shouldCombineResultsInCacheAndFromPu() {
       when(puService.findPersons(any()))
-          .thenReturn(
-              PuPersonsResponse.builder()
-                  .persons(List.of(PERSON_RESPONSE_2))
-                  .build()
-          );
-      when(personDTOMapper.toDTO(PERSON_RESPONSE_2.person()))
-          .thenReturn(PERSON_DTO_2);
+          .thenReturn(PuPersonsResponse.builder().persons(List.of(PERSON_RESPONSE_2)).build());
+      when(personDTOMapper.toDTO(PERSON_RESPONSE_2.person())).thenReturn(PERSON_DTO_2);
 
-      final var response = personsService.findPersons(
-          PersonsRequest.builder()
-              .personIds(List.of(PERSON_ID_1, PERSON_ID_2))
-              .build()
-      );
+      final var response =
+          personsService.findPersons(
+              PersonsRequest.builder().personIds(List.of(PERSON_ID_1, PERSON_ID_2)).build());
 
-      verify(puService, times(1)).findPersons(
-          PuPersonsRequest.builder()
-              .personIds(List.of(PERSON_ID_2))
-              .build()
-      );
+      verify(puService, times(1))
+          .findPersons(PuPersonsRequest.builder().personIds(List.of(PERSON_ID_2)).build());
 
       assertAll(
           () -> assertEquals(PERSON_DTO_1, response.getPersons().getFirst().getPerson()),
-          () -> assertEquals(PERSON_DTO_2, response.getPersons().get(1).getPerson())
-      );
+          () -> assertEquals(PERSON_DTO_2, response.getPersons().get(1).getPerson()));
     }
-
   }
 
   @Test
   void shouldMakeCallToPuServiceIfNoIdsAreInCache() {
-    when(personDTOMapper.toDTO(PERSON_RESPONSE_1.person()))
-        .thenReturn(PERSON_DTO_1);
+    when(personDTOMapper.toDTO(PERSON_RESPONSE_1.person())).thenReturn(PERSON_DTO_1);
     when(puService.findPersons(any()))
         .thenReturn(
             PuPersonsResponse.builder()
                 .persons(List.of(PERSON_RESPONSE_1, PERSON_RESPONSE_2))
-                .build()
-        );
-    when(personDTOMapper.toDTO(PERSON_RESPONSE_2.person()))
-        .thenReturn(PERSON_DTO_2);
+                .build());
+    when(personDTOMapper.toDTO(PERSON_RESPONSE_2.person())).thenReturn(PERSON_DTO_2);
 
-    final var response = personsService.findPersons(
-        PersonsRequest.builder()
-            .personIds(List.of(PERSON_ID_1, PERSON_ID_2))
-            .build()
-    );
+    final var response =
+        personsService.findPersons(
+            PersonsRequest.builder().personIds(List.of(PERSON_ID_1, PERSON_ID_2)).build());
 
-    verify(puService, times(1)).findPersons(
-        PuPersonsRequest.builder()
-            .personIds(List.of(PERSON_ID_1, PERSON_ID_2))
-            .build()
-    );
+    verify(puService, times(1))
+        .findPersons(
+            PuPersonsRequest.builder().personIds(List.of(PERSON_ID_1, PERSON_ID_2)).build());
 
     assertAll(
         () -> assertEquals(PERSON_DTO_1, response.getPersons().getFirst().getPerson()),
         () -> assertEquals(FOUND, response.getPersons().getFirst().getStatus()),
         () -> assertEquals(PERSON_DTO_2, response.getPersons().get(1).getPerson()),
-        () -> assertEquals(FOUND, response.getPersons().get(1).getStatus())
-    );
+        () -> assertEquals(FOUND, response.getPersons().get(1).getStatus()));
   }
 
   @Test
   void shouldSaveFoundPatientInCache() throws JsonProcessingException {
-    when(personDTOMapper.toDTO(PERSON_RESPONSE_1.person()))
-        .thenReturn(PERSON_DTO_1);
+    when(personDTOMapper.toDTO(PERSON_RESPONSE_1.person())).thenReturn(PERSON_DTO_1);
     when(objectMapper.writeValueAsString(PERSON_RESPONSE_1))
         .thenReturn(PERSON_RESPONSE_1.toString());
     when(puService.findPersons(any()))
-        .thenReturn(
-            PuPersonsResponse.builder()
-                .persons(List.of(PERSON_RESPONSE_1))
-                .build()
-        );
+        .thenReturn(PuPersonsResponse.builder().persons(List.of(PERSON_RESPONSE_1)).build());
 
-    personsService.findPersons(
-        PersonsRequest.builder()
-            .personIds(List.of(PERSON_ID_1))
-            .build()
-    );
+    personsService.findPersons(PersonsRequest.builder().personIds(List.of(PERSON_ID_1)).build());
 
     verify(cache, times(1)).put(HashUtility.hash(PERSON_ID_1), PERSON_RESPONSE_1.toString());
   }
@@ -193,24 +164,19 @@ class PersonsServiceTest {
   @Test
   void shouldNotSaveNotFoundPatientInCache() {
     when(puService.findPersons(any()))
-        .thenReturn(
-            PuPersonsResponse.builder()
-                .persons(List.of(NOT_FOUND))
-                .build()
-        );
+        .thenReturn(PuPersonsResponse.builder().persons(List.of(NOT_FOUND)).build());
 
-    final var response = personsService.findPersons(
-        PersonsRequest.builder()
-            .personIds(List.of(PERSON_ID_1))
-            .build()
-    );
+    final var response =
+        personsService.findPersons(
+            PersonsRequest.builder().personIds(List.of(PERSON_ID_1)).build());
 
     verify(cache, times(0)).put(anyString(), anyString());
 
     assertAll(
-        () -> assertEquals(PersonDTO.builder().personnummer(PERSON_ID_1).build(),
-            response.getPersons().getFirst().getPerson()),
-        () -> assertEquals(StatusDTOType.NOT_FOUND, response.getPersons().getFirst().getStatus())
-    );
+        () ->
+            assertEquals(
+                PersonDTO.builder().personnummer(PERSON_ID_1).build(),
+                response.getPersons().getFirst().getPerson()),
+        () -> assertEquals(StatusDTOType.NOT_FOUND, response.getPersons().getFirst().getStatus()));
   }
 }

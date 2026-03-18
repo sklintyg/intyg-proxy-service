@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.authorization.service;
 
 import static se.inera.intyg.intygproxyservice.common.ValidationUtility.isStringInvalid;
@@ -34,7 +33,8 @@ import se.inera.intyg.intygproxyservice.integration.api.authorization.GetCredent
 @Slf4j
 public class CredentialInformationService {
 
-  private final GetCredentialInformationIntegrationService getCredentialInformationIntegrationService;
+  private final GetCredentialInformationIntegrationService
+      getCredentialInformationIntegrationService;
 
   public CredentialInformationResponse get(CredentialInformationRequest request) {
     validateRequest(request);
@@ -42,17 +42,18 @@ public class CredentialInformationService {
     log.info(
         String.format("Getting credential info for personHsaId: '%s'", request.getPersonHsaId()));
 
-    final var response = getCredentialInformationIntegrationService.get(
-        GetCredentialInformationIntegrationRequest.builder()
-            .personHsaId(request.getPersonHsaId())
-            .build()
-    );
+    final var response =
+        getCredentialInformationIntegrationService.get(
+            GetCredentialInformationIntegrationRequest.builder()
+                .personHsaId(request.getPersonHsaId())
+                .build());
 
-    log.info(String.format("Credential information for personHsaId: '%s' was retrieved",
-        request.getPersonHsaId()));
+    log.info(
+        String.format(
+            "Credential information for personHsaId: '%s' was retrieved",
+            request.getPersonHsaId()));
 
-    return CredentialInformationResponse
-        .builder()
+    return CredentialInformationResponse.builder()
         .credentialInformation(response.getCredentialInformation())
         .build();
   }

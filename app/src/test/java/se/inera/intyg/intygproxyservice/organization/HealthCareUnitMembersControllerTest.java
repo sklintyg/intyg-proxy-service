@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.organization;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,11 +34,9 @@ import se.inera.intyg.intygproxyservice.organization.service.HealthCareUnitMembe
 @ExtendWith(MockitoExtension.class)
 class HealthCareUnitMembersControllerTest {
 
-  @Mock
-  private HealthCareUnitMembersService healthCareUnitMembersService;
+  @Mock private HealthCareUnitMembersService healthCareUnitMembersService;
 
-  @InjectMocks
-  private HealthCareUnitMembersController healthCareUnitMembersController;
+  @InjectMocks private HealthCareUnitMembersController healthCareUnitMembersController;
 
   @Test
   void shallReturnHealthCareUnitMembersResponseWhenCallingGetUnit() {
@@ -47,9 +44,9 @@ class HealthCareUnitMembersControllerTest {
     when(healthCareUnitMembersService.get(any(HealthCareUnitMembersRequest.class)))
         .thenReturn(expectedResponse);
 
-    final var response = healthCareUnitMembersController.getHealthCareUnitMembers(
-        HealthCareUnitMembersRequest.builder().build()
-    );
+    final var response =
+        healthCareUnitMembersController.getHealthCareUnitMembers(
+            HealthCareUnitMembersRequest.builder().build());
 
     assertEquals(expectedResponse, response);
   }

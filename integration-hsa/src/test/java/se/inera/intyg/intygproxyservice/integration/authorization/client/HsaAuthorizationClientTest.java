@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.intygproxyservice.integration.authorization.client;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -50,56 +68,46 @@ class HsaAuthorizationClientTest {
 
   private static final LocalDateTime LAST_UPDATE = LocalDateTime.now();
 
-  private static final GetCredentialInformationIntegrationRequest REQUEST = GetCredentialInformationIntegrationRequest
-      .builder()
-      .personHsaId(HSA_ID)
-      .build();
+  private static final GetCredentialInformationIntegrationRequest REQUEST =
+      GetCredentialInformationIntegrationRequest.builder().personHsaId(HSA_ID).build();
 
-  private static final GetCredentialsForPersonIntegrationRequest FOR_PERSON_REQUEST = GetCredentialsForPersonIntegrationRequest
-      .builder()
-      .personId("PERSON_ID")
-      .build();
+  private static final GetCredentialsForPersonIntegrationRequest FOR_PERSON_REQUEST =
+      GetCredentialsForPersonIntegrationRequest.builder().personId("PERSON_ID").build();
 
-  private static final HandleCertificationPersonIntegrationRequest HANDLE_PERSON_REQUEST = HandleCertificationPersonIntegrationRequest
-      .builder()
-      .personId("PERSON_ID")
-      .reason("REASON")
-      .operation("add")
-      .certificationId("C_ID")
-      .build();
+  private static final HandleCertificationPersonIntegrationRequest HANDLE_PERSON_REQUEST =
+      HandleCertificationPersonIntegrationRequest.builder()
+          .personId("PERSON_ID")
+          .reason("REASON")
+          .operation("add")
+          .certificationId("C_ID")
+          .build();
 
   private static final String LOGICAL_ADDRESS = "LOGICAL_ADDRESS";
 
-  private static final List<CredentialInformation> CREDENTIALS = List.of(
-      CredentialInformation.builder().build());
+  private static final List<CredentialInformation> CREDENTIALS =
+      List.of(CredentialInformation.builder().build());
 
-  @Mock
-  GetCredentialInformationResponseTypeConverter getCredentialInformationResponseTypeConverter;
+  @Mock GetCredentialInformationResponseTypeConverter getCredentialInformationResponseTypeConverter;
 
-  @Mock
-  GetLastUpdateResponseTypeConverter getLastUpdateResponseTypeConverter;
+  @Mock GetLastUpdateResponseTypeConverter getLastUpdateResponseTypeConverter;
 
-
-  @Mock
-  GetCredentialsForPersonResponseTypeConverter getCredentialsForPersonResponseTypeConverter;
+  @Mock GetCredentialsForPersonResponseTypeConverter getCredentialsForPersonResponseTypeConverter;
 
   @Mock
   HandleCertificationPersonResponseTypeConverter handleCertificationPersonResponseTypeConverter;
 
-  @Mock
-  GetHospCredentialsForPersonResponderInterface getHospCredentialsForPersonResponderInterface;
+  @Mock GetHospCredentialsForPersonResponderInterface getHospCredentialsForPersonResponderInterface;
 
   @Mock
-  GetCredentialsForPersonIncludingProtectedPersonResponderInterface getCredentialsForPersonIncludingProtectedPersonResponderInterface;
+  GetCredentialsForPersonIncludingProtectedPersonResponderInterface
+      getCredentialsForPersonIncludingProtectedPersonResponderInterface;
 
-  @Mock
-  GetHospLastUpdateResponderInterface getHospLastUpdateResponderInterface;
+  @Mock GetHospLastUpdateResponderInterface getHospLastUpdateResponderInterface;
 
   @Mock
   HandleHospCertificationPersonResponderInterface handleHospCertificationPersonResponderInterface;
 
-  @InjectMocks
-  HsaAuthorizationClient hsaAuthorizationClient;
+  @InjectMocks HsaAuthorizationClient hsaAuthorizationClient;
 
   @BeforeEach
   void setUp() {
@@ -115,13 +123,12 @@ class HsaAuthorizationClientTest {
       @Test
       void shouldThrowErrorIfInterfaceThrowsError() {
         when(getCredentialsForPersonIncludingProtectedPersonResponderInterface
-            .getCredentialsForPersonIncludingProtectedPerson(
-                anyString(),
-                any(GetCredentialsForPersonIncludingProtectedPersonType.class)
-            )
-        ).thenThrow(new IllegalStateException());
+                .getCredentialsForPersonIncludingProtectedPerson(
+                    anyString(), any(GetCredentialsForPersonIncludingProtectedPersonType.class)))
+            .thenThrow(new IllegalStateException());
 
-        assertThrows(IllegalStateException.class,
+        assertThrows(
+            IllegalStateException.class,
             () -> hsaAuthorizationClient.getCredentialInformation(REQUEST));
       }
     }
@@ -132,23 +139,20 @@ class HsaAuthorizationClientTest {
       @BeforeEach
       void setup() {
         when(getCredentialsForPersonIncludingProtectedPersonResponderInterface
-            .getCredentialsForPersonIncludingProtectedPerson(
-                anyString(),
-                any(GetCredentialsForPersonIncludingProtectedPersonType.class)
-            )
-        ).thenReturn(new GetCredentialsForPersonIncludingProtectedPersonResponseType());
+                .getCredentialsForPersonIncludingProtectedPerson(
+                    anyString(), any(GetCredentialsForPersonIncludingProtectedPersonType.class)))
+            .thenReturn(new GetCredentialsForPersonIncludingProtectedPersonResponseType());
       }
 
       @Test
       void shouldReturnResponseWithHealthCareUnitReturnedFromConverter() {
         when(getCredentialInformationResponseTypeConverter.convert(
-                any(GetCredentialsForPersonIncludingProtectedPersonResponseType.class)
-            )
-        ).thenReturn(CREDENTIALS);
+                any(GetCredentialsForPersonIncludingProtectedPersonResponseType.class)))
+            .thenReturn(CREDENTIALS);
 
-        final var response = hsaAuthorizationClient.getCredentialInformation(
-            GetCredentialInformationIntegrationRequest.builder().build()
-        );
+        final var response =
+            hsaAuthorizationClient.getCredentialInformation(
+                GetCredentialInformationIntegrationRequest.builder().build());
 
         assertEquals(CREDENTIALS, response);
       }
@@ -156,17 +160,12 @@ class HsaAuthorizationClientTest {
       @Test
       void shouldSendHsaIdInRequest() {
         hsaAuthorizationClient.getCredentialInformation(
-            GetCredentialInformationIntegrationRequest
-                .builder()
-                .personHsaId(HSA_ID)
-                .build()
-        );
+            GetCredentialInformationIntegrationRequest.builder().personHsaId(HSA_ID).build());
 
-        final var captor = ArgumentCaptor.forClass(
-            GetCredentialsForPersonIncludingProtectedPersonType.class);
+        final var captor =
+            ArgumentCaptor.forClass(GetCredentialsForPersonIncludingProtectedPersonType.class);
 
-        verify(
-            getCredentialsForPersonIncludingProtectedPersonResponderInterface)
+        verify(getCredentialsForPersonIncludingProtectedPersonResponderInterface)
             .getCredentialsForPersonIncludingProtectedPerson(anyString(), captor.capture());
 
         assertEquals(HSA_ID, captor.getValue().getPersonHsaId());
@@ -175,17 +174,12 @@ class HsaAuthorizationClientTest {
       @Test
       void shouldSendIncludeFeignedObjectsAsFalseInRquest() {
         hsaAuthorizationClient.getCredentialInformation(
-            GetCredentialInformationIntegrationRequest
-                .builder()
-                .personHsaId(HSA_ID)
-                .build()
-        );
+            GetCredentialInformationIntegrationRequest.builder().personHsaId(HSA_ID).build());
 
-        final var captor = ArgumentCaptor.forClass(
-            GetCredentialsForPersonIncludingProtectedPersonType.class);
+        final var captor =
+            ArgumentCaptor.forClass(GetCredentialsForPersonIncludingProtectedPersonType.class);
 
-        verify(
-            getCredentialsForPersonIncludingProtectedPersonResponderInterface)
+        verify(getCredentialsForPersonIncludingProtectedPersonResponderInterface)
             .getCredentialsForPersonIncludingProtectedPerson(anyString(), captor.capture());
 
         assertFalse(captor.getValue().isIncludeFeignedObject());
@@ -194,17 +188,12 @@ class HsaAuthorizationClientTest {
       @Test
       void shouldSendIncludeProfileInRquest() {
         hsaAuthorizationClient.getCredentialInformation(
-            GetCredentialInformationIntegrationRequest
-                .builder()
-                .personHsaId(HSA_ID)
-                .build()
-        );
+            GetCredentialInformationIntegrationRequest.builder().personHsaId(HSA_ID).build());
 
-        final var captor = ArgumentCaptor.forClass(
-            GetCredentialsForPersonIncludingProtectedPersonType.class);
+        final var captor =
+            ArgumentCaptor.forClass(GetCredentialsForPersonIncludingProtectedPersonType.class);
 
-        verify(
-            getCredentialsForPersonIncludingProtectedPersonResponderInterface)
+        verify(getCredentialsForPersonIncludingProtectedPersonResponderInterface)
             .getCredentialsForPersonIncludingProtectedPerson(anyString(), captor.capture());
 
         assertEquals("extended1", captor.getValue().getProfile());
@@ -213,18 +202,13 @@ class HsaAuthorizationClientTest {
       @Test
       void shouldSendLogicalAddressInRequest() {
         hsaAuthorizationClient.getCredentialInformation(
-            GetCredentialInformationIntegrationRequest
-                .builder()
-                .personHsaId(HSA_ID)
-                .build()
-        );
+            GetCredentialInformationIntegrationRequest.builder().personHsaId(HSA_ID).build());
 
         final var captor = ArgumentCaptor.forClass(String.class);
 
-        verify(
-            getCredentialsForPersonIncludingProtectedPersonResponderInterface)
-            .getCredentialsForPersonIncludingProtectedPerson(captor.capture(),
-                any(GetCredentialsForPersonIncludingProtectedPersonType.class));
+        verify(getCredentialsForPersonIncludingProtectedPersonResponderInterface)
+            .getCredentialsForPersonIncludingProtectedPerson(
+                captor.capture(), any(GetCredentialsForPersonIncludingProtectedPersonType.class));
 
         assertEquals(LOGICAL_ADDRESS, captor.getValue());
       }
@@ -239,15 +223,10 @@ class HsaAuthorizationClientTest {
 
       @Test
       void shouldThrowErrorIfInterfaceThrowsError() {
-        when(getHospLastUpdateResponderInterface
-            .getHospLastUpdate(
-                anyString(),
-                any()
-            )
-        ).thenThrow(new IllegalStateException());
+        when(getHospLastUpdateResponderInterface.getHospLastUpdate(anyString(), any()))
+            .thenThrow(new IllegalStateException());
 
-        assertThrows(IllegalStateException.class,
-            () -> hsaAuthorizationClient.getLastUpdate());
+        assertThrows(IllegalStateException.class, () -> hsaAuthorizationClient.getLastUpdate());
       }
     }
 
@@ -256,18 +235,13 @@ class HsaAuthorizationClientTest {
 
       @BeforeEach
       void setup() {
-        when(getHospLastUpdateResponderInterface
-            .getHospLastUpdate(
-                anyString(),
-                any()
-            )
-        ).thenReturn(new GetHospLastUpdateResponseType());
+        when(getHospLastUpdateResponderInterface.getHospLastUpdate(anyString(), any()))
+            .thenReturn(new GetHospLastUpdateResponseType());
       }
 
       @Test
       void shouldReturnResponseWithValueFromConverter() {
-        when(getLastUpdateResponseTypeConverter.convert(any()))
-            .thenReturn(LAST_UPDATE);
+        when(getLastUpdateResponseTypeConverter.convert(any())).thenReturn(LAST_UPDATE);
 
         final var response = hsaAuthorizationClient.getLastUpdate();
 
@@ -280,8 +254,7 @@ class HsaAuthorizationClientTest {
 
         final var captor = ArgumentCaptor.forClass(String.class);
 
-        verify(getHospLastUpdateResponderInterface)
-            .getHospLastUpdate(captor.capture(), any());
+        verify(getHospLastUpdateResponderInterface).getHospLastUpdate(captor.capture(), any());
 
         assertEquals(LOGICAL_ADDRESS, captor.getValue());
       }
@@ -296,27 +269,22 @@ class HsaAuthorizationClientTest {
 
       @Test
       void shouldThrowErrorIfInterfaceThrowsError() {
-        when(getHospCredentialsForPersonResponderInterface
-            .getHospCredentialsForPerson(
-                anyString(),
-                any(GetHospCredentialsForPersonType.class)
-            )
-        ).thenThrow(new IllegalStateException());
+        when(getHospCredentialsForPersonResponderInterface.getHospCredentialsForPerson(
+                anyString(), any(GetHospCredentialsForPersonType.class)))
+            .thenThrow(new IllegalStateException());
 
-        assertThrows(IllegalStateException.class,
+        assertThrows(
+            IllegalStateException.class,
             () -> hsaAuthorizationClient.getCredentialsForPerson(FOR_PERSON_REQUEST));
       }
 
       @Test
       void shouldReturnNullIfResponseContainsKnownExceptionMessage() {
-        when(getHospCredentialsForPersonResponderInterface
-            .getHospCredentialsForPerson(
-                anyString(),
-                any(GetHospCredentialsForPersonType.class)
-            )
-        ).thenThrow(
-            new IllegalStateException("Response message did not contain proper response data.")
-        );
+        when(getHospCredentialsForPersonResponderInterface.getHospCredentialsForPerson(
+                anyString(), any(GetHospCredentialsForPersonType.class)))
+            .thenThrow(
+                new IllegalStateException(
+                    "Response message did not contain proper response data."));
 
         assertNull(hsaAuthorizationClient.getCredentialsForPerson(FOR_PERSON_REQUEST));
       }
@@ -327,21 +295,17 @@ class HsaAuthorizationClientTest {
 
       @BeforeEach
       void setup() {
-        when(getHospCredentialsForPersonResponderInterface
-            .getHospCredentialsForPerson(
-                anyString(),
-                any(GetHospCredentialsForPersonType.class)
-            )
-        ).thenReturn(new GetHospCredentialsForPersonResponseType());
+        when(getHospCredentialsForPersonResponderInterface.getHospCredentialsForPerson(
+                anyString(), any(GetHospCredentialsForPersonType.class)))
+            .thenReturn(new GetHospCredentialsForPersonResponseType());
       }
 
       @Test
       void shouldReturnResponseFromConverter() {
         final var expected = CredentialsForPerson.builder().build();
         when(getCredentialsForPersonResponseTypeConverter.convert(
-                any(GetHospCredentialsForPersonResponseType.class)
-            )
-        ).thenReturn(expected);
+                any(GetHospCredentialsForPersonResponseType.class)))
+            .thenReturn(expected);
 
         final var response = hsaAuthorizationClient.getCredentialsForPerson(FOR_PERSON_REQUEST);
 
@@ -357,24 +321,20 @@ class HsaAuthorizationClientTest {
         verify(getHospCredentialsForPersonResponderInterface)
             .getHospCredentialsForPerson(anyString(), captor.capture());
 
-        assertEquals(FOR_PERSON_REQUEST.getPersonId(),
-            captor.getValue().getPersonalIdentityNumber());
+        assertEquals(
+            FOR_PERSON_REQUEST.getPersonId(), captor.getValue().getPersonalIdentityNumber());
       }
 
       @Test
       void shouldSendLogicalAddressInRequest() {
         hsaAuthorizationClient.getCredentialsForPerson(
-            GetCredentialsForPersonIntegrationRequest
-                .builder()
-                .personId(HSA_ID)
-                .build()
-        );
+            GetCredentialsForPersonIntegrationRequest.builder().personId(HSA_ID).build());
 
         final var captor = ArgumentCaptor.forClass(String.class);
 
         verify(getHospCredentialsForPersonResponderInterface)
-            .getHospCredentialsForPerson(captor.capture(),
-                any(GetHospCredentialsForPersonType.class));
+            .getHospCredentialsForPerson(
+                captor.capture(), any(GetHospCredentialsForPersonType.class));
 
         assertEquals(LOGICAL_ADDRESS, captor.getValue());
       }
@@ -386,14 +346,12 @@ class HsaAuthorizationClientTest {
 
     @Test
     void shouldThrowErrorIfOperationIsNotEnum() {
-      final var request = HandleCertificationPersonIntegrationRequest.builder()
-          .operation("NO_MATCH")
-          .build();
+      final var request =
+          HandleCertificationPersonIntegrationRequest.builder().operation("NO_MATCH").build();
 
       assertThrows(
           IllegalArgumentException.class,
-          () -> hsaAuthorizationClient.handleCertificationPerson(request)
-      );
+          () -> hsaAuthorizationClient.handleCertificationPerson(request));
     }
 
     @Nested
@@ -401,14 +359,12 @@ class HsaAuthorizationClientTest {
 
       @Test
       void shouldThrowErrorIfInterfaceThrowsError() {
-        when(handleHospCertificationPersonResponderInterface
-            .handleHospCertificationPerson(
-                anyString(),
-                any(HandleHospCertificationPersonType.class)
-            )
-        ).thenThrow(new IllegalStateException());
+        when(handleHospCertificationPersonResponderInterface.handleHospCertificationPerson(
+                anyString(), any(HandleHospCertificationPersonType.class)))
+            .thenThrow(new IllegalStateException());
 
-        assertThrows(IllegalStateException.class,
+        assertThrows(
+            IllegalStateException.class,
             () -> hsaAuthorizationClient.handleCertificationPerson(HANDLE_PERSON_REQUEST));
       }
     }
@@ -418,24 +374,20 @@ class HsaAuthorizationClientTest {
 
       @BeforeEach
       void setup() {
-        when(handleHospCertificationPersonResponderInterface
-            .handleHospCertificationPerson(
-                anyString(),
-                any(HandleHospCertificationPersonType.class)
-            )
-        ).thenReturn(new HandleHospCertificationPersonResponseType());
+        when(handleHospCertificationPersonResponderInterface.handleHospCertificationPerson(
+                anyString(), any(HandleHospCertificationPersonType.class)))
+            .thenReturn(new HandleHospCertificationPersonResponseType());
       }
 
       @Test
       void shouldReturnResponseFromConverter() {
         final var expected = Result.builder().build();
         when(handleCertificationPersonResponseTypeConverter.convert(
-                any(HandleHospCertificationPersonResponseType.class)
-            )
-        ).thenReturn(expected);
+                any(HandleHospCertificationPersonResponseType.class)))
+            .thenReturn(expected);
 
-        final var response = hsaAuthorizationClient.handleCertificationPerson(
-            HANDLE_PERSON_REQUEST);
+        final var response =
+            hsaAuthorizationClient.handleCertificationPerson(HANDLE_PERSON_REQUEST);
 
         assertEquals(expected, response);
       }
@@ -449,8 +401,8 @@ class HsaAuthorizationClientTest {
         verify(handleHospCertificationPersonResponderInterface)
             .handleHospCertificationPerson(anyString(), captor.capture());
 
-        assertEquals(HANDLE_PERSON_REQUEST.getPersonId(),
-            captor.getValue().getPersonalIdentityNumber());
+        assertEquals(
+            HANDLE_PERSON_REQUEST.getPersonId(), captor.getValue().getPersonalIdentityNumber());
       }
 
       @Test
@@ -462,8 +414,8 @@ class HsaAuthorizationClientTest {
         verify(handleHospCertificationPersonResponderInterface)
             .handleHospCertificationPerson(anyString(), captor.capture());
 
-        assertEquals(HANDLE_PERSON_REQUEST.getCertificationId(),
-            captor.getValue().getCertificationId());
+        assertEquals(
+            HANDLE_PERSON_REQUEST.getCertificationId(), captor.getValue().getCertificationId());
       }
 
       @Test
@@ -475,8 +427,7 @@ class HsaAuthorizationClientTest {
         verify(handleHospCertificationPersonResponderInterface)
             .handleHospCertificationPerson(anyString(), captor.capture());
 
-        assertEquals(HANDLE_PERSON_REQUEST.getReason(),
-            captor.getValue().getReason());
+        assertEquals(HANDLE_PERSON_REQUEST.getReason(), captor.getValue().getReason());
       }
 
       @Test
@@ -488,8 +439,7 @@ class HsaAuthorizationClientTest {
         verify(handleHospCertificationPersonResponderInterface)
             .handleHospCertificationPerson(anyString(), captor.capture());
 
-        assertEquals(OperationEnum.ADD.toString(),
-            captor.getValue().getOperation().toString());
+        assertEquals(OperationEnum.ADD.toString(), captor.getValue().getOperation().toString());
       }
 
       @Test

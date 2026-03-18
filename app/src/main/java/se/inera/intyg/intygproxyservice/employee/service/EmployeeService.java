@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.employee.service;
 
 import static se.inera.intyg.intygproxyservice.common.ValidationUtility.isStringInvalid;
@@ -41,32 +40,26 @@ public class EmployeeService {
   public EmployeeResponse getEmployee(EmployeeRequest request) {
     validateRequest(request);
 
-    log.info(String.format(
+    log.info(
+        String.format(
             "Getting employee with hsaId: '%s' and personId: '%s'",
-            request.getHsaId(),
-            logHashUtility.hash(request.getPersonId())
-        )
-    );
+            request.getHsaId(), logHashUtility.hash(request.getPersonId())));
 
-    final var response = getEmployeeIntegrationService.get(
-        GetEmployeeIntegrationRequest.builder()
-            .hsaId(request.getHsaId())
-            .personId(request.getPersonId())
-            .build()
-    );
+    final var response =
+        getEmployeeIntegrationService.get(
+            GetEmployeeIntegrationRequest.builder()
+                .hsaId(request.getHsaId())
+                .personId(request.getPersonId())
+                .build());
 
-    log.info(String.format(
+    log.info(
+        String.format(
             "Employee with hsaId: '%s' and personId: '%s' was retrieved, response had length: '%s'",
             request.getHsaId(),
             logHashUtility.hash(request.getPersonId()),
-            response.getEmployee().getPersonInformation().size()
-        )
-    );
+            response.getEmployee().getPersonInformation().size()));
 
-    return EmployeeResponse
-        .builder()
-        .employee(response.getEmployee())
-        .build();
+    return EmployeeResponse.builder().employee(response.getEmployee()).build();
   }
 
   private static void validateRequest(EmployeeRequest request) {
@@ -76,10 +69,9 @@ public class EmployeeService {
 
     if (isStringInvalid(request.getPersonId()) && isStringInvalid(request.getHsaId())) {
       throw new IllegalArgumentException(
-          String.format("PersonId and HsaId are not valid: '%s', '%s'",
-              request.getPersonId(),
-              request.getHsaId())
-      );
+          String.format(
+              "PersonId and HsaId are not valid: '%s', '%s'",
+              request.getPersonId(), request.getHsaId()));
     }
   }
 }

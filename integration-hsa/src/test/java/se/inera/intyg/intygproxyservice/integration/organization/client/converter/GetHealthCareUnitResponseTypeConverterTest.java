@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.integration.organization.client.converter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,16 +34,12 @@ import se.riv.infrastructure.directory.organization.gethealthcareunitresponder.v
 @ExtendWith(MockitoExtension.class)
 class GetHealthCareUnitResponseTypeConverterTest {
 
-  public static final HealthCareUnit HEALTH_CARE_UNIT = HealthCareUnit
-      .builder()
-      .healthCareUnitName("NAME")
-      .build();
+  public static final HealthCareUnit HEALTH_CARE_UNIT =
+      HealthCareUnit.builder().healthCareUnitName("NAME").build();
 
-  @Mock
-  HealthCareUnitTypeConverter healthCareUnitTypeConverter;
+  @Mock HealthCareUnitTypeConverter healthCareUnitTypeConverter;
 
-  @InjectMocks
-  GetHealthCareUnitResponseTypeConverter getHealthCareUnitResponseTypeConverter;
+  @InjectMocks GetHealthCareUnitResponseTypeConverter getHealthCareUnitResponseTypeConverter;
 
   @Test
   void shouldConvertGetHealthCareUnitResponse() {

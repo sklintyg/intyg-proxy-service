@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.integration.employee.client;
 
 import static se.inera.intyg.intygproxyservice.logging.MdcLogConstants.EVENT_TYPE_ACCESSED;
@@ -39,22 +38,27 @@ public class HsaEmployeeClient {
 
   public static final String PROFILE = "extended1";
 
-  private final GetEmployeeIncludingProtectedPersonResponderInterface getEmployeeIncludingProtectedPersonResponderInterface;
-  private final GetEmployeeIncludingProtectedPersonResponseTypeConverter getEmployeeIncludingProtectedPersonResponseTypeConverter;
+  private final GetEmployeeIncludingProtectedPersonResponderInterface
+      getEmployeeIncludingProtectedPersonResponderInterface;
+  private final GetEmployeeIncludingProtectedPersonResponseTypeConverter
+      getEmployeeIncludingProtectedPersonResponseTypeConverter;
 
   @Value("${integration.hsa.logical.address}")
   private String logicalAddress;
 
-  @PerformanceLogging(eventAction = "get-employee-including-protected-person", eventType = EVENT_TYPE_ACCESSED)
+  @PerformanceLogging(
+      eventAction = "get-employee-including-protected-person",
+      eventType = EVENT_TYPE_ACCESSED)
   public Employee getEmployee(GetEmployeeIntegrationRequest request) {
     final var parameters = getParameters(request.getHsaId(), request.getPersonId());
-    final var type = getEmployeeIncludingProtectedPersonResponderInterface
-        .getEmployeeIncludingProtectedPerson(logicalAddress, parameters);
+    final var type =
+        getEmployeeIncludingProtectedPersonResponderInterface.getEmployeeIncludingProtectedPerson(
+            logicalAddress, parameters);
     return getEmployeeIncludingProtectedPersonResponseTypeConverter.convert(type);
   }
 
-  private static GetEmployeeIncludingProtectedPersonType getParameters(String hsaId,
-      String personId) {
+  private static GetEmployeeIncludingProtectedPersonType getParameters(
+      String hsaId, String personId) {
     final var parameters = new GetEmployeeIncludingProtectedPersonType();
 
     parameters.setPersonHsaId(hsaId);

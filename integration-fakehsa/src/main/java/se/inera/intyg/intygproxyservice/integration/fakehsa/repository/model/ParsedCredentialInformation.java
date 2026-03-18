@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -38,8 +38,7 @@ public class ParsedCredentialInformation {
 
   private String hsaId;
   private String givenName;
-  @Builder.Default
-  private List<ParsedCommission> commissionList = new ArrayList<>();
+  @Builder.Default private List<ParsedCommission> commissionList = new ArrayList<>();
 
   @Data
   @Builder
@@ -49,7 +48,6 @@ public class ParsedCredentialInformation {
 
     private String healthCareProviderHsaId;
     private String healthCareUnitHsaId;
-    @Builder.Default
-    private List<String> commissionPurpose = new ArrayList<>();
+    @Builder.Default private List<String> commissionPurpose = new ArrayList<>();
   }
 }

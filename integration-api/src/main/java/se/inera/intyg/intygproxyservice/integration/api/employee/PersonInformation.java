@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.integration.api.employee;
 
 import java.time.LocalDateTime;
@@ -33,20 +32,18 @@ public class PersonInformation {
   String personHsaId;
   String givenName;
   String middleAndSurName;
-  @Builder.Default
-  List<String> healthCareProfessionalLicence = new ArrayList<>();
-  @Builder.Default
-  List<PaTitle> paTitle = new ArrayList<>();
-  @Builder.Default
-  List<String> specialityName = new ArrayList<>();
-  @Builder.Default
-  List<String> specialityCode = new ArrayList<>();
+  @Builder.Default List<String> healthCareProfessionalLicence = new ArrayList<>();
+  @Builder.Default List<PaTitle> paTitle = new ArrayList<>();
+  @Builder.Default List<String> specialityName = new ArrayList<>();
+  @Builder.Default List<String> specialityCode = new ArrayList<>();
   Boolean protectedPerson;
   LocalDateTime personStartDate;
   LocalDateTime personEndDate;
   Boolean feignedPerson;
+
   @Builder.Default
   List<HCPSpecialityCode> healthCareProfessionalLicenceSpeciality = new ArrayList<>();
+
   String age;
   String gender;
   String title;

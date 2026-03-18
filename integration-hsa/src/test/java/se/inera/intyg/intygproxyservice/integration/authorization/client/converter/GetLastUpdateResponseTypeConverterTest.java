@@ -1,6 +1,25 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.intygproxyservice.integration.authorization.client.converter;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static se.inera.intyg.intygproxyservice.integration.common.TypeConverterHelper.toXMLGregorianCalendar;
 
 import java.time.LocalDateTime;
@@ -14,8 +33,7 @@ import se.riv.infrastructure.directory.authorizationmanagement.gethosplastupdate
 @ExtendWith(MockitoExtension.class)
 class GetLastUpdateResponseTypeConverterTest {
 
-  @InjectMocks
-  GetLastUpdateResponseTypeConverter getLastUpdateResponseTypeConverter;
+  @InjectMocks GetLastUpdateResponseTypeConverter getLastUpdateResponseTypeConverter;
 
   @Test
   void shouldReturnNullIfTypeIsNull() {
@@ -42,9 +60,6 @@ class GetLastUpdateResponseTypeConverterTest {
     final var response = getLastUpdateResponseTypeConverter.convert(type);
 
     assertEquals(
-        expected.truncatedTo(ChronoUnit.SECONDS),
-        response.truncatedTo(ChronoUnit.SECONDS)
-    );
+        expected.truncatedTo(ChronoUnit.SECONDS), response.truncatedTo(ChronoUnit.SECONDS));
   }
-
 }

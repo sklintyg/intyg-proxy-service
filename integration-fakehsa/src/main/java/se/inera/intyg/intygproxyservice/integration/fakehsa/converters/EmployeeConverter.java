@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.intygproxyservice.integration.fakehsa.converters;
 
 import java.util.Collections;
@@ -34,9 +52,7 @@ public class EmployeeConverter {
                     .middleAndSurName(parsedHsaPerson.getMiddleAndSurname())
                     .protectedPerson(parsedHsaPerson.isProtectedPerson())
                     .paTitle(getPaTitles(parsedHsaPerson.getPaTitle()))
-                    .build()
-            )
-        )
+                    .build()))
         .build();
   }
 
@@ -44,33 +60,29 @@ public class EmployeeConverter {
     if (parsedPaTitle == null || parsedPaTitle.isEmpty()) {
       return Collections.emptyList();
     }
-    return parsedPaTitle.stream()
-        .map(toPaTitle())
-        .toList();
+    return parsedPaTitle.stream().map(toPaTitle()).toList();
   }
 
   private static List<HCPSpecialityCode> getSpecialities(ParsedHsaPerson parsedHsaPerson) {
-    if (parsedHsaPerson.getSpecialities() == null
-        || parsedHsaPerson.getSpecialities().isEmpty()) {
+    if (parsedHsaPerson.getSpecialities() == null || parsedHsaPerson.getSpecialities().isEmpty()) {
       return Collections.emptyList();
     }
-    return parsedHsaPerson.getSpecialities().stream()
-        .map(toHCPSpecialityCode())
-        .toList();
+    return parsedHsaPerson.getSpecialities().stream().map(toHCPSpecialityCode()).toList();
   }
 
   private static Function<ParsedPaTitle, PaTitle> toPaTitle() {
-    return title -> PaTitle.builder()
-        .paTitleCode(title.getTitleCode())
-        .paTitleName(title.getTitleName())
-        .build();
+    return title ->
+        PaTitle.builder()
+            .paTitleCode(title.getTitleCode())
+            .paTitleName(title.getTitleName())
+            .build();
   }
 
-
   private static Function<Speciality, HCPSpecialityCode> toHCPSpecialityCode() {
-    return speciality -> HCPSpecialityCode.builder()
-        .specialityCode(speciality.getSpecialityCode())
-        .specialityName(speciality.getSpecialityName())
-        .build();
+    return speciality ->
+        HCPSpecialityCode.builder()
+            .specialityCode(speciality.getSpecialityCode())
+            .specialityName(speciality.getSpecialityName())
+            .build();
   }
 }

@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.intygproxyservice.integration.fakepu;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -28,11 +46,9 @@ import se.inera.intyg.intygproxyservice.integration.fakepu.repository.FakePuRepo
 @ExtendWith(MockitoExtension.class)
 class FakePuIntegrationServiceTest {
 
-  @Mock
-  private FakePuRepository fakePuRepository;
+  @Mock private FakePuRepository fakePuRepository;
 
-  @InjectMocks
-  private FakePuIntegrationService fakePuIntegrationService;
+  @InjectMocks private FakePuIntegrationService fakePuIntegrationService;
 
   @Nested
   class GetPerson {
@@ -44,32 +60,22 @@ class FakePuIntegrationServiceTest {
 
       @BeforeEach
       void setUp() {
-        personFound = Person.builder()
-            .personnummer(PersonId.of(PERSON_ID))
-            .build();
+        personFound = Person.builder().personnummer(PersonId.of(PERSON_ID)).build();
 
-        doReturn(personFound)
-            .when(fakePuRepository)
-            .getPerson(PERSON_ID);
+        doReturn(personFound).when(fakePuRepository).getPerson(PERSON_ID);
       }
 
       @Test
       void shallReturnStatusFoundWhenPersonExists() {
-        final var actualPuResponse = fakePuIntegrationService.findPerson(
-            PuRequest.builder()
-                .personId(PERSON_ID)
-                .build()
-        );
+        final var actualPuResponse =
+            fakePuIntegrationService.findPerson(PuRequest.builder().personId(PERSON_ID).build());
         assertEquals(Status.FOUND, actualPuResponse.status());
       }
 
       @Test
       void shallReturnPersonWhenPersonExists() {
-        final var actualPuResponse = fakePuIntegrationService.findPerson(
-            PuRequest.builder()
-                .personId(PERSON_ID)
-                .build()
-        );
+        final var actualPuResponse =
+            fakePuIntegrationService.findPerson(PuRequest.builder().personId(PERSON_ID).build());
         assertEquals(personFound, actualPuResponse.person());
       }
     }
@@ -79,27 +85,20 @@ class FakePuIntegrationServiceTest {
 
       @BeforeEach
       void setUp() {
-        doReturn(null)
-            .when(fakePuRepository)
-            .getPerson(PERSON_ID);
+        doReturn(null).when(fakePuRepository).getPerson(PERSON_ID);
       }
 
       @Test
       void shallReturnStatusNotFoundWhenPersonNotFound() {
-        final var actualPuResponse = fakePuIntegrationService.findPerson(
-            PuRequest.builder()
-                .personId(PERSON_ID)
-                .build()
-        );
+        final var actualPuResponse =
+            fakePuIntegrationService.findPerson(PuRequest.builder().personId(PERSON_ID).build());
         assertEquals(Status.NOT_FOUND, actualPuResponse.status());
       }
     }
 
     @Test
     void shallThrowExceptionIfPuRequestIsNull() {
-      assertThrows(IllegalArgumentException.class,
-          () -> fakePuIntegrationService.findPerson(null)
-      );
+      assertThrows(IllegalArgumentException.class, () -> fakePuIntegrationService.findPerson(null));
     }
   }
 
@@ -111,9 +110,8 @@ class FakePuIntegrationServiceTest {
 
     @Test
     void shallThrowExceptionIfPuRequestIsNull() {
-      assertThrows(IllegalArgumentException.class,
-          () -> fakePuIntegrationService.findPersons(null)
-      );
+      assertThrows(
+          IllegalArgumentException.class, () -> fakePuIntegrationService.findPersons(null));
     }
 
     @Nested
@@ -121,47 +119,33 @@ class FakePuIntegrationServiceTest {
 
       @BeforeEach
       void setUp() {
-        personFound = Person.builder()
-            .personnummer(PersonId.of(PERSON_ID))
-            .build();
+        personFound = Person.builder().personnummer(PersonId.of(PERSON_ID)).build();
 
-        personFound2 = Person.builder()
-            .personnummer(PersonId.of(PERSON_ID_2))
-            .build();
+        personFound2 = Person.builder().personnummer(PersonId.of(PERSON_ID_2)).build();
 
-        doReturn(personFound)
-            .when(fakePuRepository)
-            .getPerson(PERSON_ID);
+        doReturn(personFound).when(fakePuRepository).getPerson(PERSON_ID);
 
-        doReturn(personFound2)
-            .when(fakePuRepository)
-            .getPerson(PERSON_ID_2);
+        doReturn(personFound2).when(fakePuRepository).getPerson(PERSON_ID_2);
       }
 
       @Test
       void shallReturnStatusFoundWhenPersonExists() {
-        final var actualPuResponse = fakePuIntegrationService.findPersons(
-            PuPersonsRequest.builder()
-                .personIds(List.of(PERSON_ID, PERSON_ID_2))
-                .build()
-        );
+        final var actualPuResponse =
+            fakePuIntegrationService.findPersons(
+                PuPersonsRequest.builder().personIds(List.of(PERSON_ID, PERSON_ID_2)).build());
         assertAll(
             () -> assertEquals(Status.FOUND, actualPuResponse.getPersons().getFirst().status()),
-            () -> assertEquals(Status.FOUND, actualPuResponse.getPersons().get(1).status())
-        );
+            () -> assertEquals(Status.FOUND, actualPuResponse.getPersons().get(1).status()));
       }
 
       @Test
       void shallReturnPersonWhenPersonExists() {
-        final var actualPuResponse = fakePuIntegrationService.findPersons(
-            PuPersonsRequest.builder()
-                .personIds(List.of(PERSON_ID, PERSON_ID_2))
-                .build()
-        );
+        final var actualPuResponse =
+            fakePuIntegrationService.findPersons(
+                PuPersonsRequest.builder().personIds(List.of(PERSON_ID, PERSON_ID_2)).build());
         assertAll(
             () -> assertEquals(personFound, actualPuResponse.getPersons().getFirst().person()),
-            () -> assertEquals(personFound2, actualPuResponse.getPersons().get(1).person())
-        );
+            () -> assertEquals(personFound2, actualPuResponse.getPersons().get(1).person()));
       }
     }
 
@@ -170,31 +154,21 @@ class FakePuIntegrationServiceTest {
 
       @BeforeEach
       void setUp() {
-        personFound2 = Person.builder()
-            .personnummer(PersonId.of(PERSON_ID_2))
-            .build();
+        personFound2 = Person.builder().personnummer(PersonId.of(PERSON_ID_2)).build();
 
-        doReturn(null)
-            .when(fakePuRepository)
-            .getPerson(PERSON_ID);
+        doReturn(null).when(fakePuRepository).getPerson(PERSON_ID);
 
-        doReturn(personFound2)
-            .when(fakePuRepository)
-            .getPerson(PERSON_ID_2);
+        doReturn(personFound2).when(fakePuRepository).getPerson(PERSON_ID_2);
       }
 
       @Test
       void shallReturnStatusNotFoundWhenPersonNotFound() {
-        final var actualPuResponse = fakePuIntegrationService.findPersons(
-            PuPersonsRequest.builder()
-                .personIds(List.of(PERSON_ID, PERSON_ID_2))
-                .build()
-        );
+        final var actualPuResponse =
+            fakePuIntegrationService.findPersons(
+                PuPersonsRequest.builder().personIds(List.of(PERSON_ID, PERSON_ID_2)).build());
         assertAll(
-            () -> assertEquals(Status.NOT_FOUND,
-                actualPuResponse.getPersons().getFirst().status()),
-            () -> assertEquals(Status.FOUND, actualPuResponse.getPersons().get(1).status())
-        );
+            () -> assertEquals(Status.NOT_FOUND, actualPuResponse.getPersons().getFirst().status()),
+            () -> assertEquals(Status.FOUND, actualPuResponse.getPersons().get(1).status()));
       }
     }
   }
@@ -207,33 +181,25 @@ class FakePuIntegrationServiceTest {
 
       @BeforeEach
       void setUp() {
-        final var personFound = Person.builder()
-            .personnummer(PersonId.of(PERSON_ID))
-            .build();
+        final var personFound = Person.builder().personnummer(PersonId.of(PERSON_ID)).build();
 
-        doReturn(personFound)
-            .when(fakePuRepository)
-            .getPerson(PERSON_ID);
+        doReturn(personFound).when(fakePuRepository).getPerson(PERSON_ID);
       }
 
       @Test
       void shallReturnResultOkWhenPersonExists() {
-        final var elva77Response = fakePuIntegrationService.findCitizen(
-            Elva77Request.builder()
-                .personId(PERSON_ID)
-                .build()
-        );
+        final var elva77Response =
+            fakePuIntegrationService.findCitizen(
+                Elva77Request.builder().personId(PERSON_ID).build());
 
         assertEquals(Result.OK, elva77Response.getResult());
       }
 
       @Test
       void shallReturnPersonWhenPersonExists() {
-        final var elva77Response = fakePuIntegrationService.findCitizen(
-            Elva77Request.builder()
-                .personId(PERSON_ID)
-                .build()
-        );
+        final var elva77Response =
+            fakePuIntegrationService.findCitizen(
+                Elva77Request.builder().personId(PERSON_ID).build());
 
         assertNotNull(elva77Response.getCitizen());
       }
@@ -244,18 +210,14 @@ class FakePuIntegrationServiceTest {
 
       @BeforeEach
       void setUp() {
-        doReturn(null)
-            .when(fakePuRepository)
-            .getPerson(PERSON_ID);
+        doReturn(null).when(fakePuRepository).getPerson(PERSON_ID);
       }
 
       @Test
       void shallReturnResultErrorWhenPersonNotFound() {
-        final var elva77Response = fakePuIntegrationService.findCitizen(
-            Elva77Request.builder()
-                .personId(PERSON_ID)
-                .build()
-        );
+        final var elva77Response =
+            fakePuIntegrationService.findCitizen(
+                Elva77Request.builder().personId(PERSON_ID).build());
 
         assertEquals(Result.ERROR, elva77Response.getResult());
       }
@@ -263,9 +225,8 @@ class FakePuIntegrationServiceTest {
 
     @Test
     void shallThrowExceptionIfElva77RequestIsNull() {
-      assertThrows(IllegalArgumentException.class,
-          () -> fakePuIntegrationService.findCitizen(null)
-      );
+      assertThrows(
+          IllegalArgumentException.class, () -> fakePuIntegrationService.findCitizen(null));
     }
   }
 }

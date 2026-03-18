@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.organization;
 
 import static se.inera.intyg.intygproxyservice.logging.MdcLogConstants.EVENT_TYPE_ACCESSED;
@@ -39,7 +38,9 @@ public class HealthCareUnitMembersController {
   private final HealthCareUnitMembersService healthCareUnitMembersService;
 
   @PostMapping("")
-  @PerformanceLogging(eventAction = "retrieve-health-care-unit-members", eventType = EVENT_TYPE_ACCESSED)
+  @PerformanceLogging(
+      eventAction = "retrieve-health-care-unit-members",
+      eventType = EVENT_TYPE_ACCESSED)
   HealthCareUnitMembersResponse getHealthCareUnitMembers(
       @RequestBody HealthCareUnitMembersRequest request) {
     return healthCareUnitMembersService.get(request);

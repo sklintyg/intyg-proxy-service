@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.integration.organization.client;
 
 import static se.inera.intyg.intygproxyservice.logging.MdcLogConstants.EVENT_TYPE_ACCESSED;
@@ -56,14 +55,17 @@ public class HsaOrganizationClient {
   private static final String PROFILE_BASIC = "basic";
 
   private final GetHealthCareUnitResponderInterface getHealthCareUnitResponderInterface;
-  private final GetHealthCareUnitMembersResponderInterface getHealthCareUnitMembersResponderInterface;
+  private final GetHealthCareUnitMembersResponderInterface
+      getHealthCareUnitMembersResponderInterface;
   private final GetUnitResponderInterface getUnitResponderInterface;
   private final GetHealthCareProviderResponderInterface getHealthCareProviderResponderInterface;
 
   private final GetHealthCareUnitResponseTypeConverter getHealthCareUnitResponseTypeConverter;
-  private final GetHealthCareUnitMembersResponseTypeConverter getHealthCareUnitMembersResponseTypeConverter;
+  private final GetHealthCareUnitMembersResponseTypeConverter
+      getHealthCareUnitMembersResponseTypeConverter;
   private final GetUnitResponseTypeConverter getUnitResponseTypeConverter;
-  private final GetHealthCareProviderResponseTypeConverter getHealthCareProviderResponseTypeConverter;
+  private final GetHealthCareProviderResponseTypeConverter
+      getHealthCareProviderResponseTypeConverter;
 
   @Value("${integration.hsa.logical.address}")
   private String logicalAddress;
@@ -72,10 +74,7 @@ public class HsaOrganizationClient {
   public Unit getUnit(GetUnitIntegrationRequest request) {
     final var parameters = getUnitParameters(request.getHsaId());
 
-    final var type = getUnitResponderInterface.getUnit(
-        logicalAddress,
-        parameters
-    );
+    final var type = getUnitResponderInterface.getUnit(logicalAddress, parameters);
 
     return getUnitResponseTypeConverter.convert(type);
   }
@@ -84,10 +83,8 @@ public class HsaOrganizationClient {
   public HealthCareUnit getHealthCareUnit(GetHealthCareUnitIntegrationRequest request) {
     final var parameters = getHealthCareUnitParameters(request.getHsaId());
 
-    final var type = getHealthCareUnitResponderInterface.getHealthCareUnit(
-        logicalAddress,
-        parameters
-    );
+    final var type =
+        getHealthCareUnitResponderInterface.getHealthCareUnit(logicalAddress, parameters);
 
     return getHealthCareUnitResponseTypeConverter.convert(type);
   }
@@ -95,13 +92,11 @@ public class HsaOrganizationClient {
   @PerformanceLogging(eventAction = "get-health-care-provider", eventType = EVENT_TYPE_ACCESSED)
   public List<HealthCareProvider> getHealthCareProvider(
       GetHealthCareProviderIntegrationRequest request) {
-    final var parameters = getProviderParameters(request.getHsaId(),
-        request.getOrganizationNumber());
+    final var parameters =
+        getProviderParameters(request.getHsaId(), request.getOrganizationNumber());
 
-    final var type = getHealthCareProviderResponderInterface.getHealthCareProvider(
-        logicalAddress,
-        parameters
-    );
+    final var type =
+        getHealthCareProviderResponderInterface.getHealthCareProvider(logicalAddress, parameters);
 
     return getHealthCareProviderResponseTypeConverter.convert(type);
   }
@@ -111,16 +106,15 @@ public class HsaOrganizationClient {
       GetHealthCareUnitMembersIntegrationRequest request) {
     final var parameters = getHealthCareUnitMembersParameters(request.getHsaId());
 
-    final var type = getHealthCareUnitMembersResponderInterface.getHealthCareUnitMembers(
-        logicalAddress,
-        parameters
-    );
+    final var type =
+        getHealthCareUnitMembersResponderInterface.getHealthCareUnitMembers(
+            logicalAddress, parameters);
 
     return getHealthCareUnitMembersResponseTypeConverter.convert(type);
   }
 
-  private static GetHealthCareProviderType getProviderParameters(String hsaId,
-      String organizationNumber) {
+  private static GetHealthCareProviderType getProviderParameters(
+      String hsaId, String organizationNumber) {
     final var parameters = new GetHealthCareProviderType();
     parameters.setHealthCareProviderHsaId(hsaId);
     parameters.setHealthCareProviderOrgNo(organizationNumber);

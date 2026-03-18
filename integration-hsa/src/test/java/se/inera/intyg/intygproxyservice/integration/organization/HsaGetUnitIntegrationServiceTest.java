@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.integration.organization;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -36,21 +35,15 @@ import se.inera.intyg.intygproxyservice.integration.organization.client.HsaOrgan
 class HsaGetUnitIntegrationServiceTest {
 
   public static final Unit UNIT = Unit.builder().build();
-  @Mock
-  HsaOrganizationClient hsaOrganizationClient;
+  @Mock HsaOrganizationClient hsaOrganizationClient;
 
-  @InjectMocks
-  HsaGetUnitIntegrationService hsaGetUnitIntegrationService;
+  @InjectMocks HsaGetUnitIntegrationService hsaGetUnitIntegrationService;
 
   @Test
   void shouldReturnUnit() {
-    when(hsaOrganizationClient.getUnit(any(GetUnitIntegrationRequest.class)))
-        .thenReturn(UNIT);
-    final var response = hsaGetUnitIntegrationService.get(
-        GetUnitIntegrationRequest
-            .builder()
-            .build()
-    );
+    when(hsaOrganizationClient.getUnit(any(GetUnitIntegrationRequest.class))).thenReturn(UNIT);
+    final var response =
+        hsaGetUnitIntegrationService.get(GetUnitIntegrationRequest.builder().build());
 
     assertEquals(UNIT, response.getUnit());
   }

@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.intygproxyservice.person.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,7 +30,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 import se.inera.intyg.intygproxyservice.integration.api.pu.Person;
 import se.inera.intyg.intygproxyservice.integration.api.pu.PersonId;
-
 
 class PersonDTOMapperTest {
 
@@ -38,15 +55,15 @@ class PersonDTOMapperTest {
 
   @Test
   void shouldSetTestIndicatedFromPuFalseIfListOfReClassifyIsEmptyList() {
-    ReflectionTestUtils.setField(personDTOMapper, "testIndicatedPersonIds",
-        Collections.emptyList());
+    ReflectionTestUtils.setField(
+        personDTOMapper, "testIndicatedPersonIds", Collections.emptyList());
     assertFalse(personDTOMapper.toDTO(PERSON_NOT_TEST_INDICATED).isTestIndicator());
   }
 
   @Test
   void shouldSetTestIndicatedFromPuTrueIfListOfReClassifyIsEmptyList() {
-    ReflectionTestUtils.setField(personDTOMapper, "testIndicatedPersonIds",
-        Collections.emptyList());
+    ReflectionTestUtils.setField(
+        personDTOMapper, "testIndicatedPersonIds", Collections.emptyList());
     assertTrue(personDTOMapper.toDTO(PERSON_TEST_INDICATED).isTestIndicator());
   }
 
@@ -62,56 +79,43 @@ class PersonDTOMapperTest {
     void shouldConvertPersonId() {
       assertEquals(
           PERSON_NO_FLAGS.getPersonnummer().id(),
-          personDTOMapper.toDTO(PERSON_NO_FLAGS).getPersonnummer()
-      );
+          personDTOMapper.toDTO(PERSON_NO_FLAGS).getPersonnummer());
     }
 
     @Test
     void shouldConvertFirstName() {
       assertEquals(
-          PERSON_NO_FLAGS.getFornamn(),
-          personDTOMapper.toDTO(PERSON_NO_FLAGS).getFornamn()
-      );
+          PERSON_NO_FLAGS.getFornamn(), personDTOMapper.toDTO(PERSON_NO_FLAGS).getFornamn());
     }
 
     @Test
     void shouldConvertLastName() {
       assertEquals(
-          PERSON_NO_FLAGS.getEfternamn(),
-          personDTOMapper.toDTO(PERSON_NO_FLAGS).getEfternamn()
-      );
+          PERSON_NO_FLAGS.getEfternamn(), personDTOMapper.toDTO(PERSON_NO_FLAGS).getEfternamn());
     }
 
     @Test
     void shouldConvertMiddleName() {
       assertEquals(
-          PERSON_NO_FLAGS.getMellannamn(),
-          personDTOMapper.toDTO(PERSON_NO_FLAGS).getMellannamn()
-      );
+          PERSON_NO_FLAGS.getMellannamn(), personDTOMapper.toDTO(PERSON_NO_FLAGS).getMellannamn());
     }
 
     @Test
     void shouldConvertPostaddress() {
       assertEquals(
-          PERSON_NO_FLAGS.getPostadress(),
-          personDTOMapper.toDTO(PERSON_NO_FLAGS).getPostadress()
-      );
+          PERSON_NO_FLAGS.getPostadress(), personDTOMapper.toDTO(PERSON_NO_FLAGS).getPostadress());
     }
 
     @Test
     void shouldConvertPostnummer() {
       assertEquals(
-          PERSON_NO_FLAGS.getPostnummer(),
-          personDTOMapper.toDTO(PERSON_NO_FLAGS).getPostnummer()
-      );
+          PERSON_NO_FLAGS.getPostnummer(), personDTOMapper.toDTO(PERSON_NO_FLAGS).getPostnummer());
     }
 
     @Test
     void shouldConvertPostort() {
       assertEquals(
-          PERSON_NO_FLAGS.getPostort(),
-          personDTOMapper.toDTO(PERSON_NO_FLAGS).getPostort()
-      );
+          PERSON_NO_FLAGS.getPostort(), personDTOMapper.toDTO(PERSON_NO_FLAGS).getPostort());
     }
 
     @Test
@@ -145,8 +149,8 @@ class PersonDTOMapperTest {
     }
   }
 
-  private static Person getPerson(String patientId, boolean avliden, boolean sekretess,
-      boolean testIndicated) {
+  private static Person getPerson(
+      String patientId, boolean avliden, boolean sekretess, boolean testIndicated) {
     return Person.builder()
         .personnummer(PersonId.of(patientId))
         .postadress("Postadress")

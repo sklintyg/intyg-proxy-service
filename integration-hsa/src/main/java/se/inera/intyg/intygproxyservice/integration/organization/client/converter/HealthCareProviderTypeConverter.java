@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.integration.organization.client.converter;
 
 import static se.inera.intyg.intygproxyservice.integration.common.TypeConverterHelper.toLocalDate;
@@ -41,7 +40,9 @@ public class HealthCareProviderTypeConverter {
   }
 
   public HealthCareProvider convertV1(
-      se.riv.infrastructure.directory.organization.gethealthcareproviderresponder.v1.HealthCareProviderType type) {
+      se.riv.infrastructure.directory.organization.gethealthcareproviderresponder.v1
+              .HealthCareProviderType
+          type) {
     return HealthCareProvider.builder()
         .archivedHealthCareProvider(type.isArchivedHealthCareProvider())
         .feignedHealthCareProvider(type.isFeignedHealthCareProvider())
@@ -52,5 +53,4 @@ public class HealthCareProviderTypeConverter {
         .healthCareProviderStartDate(toLocalDate(type.getHealthCareProviderStartDate()))
         .build();
   }
-
 }

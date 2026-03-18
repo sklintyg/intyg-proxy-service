@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.intygproxyservice.integration.fakehsa;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,8 +36,7 @@ import se.inera.intyg.intygproxyservice.integration.fakehsa.repository.FakeHsaRe
 class FakeHsaGetCredentialInformationIntegrationServiceTest {
 
   private static final String HSA_ID = "hsaId";
-  @Mock
-  private FakeHsaRepository fakeHsaRepository;
+  @Mock private FakeHsaRepository fakeHsaRepository;
 
   @InjectMocks
   private FakeHsaGetCredentialInformationIntegrationService fakeHsaGetUnitIntegrationService;
@@ -27,32 +44,27 @@ class FakeHsaGetCredentialInformationIntegrationServiceTest {
   @Test
   void shouldThrowIfHsaIdIsNull() {
     final var request = GetCredentialInformationIntegrationRequest.builder().build();
-    assertThrows(IllegalArgumentException.class,
-        () -> fakeHsaGetUnitIntegrationService.get(request)
-    );
+    assertThrows(
+        IllegalArgumentException.class, () -> fakeHsaGetUnitIntegrationService.get(request));
   }
-
 
   @Test
   void shouldThrowIfHsaIdIsEmpty() {
-    final var request = GetCredentialInformationIntegrationRequest.builder()
-        .personHsaId("")
-        .build();
-    assertThrows(IllegalArgumentException.class,
-        () -> fakeHsaGetUnitIntegrationService.get(request)
-    );
+    final var request =
+        GetCredentialInformationIntegrationRequest.builder().personHsaId("").build();
+    assertThrows(
+        IllegalArgumentException.class, () -> fakeHsaGetUnitIntegrationService.get(request));
   }
 
   @Test
   void shouldReturnCredentialInformationFromFakeHsaRepository() {
-    final var request = GetCredentialInformationIntegrationRequest.builder()
-        .personHsaId(HSA_ID)
-        .build();
+    final var request =
+        GetCredentialInformationIntegrationRequest.builder().personHsaId(HSA_ID).build();
 
     final var expectedResult = List.of(CredentialInformation.builder().build());
 
-    when(fakeHsaRepository.getCredentialInformation(request.getPersonHsaId())).thenReturn(
-        expectedResult);
+    when(fakeHsaRepository.getCredentialInformation(request.getPersonHsaId()))
+        .thenReturn(expectedResult);
 
     final var result = fakeHsaGetUnitIntegrationService.get(request);
 

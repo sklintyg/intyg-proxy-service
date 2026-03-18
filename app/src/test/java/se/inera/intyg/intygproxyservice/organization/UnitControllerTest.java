@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.organization;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,21 +34,16 @@ import se.inera.intyg.intygproxyservice.organization.service.UnitService;
 @ExtendWith(MockitoExtension.class)
 class UnitControllerTest {
 
-  @Mock
-  private UnitService unitService;
+  @Mock private UnitService unitService;
 
-  @InjectMocks
-  private UnitController unitController;
+  @InjectMocks private UnitController unitController;
 
   @Test
   void shallReturnUnitResponseWhenCallingGetUnit() {
     final var expectedResponse = UnitResponse.builder().build();
-    when(unitService.get(any(UnitRequest.class)))
-        .thenReturn(expectedResponse);
+    when(unitService.get(any(UnitRequest.class))).thenReturn(expectedResponse);
 
-    final var response = unitController.getUnit(
-        UnitRequest.builder().build()
-    );
+    final var response = unitController.getUnit(UnitRequest.builder().build());
 
     assertEquals(expectedResponse, response);
   }

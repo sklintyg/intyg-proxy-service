@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.authorization.service;
 
 import static se.inera.intyg.intygproxyservice.common.ValidationUtility.isStringInvalid;
@@ -44,26 +43,20 @@ public class CredentialsForPersonService {
     log.info(
         String.format(
             "Getting credential info for person with personId: '%s'",
-            logHashUtility.hash(request.getPersonId())
-        )
-    );
+            logHashUtility.hash(request.getPersonId())));
 
-    final var response = getCredentialsForPersonIntegrationService.get(
-        GetCredentialsForPersonIntegrationRequest.builder()
-            .personId(request.getPersonId())
-            .build()
-    );
+    final var response =
+        getCredentialsForPersonIntegrationService.get(
+            GetCredentialsForPersonIntegrationRequest.builder()
+                .personId(request.getPersonId())
+                .build());
 
-    log.info(String.format(
+    log.info(
+        String.format(
             "Credentials for person with personId: '%s' was retrieved",
-            logHashUtility.hash(request.getPersonId())
-        )
-    );
+            logHashUtility.hash(request.getPersonId())));
 
-    return CredentialsForPersonResponse
-        .builder()
-        .credentials(response.getCredentials())
-        .build();
+    return CredentialsForPersonResponse.builder().credentials(response.getCredentials()).build();
   }
 
   private void validateRequest(CredentialsForPersonRequest request) {
@@ -73,11 +66,7 @@ public class CredentialsForPersonService {
 
     if (isStringInvalid(request.getPersonId())) {
       throw new IllegalArgumentException(
-          String.format(
-              "PersonId is not valid: '%s'",
-              logHashUtility.hash(request.getPersonId())
-          )
-      );
+          String.format("PersonId is not valid: '%s'", logHashUtility.hash(request.getPersonId())));
     }
   }
 }

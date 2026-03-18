@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.intygproxyservice.authorization.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,105 +47,106 @@ class HandleCertificationPersonServiceTest {
   private static final String OPERATION = "OPERATION";
   private static final String REASON = "REASON";
 
-  private static final HandleCertificationPersonRequest REQUEST = HandleCertificationPersonRequest
-      .builder()
-      .personId(PERSON_ID)
-      .certificationId(CERTIFICATION_ID)
-      .operation(OPERATION)
-      .reason(REASON)
-      .build();
+  private static final HandleCertificationPersonRequest REQUEST =
+      HandleCertificationPersonRequest.builder()
+          .personId(PERSON_ID)
+          .certificationId(CERTIFICATION_ID)
+          .operation(OPERATION)
+          .reason(REASON)
+          .build();
 
-  private static final HandleCertificationPersonIntegrationResponse RESPONSE = HandleCertificationPersonIntegrationResponse
-      .builder()
-      .result(Result.builder()
-          .resultCode("CODE")
-          .resultText("TEXT")
-          .build()
-      )
-      .build();
+  private static final HandleCertificationPersonIntegrationResponse RESPONSE =
+      HandleCertificationPersonIntegrationResponse.builder()
+          .result(Result.builder().resultCode("CODE").resultText("TEXT").build())
+          .build();
 
   @Mock
   private HandleCertificationPersonIntegrationService handleCertificationPersonIntegrationService;
-  @Mock
-  private LogHashUtility logHashUtility;
-  
-  @InjectMocks
-  private HandleCertificationPersonService handleCertificationPersonService;
+
+  @Mock private LogHashUtility logHashUtility;
+
+  @InjectMocks private HandleCertificationPersonService handleCertificationPersonService;
 
   @Test
   void shouldThrowIllegalArgumentExceptionIfRequestIsNull() {
-    assertThrows(IllegalArgumentException.class,
-        () -> handleCertificationPersonService.handle(null));
+    assertThrows(
+        IllegalArgumentException.class, () -> handleCertificationPersonService.handle(null));
   }
 
   @Test
   void shouldThrowIllegalArgumentExceptionIfPersonIdIsNull() {
-    final var request = HandleCertificationPersonRequest.builder()
-        .reason(REASON)
-        .certificationId(CERTIFICATION_ID)
-        .operation(OPERATION)
-        .build();
-    assertThrows(IllegalArgumentException.class,
-        () -> handleCertificationPersonService.handle(request));
+    final var request =
+        HandleCertificationPersonRequest.builder()
+            .reason(REASON)
+            .certificationId(CERTIFICATION_ID)
+            .operation(OPERATION)
+            .build();
+    assertThrows(
+        IllegalArgumentException.class, () -> handleCertificationPersonService.handle(request));
   }
 
   @Test
   void shouldThrowIllegalArgumentExceptionIfPersonIdIsEmpty() {
-    final var request = HandleCertificationPersonRequest.builder()
-        .personId("")
-        .reason(REASON)
-        .certificationId(CERTIFICATION_ID)
-        .operation(OPERATION)
-        .build();
-    assertThrows(IllegalArgumentException.class,
-        () -> handleCertificationPersonService.handle(request));
+    final var request =
+        HandleCertificationPersonRequest.builder()
+            .personId("")
+            .reason(REASON)
+            .certificationId(CERTIFICATION_ID)
+            .operation(OPERATION)
+            .build();
+    assertThrows(
+        IllegalArgumentException.class, () -> handleCertificationPersonService.handle(request));
   }
 
   @Test
   void shouldThrowIllegalArgumentExceptionIfPersonIdIsBlank() {
-    final var request = HandleCertificationPersonRequest.builder()
-        .personId("   ")
-        .reason(REASON)
-        .certificationId(CERTIFICATION_ID)
-        .operation(OPERATION)
-        .build();
-    assertThrows(IllegalArgumentException.class,
-        () -> handleCertificationPersonService.handle(request));
+    final var request =
+        HandleCertificationPersonRequest.builder()
+            .personId("   ")
+            .reason(REASON)
+            .certificationId(CERTIFICATION_ID)
+            .operation(OPERATION)
+            .build();
+    assertThrows(
+        IllegalArgumentException.class, () -> handleCertificationPersonService.handle(request));
   }
 
   @Test
   void shouldThrowIllegalArgumentExceptionIfOperationIsNull() {
-    final var request = HandleCertificationPersonRequest.builder()
-        .personId(PERSON_ID)
-        .reason(REASON)
-        .certificationId(CERTIFICATION_ID)
-        .build();
-    assertThrows(IllegalArgumentException.class,
-        () -> handleCertificationPersonService.handle(request));
+    final var request =
+        HandleCertificationPersonRequest.builder()
+            .personId(PERSON_ID)
+            .reason(REASON)
+            .certificationId(CERTIFICATION_ID)
+            .build();
+    assertThrows(
+        IllegalArgumentException.class, () -> handleCertificationPersonService.handle(request));
   }
 
   @Test
   void shouldThrowIllegalArgumentExceptionIfOperationIdIsEmpty() {
-    final var request = HandleCertificationPersonRequest.builder()
-        .personId(PERSON_ID)
-        .reason(REASON)
-        .certificationId(CERTIFICATION_ID)
-        .operation("")
-        .build();
-    assertThrows(IllegalArgumentException.class,
-        () -> handleCertificationPersonService.handle(request));
+    final var request =
+        HandleCertificationPersonRequest.builder()
+            .personId(PERSON_ID)
+            .reason(REASON)
+            .certificationId(CERTIFICATION_ID)
+            .operation("")
+            .build();
+    assertThrows(
+        IllegalArgumentException.class, () -> handleCertificationPersonService.handle(request));
   }
 
   @Test
   void shouldThrowIllegalArgumentExceptionIfOperationIsBlank() {
-    final var request = HandleCertificationPersonRequest.builder()
-        .personId(PERSON_ID)
-        .certificationId(CERTIFICATION_ID)
-        .reason(REASON)
-        .operation("  ")
-        .build();
-    assertThrows(IllegalArgumentException.class,
-        () -> handleCertificationPersonService.handle(request));
+    final var request =
+        HandleCertificationPersonRequest.builder()
+            .personId(PERSON_ID)
+            .certificationId(CERTIFICATION_ID)
+            .reason(REASON)
+            .operation("  ")
+            .build();
+    assertThrows(
+        IllegalArgumentException.class, () -> handleCertificationPersonService.handle(request));
   }
 
   @Nested
@@ -149,8 +168,7 @@ class HandleCertificationPersonServiceTest {
     void shallSetPersonIdInRequest() {
       handleCertificationPersonService.handle(REQUEST);
 
-      final var captor = ArgumentCaptor.forClass(
-          HandleCertificationPersonIntegrationRequest.class);
+      final var captor = ArgumentCaptor.forClass(HandleCertificationPersonIntegrationRequest.class);
       verify(handleCertificationPersonIntegrationService).get(captor.capture());
 
       assertEquals(REQUEST.getPersonId(), captor.getValue().getPersonId());
@@ -160,8 +178,7 @@ class HandleCertificationPersonServiceTest {
     void shallSetCertificationIdInRequest() {
       handleCertificationPersonService.handle(REQUEST);
 
-      final var captor = ArgumentCaptor.forClass(
-          HandleCertificationPersonIntegrationRequest.class);
+      final var captor = ArgumentCaptor.forClass(HandleCertificationPersonIntegrationRequest.class);
       verify(handleCertificationPersonIntegrationService).get(captor.capture());
 
       assertEquals(REQUEST.getCertificationId(), captor.getValue().getCertificationId());
@@ -171,8 +188,7 @@ class HandleCertificationPersonServiceTest {
     void shallSetReasonInRequest() {
       handleCertificationPersonService.handle(REQUEST);
 
-      final var captor = ArgumentCaptor.forClass(
-          HandleCertificationPersonIntegrationRequest.class);
+      final var captor = ArgumentCaptor.forClass(HandleCertificationPersonIntegrationRequest.class);
       verify(handleCertificationPersonIntegrationService).get(captor.capture());
 
       assertEquals(REQUEST.getReason(), captor.getValue().getReason());
@@ -182,8 +198,7 @@ class HandleCertificationPersonServiceTest {
     void shallSetOperationInRequest() {
       handleCertificationPersonService.handle(REQUEST);
 
-      final var captor = ArgumentCaptor.forClass(
-          HandleCertificationPersonIntegrationRequest.class);
+      final var captor = ArgumentCaptor.forClass(HandleCertificationPersonIntegrationRequest.class);
       verify(handleCertificationPersonIntegrationService).get(captor.capture());
 
       assertEquals(REQUEST.getOperation(), captor.getValue().getOperation());

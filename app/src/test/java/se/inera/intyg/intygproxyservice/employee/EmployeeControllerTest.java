@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.employee;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,21 +34,16 @@ import se.inera.intyg.intygproxyservice.employee.service.EmployeeService;
 @ExtendWith(MockitoExtension.class)
 class EmployeeControllerTest {
 
-  @Mock
-  private EmployeeService employeeService;
+  @Mock private EmployeeService employeeService;
 
-  @InjectMocks
-  private EmployeeController employeeController;
+  @InjectMocks private EmployeeController employeeController;
 
   @Test
   void shallReturnEmployeeResponseWhenCallingGetEmployee() {
     final var expectedResponse = EmployeeResponse.builder().build();
-    when(employeeService.getEmployee(any(EmployeeRequest.class)))
-        .thenReturn(expectedResponse);
+    when(employeeService.getEmployee(any(EmployeeRequest.class))).thenReturn(expectedResponse);
 
-    final var response = employeeController.getEmployee(
-        EmployeeRequest.builder().build()
-    );
+    final var response = employeeController.getEmployee(EmployeeRequest.builder().build());
 
     assertEquals(expectedResponse, response);
   }

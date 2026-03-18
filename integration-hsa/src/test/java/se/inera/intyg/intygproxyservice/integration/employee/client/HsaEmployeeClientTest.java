@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.integration.employee.client;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -49,16 +48,19 @@ class HsaEmployeeClientTest {
   public static final Employee EMPLOYEE = Employee.builder().build();
   public static final String HSA_ID = "HSA_ID";
   public static final String PERSON_ID = "PERSON_ID";
-  public static final GetEmployeeIntegrationRequest REQUEST = GetEmployeeIntegrationRequest.builder()
-      .hsaId(HSA_ID).personId(PERSON_ID).build();
+  public static final GetEmployeeIntegrationRequest REQUEST =
+      GetEmployeeIntegrationRequest.builder().hsaId(HSA_ID).personId(PERSON_ID).build();
   public static final String LOGICAL_ADDRESS = "LOGICAL_ADDRESS";
-  @Mock
-  GetEmployeeIncludingProtectedPersonResponseTypeConverter getEmployeeIncludingProtectedPersonResponseTypeConverter;
-  @Mock
-  GetEmployeeIncludingProtectedPersonResponderInterface getEmployeeIncludingProtectedPersonResponderInterface;
 
-  @InjectMocks
-  HsaEmployeeClient hsaEmployeeClient;
+  @Mock
+  GetEmployeeIncludingProtectedPersonResponseTypeConverter
+      getEmployeeIncludingProtectedPersonResponseTypeConverter;
+
+  @Mock
+  GetEmployeeIncludingProtectedPersonResponderInterface
+      getEmployeeIncludingProtectedPersonResponderInterface;
+
+  @InjectMocks HsaEmployeeClient hsaEmployeeClient;
 
   @BeforeEach
   void setUp() {
@@ -71,11 +73,9 @@ class HsaEmployeeClientTest {
     @Test
     void shouldThrowErrorIfInterfaceThrowsError() {
       when(getEmployeeIncludingProtectedPersonResponderInterface
-          .getEmployeeIncludingProtectedPerson(
-              anyString(),
-              any(GetEmployeeIncludingProtectedPersonType.class)
-          )
-      ).thenThrow(new IllegalStateException());
+              .getEmployeeIncludingProtectedPerson(
+                  anyString(), any(GetEmployeeIncludingProtectedPersonType.class)))
+          .thenThrow(new IllegalStateException());
 
       assertThrows(IllegalStateException.class, () -> hsaEmployeeClient.getEmployee(REQUEST));
     }
@@ -87,23 +87,19 @@ class HsaEmployeeClientTest {
     @BeforeEach
     void setup() {
       when(getEmployeeIncludingProtectedPersonResponderInterface
-          .getEmployeeIncludingProtectedPerson(
-              anyString(),
-              any(GetEmployeeIncludingProtectedPersonType.class)
-          )
-      ).thenReturn(new GetEmployeeIncludingProtectedPersonResponseType());
+              .getEmployeeIncludingProtectedPerson(
+                  anyString(), any(GetEmployeeIncludingProtectedPersonType.class)))
+          .thenReturn(new GetEmployeeIncludingProtectedPersonResponseType());
     }
 
     @Test
     void shouldReturnResponseWithEmployeeReturnedFromConverter() {
       when(getEmployeeIncludingProtectedPersonResponseTypeConverter.convert(
-              any(GetEmployeeIncludingProtectedPersonResponseType.class)
-          )
-      ).thenReturn(EMPLOYEE);
+              any(GetEmployeeIncludingProtectedPersonResponseType.class)))
+          .thenReturn(EMPLOYEE);
 
-      final var response = hsaEmployeeClient.getEmployee(
-          GetEmployeeIntegrationRequest.builder().build()
-      );
+      final var response =
+          hsaEmployeeClient.getEmployee(GetEmployeeIntegrationRequest.builder().build());
 
       assertEquals(EMPLOYEE, response);
     }
@@ -111,17 +107,11 @@ class HsaEmployeeClientTest {
     @Test
     void shouldSendHsaIdInRequest() {
       hsaEmployeeClient.getEmployee(
-          GetEmployeeIntegrationRequest
-              .builder()
-              .hsaId(HSA_ID)
-              .personId(PERSON_ID)
-              .build()
-      );
+          GetEmployeeIntegrationRequest.builder().hsaId(HSA_ID).personId(PERSON_ID).build());
 
       final var captor = ArgumentCaptor.forClass(GetEmployeeIncludingProtectedPersonType.class);
 
-      verify(
-          getEmployeeIncludingProtectedPersonResponderInterface)
+      verify(getEmployeeIncludingProtectedPersonResponderInterface)
           .getEmployeeIncludingProtectedPerson(anyString(), captor.capture());
 
       assertEquals(HSA_ID, captor.getValue().getPersonHsaId());
@@ -130,17 +120,11 @@ class HsaEmployeeClientTest {
     @Test
     void shouldSendPersonIdInRequest() {
       hsaEmployeeClient.getEmployee(
-          GetEmployeeIntegrationRequest
-              .builder()
-              .hsaId(HSA_ID)
-              .personId(PERSON_ID)
-              .build()
-      );
+          GetEmployeeIntegrationRequest.builder().hsaId(HSA_ID).personId(PERSON_ID).build());
 
       final var captor = ArgumentCaptor.forClass(GetEmployeeIncludingProtectedPersonType.class);
 
-      verify(
-          getEmployeeIncludingProtectedPersonResponderInterface)
+      verify(getEmployeeIncludingProtectedPersonResponderInterface)
           .getEmployeeIncludingProtectedPerson(any(), captor.capture());
 
       assertEquals(PERSON_ID, captor.getValue().getPersonalIdentityNumber());
@@ -149,19 +133,13 @@ class HsaEmployeeClientTest {
     @Test
     void shouldSendLogicalAddressInRequest() {
       hsaEmployeeClient.getEmployee(
-          GetEmployeeIntegrationRequest
-              .builder()
-              .hsaId(HSA_ID)
-              .personId(PERSON_ID)
-              .build()
-      );
+          GetEmployeeIntegrationRequest.builder().hsaId(HSA_ID).personId(PERSON_ID).build());
 
       final var captor = ArgumentCaptor.forClass(String.class);
 
-      verify(
-          getEmployeeIncludingProtectedPersonResponderInterface)
-          .getEmployeeIncludingProtectedPerson(captor.capture(),
-              any(GetEmployeeIncludingProtectedPersonType.class));
+      verify(getEmployeeIncludingProtectedPersonResponderInterface)
+          .getEmployeeIncludingProtectedPerson(
+              captor.capture(), any(GetEmployeeIncludingProtectedPersonType.class));
 
       assertEquals(LOGICAL_ADDRESS, captor.getValue());
     }
@@ -169,19 +147,12 @@ class HsaEmployeeClientTest {
     @Test
     void shouldSendIncludeFeignedObjectsAsFalse() {
       hsaEmployeeClient.getEmployee(
-          GetEmployeeIntegrationRequest
-              .builder()
-              .hsaId(HSA_ID)
-              .personId(PERSON_ID)
-              .build()
-      );
+          GetEmployeeIntegrationRequest.builder().hsaId(HSA_ID).personId(PERSON_ID).build());
 
       final var captor = ArgumentCaptor.forClass(GetEmployeeIncludingProtectedPersonType.class);
 
-      verify(
-          getEmployeeIncludingProtectedPersonResponderInterface)
-          .getEmployeeIncludingProtectedPerson(anyString(),
-              captor.capture());
+      verify(getEmployeeIncludingProtectedPersonResponderInterface)
+          .getEmployeeIncludingProtectedPerson(anyString(), captor.capture());
 
       assertFalse(captor.getValue().isIncludeFeignedObject());
     }
@@ -189,19 +160,12 @@ class HsaEmployeeClientTest {
     @Test
     void shouldSendProfileInRequest() {
       hsaEmployeeClient.getEmployee(
-          GetEmployeeIntegrationRequest
-              .builder()
-              .hsaId(HSA_ID)
-              .personId(PERSON_ID)
-              .build()
-      );
+          GetEmployeeIntegrationRequest.builder().hsaId(HSA_ID).personId(PERSON_ID).build());
 
       final var captor = ArgumentCaptor.forClass(GetEmployeeIncludingProtectedPersonType.class);
 
-      verify(
-          getEmployeeIncludingProtectedPersonResponderInterface)
-          .getEmployeeIncludingProtectedPerson(anyString(),
-              captor.capture());
+      verify(getEmployeeIncludingProtectedPersonResponderInterface)
+          .getEmployeeIncludingProtectedPerson(anyString(), captor.capture());
 
       assertEquals("extended1", captor.getValue().getProfile());
     }

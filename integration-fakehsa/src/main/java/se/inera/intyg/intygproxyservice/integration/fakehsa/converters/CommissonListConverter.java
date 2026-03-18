@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.intygproxyservice.integration.fakehsa.converters;
 
 import java.util.ArrayList;
@@ -15,17 +33,19 @@ import se.inera.intyg.intygproxyservice.integration.fakehsa.repository.model.Par
 @Component
 public class CommissonListConverter {
 
-  public List<Commission> convert(Map<String, ParsedCareUnit> careUnitMap,
+  public List<Commission> convert(
+      Map<String, ParsedCareUnit> careUnitMap,
       Map<String, ParsedCareProvider> careProviderMap,
       ParsedCredentialInformation credentialInformation) {
     if (credentialInformation.getCommissionList() == null) {
       return Collections.emptyList();
     }
 
-    final var filteredCommissonPurpose = credentialInformation.getCommissionList().stream()
-        .filter(isPresentInUnitMap(careUnitMap))
-        .filter(hasCommissonPurpose())
-        .toList();
+    final var filteredCommissonPurpose =
+        credentialInformation.getCommissionList().stream()
+            .filter(isPresentInUnitMap(careUnitMap))
+            .filter(hasCommissonPurpose())
+            .toList();
 
     if (filteredCommissonPurpose.isEmpty()) {
       return Collections.emptyList();
@@ -42,26 +62,27 @@ public class CommissonListConverter {
 
       final var parsedCareProvider = careProviderMap.get(parsedCareUnit.getCareProviderHsaId());
 
-      parsedCommission.getCommissionPurpose().forEach(purpose -> commissionsList.add(
-              Commission.builder()
-                  .commissionHsaId(credentialInformation.getHsaId())
-                  .commissionPurpose(purpose)
-                  .commissionName(credentialInformation.getGivenName())
-                  .healthCareUnitHsaId(parsedCareUnit.getId())
-                  .healthCareUnitName(parsedCareUnit.getName())
-                  .healthCareUnitStartDate(parsedCareUnit.getStart())
-                  .healthCareUnitEndDate(parsedCareUnit.getEnd())
-                  .healthCareProviderOrgNo(parsedCareUnit.getHealthCareProviderOrgno())
-                  .healthCareProviderHsaId(parsedCareProvider.getId())
-                  .healthCareProviderName(parsedCareProvider.getName())
-                  .build()
-          )
-      );
+      parsedCommission
+          .getCommissionPurpose()
+          .forEach(
+              purpose ->
+                  commissionsList.add(
+                      Commission.builder()
+                          .commissionHsaId(credentialInformation.getHsaId())
+                          .commissionPurpose(purpose)
+                          .commissionName(credentialInformation.getGivenName())
+                          .healthCareUnitHsaId(parsedCareUnit.getId())
+                          .healthCareUnitName(parsedCareUnit.getName())
+                          .healthCareUnitStartDate(parsedCareUnit.getStart())
+                          .healthCareUnitEndDate(parsedCareUnit.getEnd())
+                          .healthCareProviderOrgNo(parsedCareUnit.getHealthCareProviderOrgno())
+                          .healthCareProviderHsaId(parsedCareProvider.getId())
+                          .healthCareProviderName(parsedCareProvider.getName())
+                          .build()));
     }
 
     return commissionsList;
   }
-
 
   private static Predicate<ParsedCommission> isPresentInUnitMap(
       Map<String, ParsedCareUnit> careUnitMap) {
@@ -69,8 +90,8 @@ public class CommissonListConverter {
   }
 
   private static Predicate<ParsedCommission> hasCommissonPurpose() {
-    return parsedCommission -> parsedCommission.getCommissionPurpose() != null
-        && !parsedCommission.getCommissionPurpose().isEmpty();
+    return parsedCommission ->
+        parsedCommission.getCommissionPurpose() != null
+            && !parsedCommission.getCommissionPurpose().isEmpty();
   }
-
 }

@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.intygproxyservice.integration.fakehsa.repository;
 
 import java.time.LocalDateTime;
@@ -49,14 +67,11 @@ public class FakeHsaRepository {
   private final Map<String, ParsedCareUnit> careUnitMap = new HashMap<>();
   private final Map<String, ParsedSubUnit> subUnitMap = new HashMap<>();
 
-
   public Employee getEmployee(String id) {
     final var employee = hsaPersonMap.get(id);
     if (employee == null) {
       log.info("Employee was not found, id: '{}'", id);
-      return Employee.builder()
-          .personInformation(Collections.emptyList())
-          .build();
+      return Employee.builder().personInformation(Collections.emptyList()).build();
     }
     return employeeConverter.convert(employee);
   }
@@ -100,12 +115,9 @@ public class FakeHsaRepository {
       return Collections.emptyList();
     }
 
-    final var credentialInformation = credentialInformationConverter.convert(
-        parsedCredentialInformation,
-        parsedHsaPerson,
-        careProviderMap,
-        careUnitMap
-    );
+    final var credentialInformation =
+        credentialInformationConverter.convert(
+            parsedCredentialInformation, parsedHsaPerson, careProviderMap, careUnitMap);
 
     return List.of(credentialInformation);
   }
@@ -137,8 +149,7 @@ public class FakeHsaRepository {
     return LocalDateTime.now(ZoneId.systemDefault());
   }
 
-  public CredentialsForPerson getCredentialsForPerson(
-      String personId) {
+  public CredentialsForPerson getCredentialsForPerson(String personId) {
     final var parsedHsaPerson = hsaPersonMap.get(personId);
     return credentialsForPersonConverter.convert(parsedHsaPerson);
   }
@@ -187,8 +198,7 @@ public class FakeHsaRepository {
   }
 
   private static boolean careProviderHasNoCareUnits(ParsedCareProvider parsedCareProvider) {
-    return parsedCareProvider.getCareUnits() == null || parsedCareProvider.getCareUnits()
-        .isEmpty();
+    return parsedCareProvider.getCareUnits() == null || parsedCareProvider.getCareUnits().isEmpty();
   }
 
   private static <T> void addKeyAndValueToMap(String id, T value, Map<String, T> map) {

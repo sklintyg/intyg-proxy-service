@@ -1,6 +1,25 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.intygproxyservice.integration.authorization.client.converter;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -26,20 +45,15 @@ import se.riv.infrastructure.directory.authorizationmanagement.v2.NursePrescript
 @ExtendWith(MockitoExtension.class)
 class CredentialInformationTypeConverterTest {
 
-  @Mock
-  CommissionTypeConverter commissionTypeConverter;
+  @Mock CommissionTypeConverter commissionTypeConverter;
 
-  @Mock
-  NursePrescriptionRightTypeConverter nursePrescriptionRightTypeConverter;
+  @Mock NursePrescriptionRightTypeConverter nursePrescriptionRightTypeConverter;
 
-  @Mock
-  HCPSpecialityCodeTypeConverter hcpSpecialityCodeTypeConverter;
+  @Mock HCPSpecialityCodeTypeConverter hcpSpecialityCodeTypeConverter;
 
-  @Mock
-  HsaSystemRoleTypeConverter hsaSystemRoleTypeConverter;
+  @Mock HsaSystemRoleTypeConverter hsaSystemRoleTypeConverter;
 
-  @InjectMocks
-  CredentialInformationTypeConverter credentialInformationTypeConverter;
+  @InjectMocks CredentialInformationTypeConverter credentialInformationTypeConverter;
 
   @Test
   void shouldConvertNull() {
@@ -51,8 +65,7 @@ class CredentialInformationTypeConverterTest {
   @Test
   void shouldConvertPersonHsaId() {
     final var type = mock(CredentialInformationType.class);
-    when(type.getPersonalIdentity())
-        .thenReturn(null);
+    when(type.getPersonalIdentity()).thenReturn(null);
 
     final var response = credentialInformationTypeConverter.convert(type);
 
@@ -98,8 +111,7 @@ class CredentialInformationTypeConverterTest {
   @Test
   void shouldConvertGroupPrescription() {
     final var type = mock(CredentialInformationType.class);
-    when(type.getGroupPrescriptionCode())
-        .thenReturn(List.of("String1"));
+    when(type.getGroupPrescriptionCode()).thenReturn(List.of("String1"));
 
     final var response = credentialInformationTypeConverter.convert(type);
 
@@ -109,44 +121,42 @@ class CredentialInformationTypeConverterTest {
   @Test
   void shouldConvertLicense() {
     final var type = mock(CredentialInformationType.class);
-    when(type.getHealthCareProfessionalLicence())
-        .thenReturn(List.of("String1"));
+    when(type.getHealthCareProfessionalLicence()).thenReturn(List.of("String1"));
 
     final var response = credentialInformationTypeConverter.convert(type);
 
-    assertEquals(type.getHealthCareProfessionalLicence(),
-        response.getHealthCareProfessionalLicence());
+    assertEquals(
+        type.getHealthCareProfessionalLicence(), response.getHealthCareProfessionalLicence());
   }
 
   @Test
   void shouldConvertLicenseCode() {
     final var type = mock(CredentialInformationType.class);
-    when(type.getHealthCareProfessionalLicenceCode())
-        .thenReturn(List.of("String1"));
+    when(type.getHealthCareProfessionalLicenceCode()).thenReturn(List.of("String1"));
 
     final var response = credentialInformationTypeConverter.convert(type);
 
-    assertEquals(type.getHealthCareProfessionalLicenceCode(),
+    assertEquals(
+        type.getHealthCareProfessionalLicenceCode(),
         response.getHealthCareProfessionalLicenceCode());
   }
 
   @Test
   void shouldConvertLicenseId() {
     final var type = mock(CredentialInformationType.class);
-    when(type.getHealthCareProfessionalLicence())
-        .thenReturn(List.of("String1"));
+    when(type.getHealthCareProfessionalLicence()).thenReturn(List.of("String1"));
 
     final var response = credentialInformationTypeConverter.convert(type);
 
-    assertEquals(type.getHealthcareProfessionalLicenseIdentityNumber(),
+    assertEquals(
+        type.getHealthcareProfessionalLicenseIdentityNumber(),
         response.getHealthcareProfessionalLicenseIdentityNumber());
   }
 
   @Test
   void shouldConvertPaTitleCode() {
     final var type = mock(CredentialInformationType.class);
-    when(type.getPaTitleCode())
-        .thenReturn(List.of("String1"));
+    when(type.getPaTitleCode()).thenReturn(List.of("String1"));
 
     final var response = credentialInformationTypeConverter.convert(type);
 
@@ -156,8 +166,7 @@ class CredentialInformationTypeConverterTest {
   @Test
   void shouldConvertOccupationalCode() {
     final var type = mock(CredentialInformationType.class);
-    when(type.getOccupationalCode())
-        .thenReturn(List.of("String1"));
+    when(type.getOccupationalCode()).thenReturn(List.of("String1"));
 
     final var response = credentialInformationTypeConverter.convert(type);
 
@@ -170,8 +179,7 @@ class CredentialInformationTypeConverterTest {
     personalIdentity.setExtension("EXT");
     personalIdentity.setRoot("ROOT");
     final var type = mock(CredentialInformationType.class);
-    when(type.getPersonalIdentity())
-        .thenReturn(personalIdentity);
+    when(type.getPersonalIdentity()).thenReturn(personalIdentity);
 
     final var response = credentialInformationTypeConverter.convert(type);
 
@@ -200,10 +208,8 @@ class CredentialInformationTypeConverterTest {
   void shouldConvertCommission() {
     final var expectedCommission = Commission.builder().build();
     final var type = mock(CredentialInformationType.class);
-    when(type.getCommission())
-        .thenReturn(List.of(new CommissionType()));
-    when(commissionTypeConverter.convert(any(CommissionType.class)))
-        .thenReturn(expectedCommission);
+    when(type.getCommission()).thenReturn(List.of(new CommissionType()));
+    when(commissionTypeConverter.convert(any(CommissionType.class))).thenReturn(expectedCommission);
 
     final var response = credentialInformationTypeConverter.convert(type);
 
@@ -214,8 +220,7 @@ class CredentialInformationTypeConverterTest {
   void shouldConvertNurseRight() {
     final var expected = NursePrescriptionRight.builder().build();
     final var type = mock(CredentialInformationType.class);
-    when(type.getNursePrescriptionRight())
-        .thenReturn(List.of(new NursePrescriptionRightType()));
+    when(type.getNursePrescriptionRight()).thenReturn(List.of(new NursePrescriptionRightType()));
     when(nursePrescriptionRightTypeConverter.convert(any(NursePrescriptionRightType.class)))
         .thenReturn(expected);
 
@@ -242,10 +247,8 @@ class CredentialInformationTypeConverterTest {
   void shouldConvertHsaSystemRole() {
     final var expected = HsaSystemRole.builder().build();
     final var type = mock(CredentialInformationType.class);
-    when(type.getHsaSystemRole())
-        .thenReturn(List.of(new HsaSystemRoleType()));
-    when(hsaSystemRoleTypeConverter.convert(any(HsaSystemRoleType.class)))
-        .thenReturn(expected);
+    when(type.getHsaSystemRole()).thenReturn(List.of(new HsaSystemRoleType()));
+    when(hsaSystemRoleTypeConverter.convert(any(HsaSystemRoleType.class))).thenReturn(expected);
 
     final var response = credentialInformationTypeConverter.convert(type);
 
@@ -265,5 +268,4 @@ class CredentialInformationTypeConverterTest {
 
     return type;
   }
-
 }

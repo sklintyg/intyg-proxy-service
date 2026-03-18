@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.intygproxyservice.integration.pu.v5;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -23,66 +41,55 @@ import se.inera.intyg.intygproxyservice.integration.pu.v5.client.PuClientV5;
 @ExtendWith(MockitoExtension.class)
 class PuIntegrationServiceV5Test {
 
-  @Mock
-  PuClientV5 puClient;
+  @Mock PuClientV5 puClient;
 
-  @InjectMocks
-  private PuIntegrationServiceV5 puIntegrationServiceV5;
+  @InjectMocks private PuIntegrationServiceV5 puIntegrationServiceV5;
 
-  private static final PuPersonsResponse RESPONSE_B1 = PuPersonsResponse.builder()
-      .persons(List.of(
-              PuResponse.found(Person.builder().personnummer(PersonId.of("1")).build()),
-              PuResponse.found(Person.builder().personnummer(PersonId.of("2")).build()),
-              PuResponse.found(Person.builder().personnummer(PersonId.of("3")).build()),
-              PuResponse.found(Person.builder().personnummer(PersonId.of("4")).build()),
-              PuResponse.found(Person.builder().personnummer(PersonId.of("5")).build())
-          )
-      )
-      .build();
+  private static final PuPersonsResponse RESPONSE_B1 =
+      PuPersonsResponse.builder()
+          .persons(
+              List.of(
+                  PuResponse.found(Person.builder().personnummer(PersonId.of("1")).build()),
+                  PuResponse.found(Person.builder().personnummer(PersonId.of("2")).build()),
+                  PuResponse.found(Person.builder().personnummer(PersonId.of("3")).build()),
+                  PuResponse.found(Person.builder().personnummer(PersonId.of("4")).build()),
+                  PuResponse.found(Person.builder().personnummer(PersonId.of("5")).build())))
+          .build();
 
-  private static final PuPersonsResponse RESPONSE_B2 = PuPersonsResponse.builder()
-      .persons(List.of(
-              PuResponse.found(Person.builder().personnummer(PersonId.of("6")).build()),
-              PuResponse.found(Person.builder().personnummer(PersonId.of("7")).build()),
-              PuResponse.found(Person.builder().personnummer(PersonId.of("8")).build()),
-              PuResponse.found(Person.builder().personnummer(PersonId.of("9")).build())
-          )
-      )
-      .build();
+  private static final PuPersonsResponse RESPONSE_B2 =
+      PuPersonsResponse.builder()
+          .persons(
+              List.of(
+                  PuResponse.found(Person.builder().personnummer(PersonId.of("6")).build()),
+                  PuResponse.found(Person.builder().personnummer(PersonId.of("7")).build()),
+                  PuResponse.found(Person.builder().personnummer(PersonId.of("8")).build()),
+                  PuResponse.found(Person.builder().personnummer(PersonId.of("9")).build())))
+          .build();
 
   @BeforeEach
   void setup() {
     ReflectionTestUtils.setField(puIntegrationServiceV5, "batchSize", 5);
     when(puClient.findPersons(
-        PuPersonsRequest.builder()
-            .personIds(List.of("1", "2", "3", "4", "5"))
-            .build()
-    )).thenReturn(
-        RESPONSE_B1
-    );
+            PuPersonsRequest.builder().personIds(List.of("1", "2", "3", "4", "5")).build()))
+        .thenReturn(RESPONSE_B1);
 
     when(puClient.findPersons(
-        PuPersonsRequest.builder()
-            .personIds(List.of("6", "7", "8", "9"))
-            .build()
-    )).thenReturn(
-        RESPONSE_B2
-    );
+            PuPersonsRequest.builder().personIds(List.of("6", "7", "8", "9")).build()))
+        .thenReturn(RESPONSE_B2);
   }
 
   @Test
   void shouldMakeOneCallForEachBatchAndMergeResults() {
-    final var request = PuPersonsRequest.builder()
-        .personIds(List.of("1", "2", "3", "4", "5", "6", "7", "8", "9"))
-        .build();
+    final var request =
+        PuPersonsRequest.builder()
+            .personIds(List.of("1", "2", "3", "4", "5", "6", "7", "8", "9"))
+            .build();
 
     final var response = puIntegrationServiceV5.findPersons(request);
 
     assertAll(
         () -> assertEquals(9, response.getPersons().size()),
         () -> assertTrue(response.getPersons().containsAll(RESPONSE_B1.getPersons())),
-        () -> assertTrue(response.getPersons().containsAll(RESPONSE_B2.getPersons()))
-    );
+        () -> assertTrue(response.getPersons().containsAll(RESPONSE_B2.getPersons())));
   }
-
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.authorization;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,11 +34,9 @@ import se.inera.intyg.intygproxyservice.authorization.service.HandleCertificatio
 @ExtendWith(MockitoExtension.class)
 class HandleCertificationPersonControllerTest {
 
-  @Mock
-  private HandleCertificationPersonService handleCertificationPersonService;
+  @Mock private HandleCertificationPersonService handleCertificationPersonService;
 
-  @InjectMocks
-  private HandleCertificationPersonController handleCertificationPersonController;
+  @InjectMocks private HandleCertificationPersonController handleCertificationPersonController;
 
   @Test
   void shallReturnValueFromService() {
@@ -47,9 +44,9 @@ class HandleCertificationPersonControllerTest {
     when(handleCertificationPersonService.handle(any(HandleCertificationPersonRequest.class)))
         .thenReturn(expectedResponse);
 
-    final var response = handleCertificationPersonController.handleCertificationForPerson(
-        HandleCertificationPersonRequest.builder().build()
-    );
+    final var response =
+        handleCertificationPersonController.handleCertificationForPerson(
+            HandleCertificationPersonRequest.builder().build());
 
     assertEquals(expectedResponse, response);
   }

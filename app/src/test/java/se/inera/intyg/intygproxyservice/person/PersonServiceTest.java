@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.intygproxyservice.person;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -37,43 +55,29 @@ import se.inera.intyg.intygproxyservice.person.service.PersonService;
 class PersonServiceTest {
 
   private static final String PERSON_ID = "191212121212";
-  private static final PersonRequest PU_REQUEST = PersonRequest.builder()
-      .personId(PERSON_ID)
-      .build();
-  private static final PuResponse PERSON_RESPONSE = PuResponse.found(
-      Person.builder()
-          .personnummer(PersonId.of(PERSON_ID))
-          .build()
-  );
-  private static final PersonDTO PERSON_DTO = PersonDTO.builder()
-      .personnummer(PERSON_ID)
-      .build();
+  private static final PersonRequest PU_REQUEST =
+      PersonRequest.builder().personId(PERSON_ID).build();
+  private static final PuResponse PERSON_RESPONSE =
+      PuResponse.found(Person.builder().personnummer(PersonId.of(PERSON_ID)).build());
+  private static final PersonDTO PERSON_DTO = PersonDTO.builder().personnummer(PERSON_ID).build();
 
-  @Mock
-  private PuService puService;
-  @Mock
-  private ObjectMapper objectMapper;
-  @Mock
-  private CacheManager cacheManager;
-  @Mock
-  private Cache cache;
-  @Mock
-  private PersonDTOMapper personDTOMapper;
+  @Mock private PuService puService;
+  @Mock private ObjectMapper objectMapper;
+  @Mock private CacheManager cacheManager;
+  @Mock private Cache cache;
+  @Mock private PersonDTOMapper personDTOMapper;
 
-  @InjectMocks
-  private PersonService personService;
+  @InjectMocks private PersonService personService;
 
   @Nested
   class PersonInCache {
 
     @BeforeEach
     void setup() {
-      when(personDTOMapper.toDTO(PERSON_RESPONSE.person()))
-          .thenReturn(PERSON_DTO);
+      when(personDTOMapper.toDTO(PERSON_RESPONSE.person())).thenReturn(PERSON_DTO);
       when(cache.get(HashUtility.hash(PERSON_ID), String.class))
           .thenReturn(PERSON_RESPONSE.toString());
-      when(cacheManager.getCache(RedisConfig.PERSON_CACHE))
-          .thenReturn(cache);
+      when(cacheManager.getCache(RedisConfig.PERSON_CACHE)).thenReturn(cache);
 
       try {
         when(objectMapper.readValue(PERSON_RESPONSE.toString(), PuResponse.class))
@@ -85,11 +89,8 @@ class PersonServiceTest {
 
     @Test
     void shouldNotMakeCallToPuServiceIfAllIdsAreInCache() {
-      final var response = personService.findPerson(
-          PersonRequest.builder()
-              .personId(PERSON_ID)
-              .build()
-      );
+      final var response =
+          personService.findPerson(PersonRequest.builder().personId(PERSON_ID).build());
 
       verify(puService, times(0)).findPersons(any());
       assertEquals(PERSON_DTO, response.getPerson());
@@ -101,30 +102,21 @@ class PersonServiceTest {
 
     @Test
     void shallThrowExceptionIfPersonRequestIsNull() {
-      assertThrows(IllegalArgumentException.class,
-          () -> personService.findPerson(null)
-      );
+      assertThrows(IllegalArgumentException.class, () -> personService.findPerson(null));
     }
 
     @Test
     void shallThrowExceptionIfPersonRequestContainsNullPersonId() {
-      final var personRequest = PersonRequest.builder()
-          .build();
+      final var personRequest = PersonRequest.builder().build();
 
-      assertThrows(IllegalArgumentException.class,
-          () -> personService.findPerson(personRequest)
-      );
+      assertThrows(IllegalArgumentException.class, () -> personService.findPerson(personRequest));
     }
 
     @Test
     void shallThrowExceptionIfPersonRequestContainsEmptyPersonId() {
-      final var personRequest = PersonRequest.builder()
-          .personId("")
-          .build();
+      final var personRequest = PersonRequest.builder().personId("").build();
 
-      assertThrows(IllegalArgumentException.class,
-          () -> personService.findPerson(personRequest)
-      );
+      assertThrows(IllegalArgumentException.class, () -> personService.findPerson(personRequest));
     }
   }
 
@@ -133,13 +125,9 @@ class PersonServiceTest {
 
     @BeforeEach
     void setUp() {
-      when(personDTOMapper.toDTO(PERSON_RESPONSE.person()))
-          .thenReturn(PERSON_DTO);
-      doReturn(PERSON_RESPONSE)
-          .when(puService)
-          .findPerson(any(PuRequest.class));
-      when(cacheManager.getCache(RedisConfig.PERSON_CACHE))
-          .thenReturn(cache);
+      when(personDTOMapper.toDTO(PERSON_RESPONSE.person())).thenReturn(PERSON_DTO);
+      doReturn(PERSON_RESPONSE).when(puService).findPerson(any(PuRequest.class));
+      when(cacheManager.getCache(RedisConfig.PERSON_CACHE)).thenReturn(cache);
     }
 
     @Test
@@ -162,12 +150,9 @@ class PersonServiceTest {
     void setUp() {
       final var puReponseNotFound = PuResponse.notFound();
 
-      when(cacheManager.getCache(RedisConfig.PERSON_CACHE))
-          .thenReturn(cache);
+      when(cacheManager.getCache(RedisConfig.PERSON_CACHE)).thenReturn(cache);
 
-      doReturn(puReponseNotFound)
-          .when(puService)
-          .findPerson(any(PuRequest.class));
+      doReturn(puReponseNotFound).when(puService).findPerson(any(PuRequest.class));
     }
 
     @Test
@@ -190,12 +175,9 @@ class PersonServiceTest {
     void setUp() {
       final var puResponseError = PuResponse.error();
 
-      when(cacheManager.getCache(RedisConfig.PERSON_CACHE))
-          .thenReturn(cache);
+      when(cacheManager.getCache(RedisConfig.PERSON_CACHE)).thenReturn(cache);
 
-      doReturn(puResponseError)
-          .when(puService)
-          .findPerson(any(PuRequest.class));
+      doReturn(puResponseError).when(puService).findPerson(any(PuRequest.class));
     }
 
     @Test

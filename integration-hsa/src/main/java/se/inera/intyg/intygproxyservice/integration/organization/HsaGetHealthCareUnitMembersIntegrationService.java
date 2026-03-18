@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.integration.organization;
 
 import static se.inera.intyg.intygproxyservice.integration.api.constants.HsaConstants.FAKE_HSA_PROFILE;
@@ -32,8 +31,8 @@ import se.inera.intyg.intygproxyservice.integration.organization.client.HsaOrgan
 @Service
 @RequiredArgsConstructor
 @Profile("!" + FAKE_HSA_PROFILE)
-public class HsaGetHealthCareUnitMembersIntegrationService implements
-    GetHealthCareUnitMembersIntegrationService {
+public class HsaGetHealthCareUnitMembersIntegrationService
+    implements GetHealthCareUnitMembersIntegrationService {
 
   private final HsaOrganizationClient hsaOrganizationClient;
 
@@ -41,8 +40,7 @@ public class HsaGetHealthCareUnitMembersIntegrationService implements
   public GetHealthCareUnitMembersIntegrationResponse get(
       GetHealthCareUnitMembersIntegrationRequest request) {
 
-    return GetHealthCareUnitMembersIntegrationResponse
-        .builder()
+    return GetHealthCareUnitMembersIntegrationResponse.builder()
         .healthCareUnitMembers(hsaOrganizationClient.getHealthCareUnitMembers(request))
         .build();
   }

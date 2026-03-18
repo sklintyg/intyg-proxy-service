@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.integration.employee;
 
 import static se.inera.intyg.intygproxyservice.integration.api.constants.HsaConstants.FAKE_HSA_PROFILE;
@@ -42,9 +41,7 @@ public class HsaGetEmployeeIntegrationService implements GetEmployeeIntegrationS
   public GetEmployeeIntegrationResponse get(
       GetEmployeeIntegrationRequest getEmployeeIntegrationRequest) {
     return GetEmployeeIntegrationResponse.builder()
-        .employee(
-            hsaEmployeeClient.getEmployee(getEmployeeIntegrationRequest)
-        )
+        .employee(hsaEmployeeClient.getEmployee(getEmployeeIntegrationRequest))
         .build();
   }
 }

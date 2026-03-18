@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.integration.organization;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -36,21 +35,16 @@ import se.inera.intyg.intygproxyservice.integration.organization.client.HsaOrgan
 class HsaGetHealthCareUnitIntegrationServiceTest {
 
   public static final HealthCareUnit HEALTH_CARE_UNIT = HealthCareUnit.builder().build();
-  @Mock
-  HsaOrganizationClient hsaOrganizationClient;
+  @Mock HsaOrganizationClient hsaOrganizationClient;
 
-  @InjectMocks
-  HsaGetHealthCareUnitIntegrationService hsaGetUnitIntegrationService;
+  @InjectMocks HsaGetHealthCareUnitIntegrationService hsaGetUnitIntegrationService;
 
   @Test
   void shouldReturnUnit() {
     when(hsaOrganizationClient.getHealthCareUnit(any(GetHealthCareUnitIntegrationRequest.class)))
         .thenReturn(HEALTH_CARE_UNIT);
-    final var response = hsaGetUnitIntegrationService.get(
-        GetHealthCareUnitIntegrationRequest
-            .builder()
-            .build()
-    );
+    final var response =
+        hsaGetUnitIntegrationService.get(GetHealthCareUnitIntegrationRequest.builder().build());
 
     assertEquals(HEALTH_CARE_UNIT, response.getHealthCareUnit());
   }

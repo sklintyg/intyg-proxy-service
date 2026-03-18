@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.intygproxyservice.integration.common;
 
 import java.io.FileInputStream;
@@ -36,7 +54,7 @@ public class WebServiceClientFactory {
   public <T> T create(Class<T> webserviceType, String endpoint) {
     final var jaxWsProxyFactoryBean = new JaxWsProxyFactoryBean();
     jaxWsProxyFactoryBean.setAddress(endpoint);
-    
+
     final var webserviceInstance = jaxWsProxyFactoryBean.create(webserviceType);
 
     final var client = ClientProxy.getClient(webserviceInstance);
@@ -68,12 +86,12 @@ public class WebServiceClientFactory {
 
   private KeyManagerFactory getKeyManagerFactory() {
     try {
-      final var keyManagerFactory = KeyManagerFactory.getInstance(
-          KeyManagerFactory.getDefaultAlgorithm());
+      final var keyManagerFactory =
+          KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
 
       final var keyStore = KeyStore.getInstance(keyStoreType);
-      keyStore.load(new FileInputStream(ResourceUtils.getFile(keyStorePath)),
-          keyStorePassword.toCharArray());
+      keyStore.load(
+          new FileInputStream(ResourceUtils.getFile(keyStorePath)), keyStorePassword.toCharArray());
 
       keyManagerFactory.init(keyStore, keyStorePassword.toCharArray());
 
@@ -86,11 +104,12 @@ public class WebServiceClientFactory {
 
   private TrustManagerFactory getTrustManagerFactory() {
     try {
-      final var trustManagerFactory = TrustManagerFactory.getInstance(
-          TrustManagerFactory.getDefaultAlgorithm());
+      final var trustManagerFactory =
+          TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
 
       final var trustStore = KeyStore.getInstance(keyStoreType);
-      trustStore.load(new FileInputStream((ResourceUtils.getFile(trustStorePath))),
+      trustStore.load(
+          new FileInputStream((ResourceUtils.getFile(trustStorePath))),
           trustStorePassword.toCharArray());
 
       trustManagerFactory.init(trustStore);

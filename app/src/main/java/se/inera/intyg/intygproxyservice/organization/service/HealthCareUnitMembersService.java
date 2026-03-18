@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.organization.service;
 
 import static se.inera.intyg.intygproxyservice.common.ValidationUtility.isStringInvalid;
@@ -34,25 +33,25 @@ import se.inera.intyg.intygproxyservice.organization.dto.HealthCareUnitMembersRe
 @Slf4j
 public class HealthCareUnitMembersService {
 
-  private final GetHealthCareUnitMembersIntegrationService getHealthCareUnitMembersIntegrationService;
+  private final GetHealthCareUnitMembersIntegrationService
+      getHealthCareUnitMembersIntegrationService;
 
   public HealthCareUnitMembersResponse get(HealthCareUnitMembersRequest request) {
     validateRequest(request);
 
-    log.info(String.format("Getting health care unit members related to hsaId: '%s'",
-        request.getHsaId()));
+    log.info(
+        String.format(
+            "Getting health care unit members related to hsaId: '%s'", request.getHsaId()));
 
-    final var response = getHealthCareUnitMembersIntegrationService.get(
-        GetHealthCareUnitMembersIntegrationRequest.builder()
-            .hsaId(request.getHsaId())
-            .build()
-    );
+    final var response =
+        getHealthCareUnitMembersIntegrationService.get(
+            GetHealthCareUnitMembersIntegrationRequest.builder().hsaId(request.getHsaId()).build());
 
-    log.info(String.format("Health care unit members related to hsaId: '%s' were retrieved",
-        request.getHsaId()));
+    log.info(
+        String.format(
+            "Health care unit members related to hsaId: '%s' were retrieved", request.getHsaId()));
 
-    return HealthCareUnitMembersResponse
-        .builder()
+    return HealthCareUnitMembersResponse.builder()
         .healthCareUnitMembers(response.getHealthCareUnitMembers())
         .build();
   }

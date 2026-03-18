@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.organization.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -44,23 +43,17 @@ class HealthCareUnitServiceTest {
 
   private static final String HSA_ID = "HSA_ID";
 
-  private static final HealthCareUnitRequest REQUEST = HealthCareUnitRequest
-      .builder()
-      .hsaId(HSA_ID)
-      .build();
+  private static final HealthCareUnitRequest REQUEST =
+      HealthCareUnitRequest.builder().hsaId(HSA_ID).build();
 
-  private static final GetHealthCareUnitIntegrationResponse RESPONSE = GetHealthCareUnitIntegrationResponse
-      .builder()
-      .healthCareUnit(HealthCareUnit
-          .builder()
-          .build())
-      .build();
+  private static final GetHealthCareUnitIntegrationResponse RESPONSE =
+      GetHealthCareUnitIntegrationResponse.builder()
+          .healthCareUnit(HealthCareUnit.builder().build())
+          .build();
 
-  @Mock
-  private GetHealthCareUnitIntegrationService getHealthCareUnitIntegrationService;
+  @Mock private GetHealthCareUnitIntegrationService getHealthCareUnitIntegrationService;
 
-  @InjectMocks
-  private HealthCareUnitService healthCareUnitService;
+  @InjectMocks private HealthCareUnitService healthCareUnitService;
 
   @Test
   void shouldThrowIllegalArgumentExceptionIfRequestIsNull() {

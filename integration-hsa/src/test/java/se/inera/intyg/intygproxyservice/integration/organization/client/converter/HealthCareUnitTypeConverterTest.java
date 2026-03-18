@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.integration.organization.client.converter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -41,8 +40,7 @@ class HealthCareUnitTypeConverterTest {
   public static final LocalDateTime MEMBER_END_DATE = LocalDateTime.now().plusDays(15);
   public static final LocalDateTime MEMBER_START_DATE = LocalDateTime.now().plusDays(14);
 
-  @InjectMocks
-  HealthCareUnitTypeConverter healthCareUnitTypeConverter;
+  @InjectMocks HealthCareUnitTypeConverter healthCareUnitTypeConverter;
 
   @Nested
   class HealthCareUnit {
@@ -92,8 +90,8 @@ class HealthCareUnitTypeConverterTest {
       final var type = getType();
       final var response = healthCareUnitTypeConverter.convert(type);
 
-      assertEquals(truncateToSeconds(UNIT_END_DATE),
-          truncateToSeconds(response.getHealthCareUnitEndDate()));
+      assertEquals(
+          truncateToSeconds(UNIT_END_DATE), truncateToSeconds(response.getHealthCareUnitEndDate()));
     }
 
     @Test
@@ -101,7 +99,8 @@ class HealthCareUnitTypeConverterTest {
       final var type = getType();
       final var response = healthCareUnitTypeConverter.convert(type);
 
-      assertEquals(truncateToSeconds(UNIT_START_DATE),
+      assertEquals(
+          truncateToSeconds(UNIT_START_DATE),
           truncateToSeconds(response.getHealthCareUnitStartDate()));
     }
   }
@@ -114,8 +113,8 @@ class HealthCareUnitTypeConverterTest {
       final var type = getType();
       final var response = healthCareUnitTypeConverter.convert(type);
 
-      assertEquals(type.isArchivedHealthCareUnitMember(),
-          response.getArchivedHealthCareUnitMember());
+      assertEquals(
+          type.isArchivedHealthCareUnitMember(), response.getArchivedHealthCareUnitMember());
     }
 
     @Test
@@ -147,8 +146,8 @@ class HealthCareUnitTypeConverterTest {
       final var type = getType();
       final var response = healthCareUnitTypeConverter.convert(type);
 
-      assertEquals(type.getHealthCareUnitMemberPublicName(),
-          response.getHealthCareUnitMemberPublicName());
+      assertEquals(
+          type.getHealthCareUnitMemberPublicName(), response.getHealthCareUnitMemberPublicName());
     }
 
     @Test
@@ -156,7 +155,8 @@ class HealthCareUnitTypeConverterTest {
       final var type = getType();
       final var response = healthCareUnitTypeConverter.convert(type);
 
-      assertEquals(truncateToSeconds(MEMBER_END_DATE),
+      assertEquals(
+          truncateToSeconds(MEMBER_END_DATE),
           truncateToSeconds(response.getHealthCareUnitMemberEndDate()));
     }
 
@@ -165,7 +165,8 @@ class HealthCareUnitTypeConverterTest {
       final var type = getType();
       final var response = healthCareUnitTypeConverter.convert(type);
 
-      assertEquals(truncateToSeconds(MEMBER_START_DATE),
+      assertEquals(
+          truncateToSeconds(MEMBER_START_DATE),
           truncateToSeconds(response.getHealthCareUnitMemberStartDate()));
     }
   }
@@ -210,8 +211,8 @@ class HealthCareUnitTypeConverterTest {
       final var type = getType();
       final var response = healthCareUnitTypeConverter.convert(type);
 
-      assertEquals(type.getHealthCareProviderPublicName(),
-          response.getHealthCareProviderPublicName());
+      assertEquals(
+          type.getHealthCareProviderPublicName(), response.getHealthCareProviderPublicName());
     }
 
     @Test
@@ -227,7 +228,8 @@ class HealthCareUnitTypeConverterTest {
       final var type = getType();
       final var response = healthCareUnitTypeConverter.convert(type);
 
-      assertEquals(truncateToSeconds(PROVIDER_END_DATE),
+      assertEquals(
+          truncateToSeconds(PROVIDER_END_DATE),
           truncateToSeconds(response.getHealthCareProviderEndDate()));
     }
 
@@ -236,7 +238,8 @@ class HealthCareUnitTypeConverterTest {
       final var type = getType();
       final var response = healthCareUnitTypeConverter.convert(type);
 
-      assertEquals(truncateToSeconds(PROVIDER_START_DATE),
+      assertEquals(
+          truncateToSeconds(PROVIDER_START_DATE),
           truncateToSeconds(response.getHealthCareProviderStartDate()));
     }
   }
