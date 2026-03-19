@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.intygproxyservice.integration.pu.v5;
 
 import static se.inera.intyg.intygproxyservice.integration.pu.v5.configuration.configuration.PuConstants.CODE_PERSONAL_ID;
@@ -29,13 +47,14 @@ public class TestData {
   public static final boolean PROTECTED_PERSON = true;
   public static final boolean TEST_INDICATED = true;
 
-  public static Person PERSON = Person.builder()
-      .personnummer(PersonId.of(PERSON_ID_AS_PERSONNUMMER))
-      .fornamn(GIVEN_NAME)
-      .mellannamn(MIDDLE_NAME)
-      .efternamn(SURNAME)
-      .postadress(POSTAL_ADDRESS1)
-      .build();
+  public static Person PERSON =
+      Person.builder()
+          .personnummer(PersonId.of(PERSON_ID_AS_PERSONNUMMER))
+          .fornamn(GIVEN_NAME)
+          .mellannamn(MIDDLE_NAME)
+          .efternamn(SURNAME)
+          .postadress(POSTAL_ADDRESS1)
+          .build();
 
   public static RequestedPersonRecordType requestedPersonRecordType() {
     final var requestedPersonRecordType = new RequestedPersonRecordType();
@@ -75,8 +94,8 @@ public class TestData {
     return residentialAddressType;
   }
 
-  public static AddressInformationType addressInformationType(String careOf, String postalAddress1,
-      String postalAddress2) {
+  public static AddressInformationType addressInformationType(
+      String careOf, String postalAddress1, String postalAddress2) {
     final var residentialAddressType = new ResidentialAddressType();
     residentialAddressType.setCareOf(careOf);
     residentialAddressType.setPostalAddress1(postalAddress1);
@@ -90,15 +109,9 @@ public class TestData {
 
   public static NameType nameType() {
     final var nameType = new NameType();
-    nameType.setGivenName(
-        GIVEN_NAME
-    );
-    nameType.setMiddleName(
-        MIDDLE_NAME
-    );
-    nameType.setSurname(
-        SURNAME
-    );
+    nameType.setGivenName(GIVEN_NAME);
+    nameType.setMiddleName(MIDDLE_NAME);
+    nameType.setSurname(SURNAME);
     return nameType;
   }
 

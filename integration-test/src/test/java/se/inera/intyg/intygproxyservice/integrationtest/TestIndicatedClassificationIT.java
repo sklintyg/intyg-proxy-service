@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.intygproxyservice.integrationtest;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -32,8 +50,7 @@ class TestIndicatedClassificationIT {
 
   private static final GenericContainer<?> redisContainer = Containers.getRedisContainer();
 
-  @LocalServerPort
-  private int port;
+  @LocalServerPort private int port;
 
   private final TestRestTemplate restTemplate;
   private ApiUtil api;
@@ -46,7 +63,8 @@ class TestIndicatedClassificationIT {
   @DynamicPropertySource
   static void configureProperties(DynamicPropertyRegistry registry) {
     Containers.configurePuProperties(registry);
-    registry.add("putjanst.testindicated.reclassify.active.except.ssn",
+    registry.add(
+        "putjanst.testindicated.reclassify.active.except.ssn",
         () -> String.format("191212121212, %s", PROTECTED_PERSON_DTO.getPersonnummer()));
     Containers.configureRedisProperties(registry);
   }
@@ -66,30 +84,28 @@ class TestIndicatedClassificationIT {
 
     @Test
     void shallSwapTestIndicatedFlagToFalseFromTrueToIfReclassifyIsSetToNotIncludeId() {
-      final var request = PersonRequest.builder()
-          .personId(DECEASED_TEST_INDICATED_PERSON.getPersonnummer())
-          .build();
+      final var request =
+          PersonRequest.builder()
+              .personId(DECEASED_TEST_INDICATED_PERSON.getPersonnummer())
+              .build();
 
       final var response = api.person(request);
 
       assertAll(
           () -> assertEquals(HttpStatus.OK, response.getStatusCode()),
-          () -> assertFalse(response.getBody().getPerson().isTestIndicator())
-      );
+          () -> assertFalse(response.getBody().getPerson().isTestIndicator()));
     }
 
     @Test
     void shallSwapTestIndicatedFlagToTrueFromFalseIfReclassifyIsSetToIncludeId() {
-      final var request = PersonRequest.builder()
-          .personId(PROTECTED_PERSON_DTO.getPersonnummer())
-          .build();
+      final var request =
+          PersonRequest.builder().personId(PROTECTED_PERSON_DTO.getPersonnummer()).build();
 
       final var response = api.person(request);
 
       assertAll(
           () -> assertEquals(HttpStatus.OK, response.getStatusCode()),
-          () -> assertTrue(response.getBody().getPerson().isTestIndicator())
-      );
+          () -> assertTrue(response.getBody().getPerson().isTestIndicator()));
     }
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.integration.employee.client.converter;
 
 import static se.inera.intyg.intygproxyservice.integration.common.TypeConverterHelper.toLocalDate;
@@ -34,8 +33,7 @@ import se.riv.infrastructure.directory.employee.v3.PersonInformationType;
 public class PersonInformationTypeConverter {
 
   public PersonInformation convert(PersonInformationType type) {
-    return PersonInformation
-        .builder()
+    return PersonInformation.builder()
         .age(type.getAge())
         .feignedPerson(type.isFeignedPerson())
         .gender(type.getGender())
@@ -50,21 +48,17 @@ public class PersonInformationTypeConverter {
         .personStartDate(toLocalDate(type.getPersonStartDate()))
         .healthCareProfessionalLicence(type.getHealthCareProfessionalLicence())
         .healthCareProfessionalLicenceSpeciality(
-            toHCPSpecialityCodes(type.getHealthCareProfessionalLicenceSpeciality())
-        )
+            toHCPSpecialityCodes(type.getHealthCareProfessionalLicenceSpeciality()))
         .paTitle(paTitleList(type.getPaTitle()))
         .build();
   }
 
   private List<PaTitle> paTitleList(List<PaTitleType> type) {
-    return type.stream()
-        .map(this::paTitle)
-        .toList();
+    return type.stream().map(this::paTitle).toList();
   }
 
   private PaTitle paTitle(PaTitleType type) {
-    return PaTitle
-        .builder()
+    return PaTitle.builder()
         .paTitleCode(type.getPaTitleCode())
         .paTitleName(type.getPaTitleName())
         .build();
@@ -72,15 +66,11 @@ public class PersonInformationTypeConverter {
 
   private List<HCPSpecialityCode> toHCPSpecialityCodes(
       List<HealthCareProfessionalLicenceSpecialityType> types) {
-    return types
-        .stream()
-        .map(this::toHCPSpecialityCode)
-        .toList();
+    return types.stream().map(this::toHCPSpecialityCode).toList();
   }
 
   private HCPSpecialityCode toHCPSpecialityCode(HealthCareProfessionalLicenceSpecialityType type) {
-    return HCPSpecialityCode
-        .builder()
+    return HCPSpecialityCode.builder()
         .specialityCode(type.getSpecialityCode())
         .specialityName(type.getSpecialityName())
         .healthCareProfessionalLicenceCode(type.getHealthCareProfessionalLicence())

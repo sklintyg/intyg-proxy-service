@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.intygproxyservice.integration.authorization.client.converter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -31,11 +49,9 @@ class CommissionTypeConverterTest {
   private static final LocalDateTime END_DATE_UNIT = LocalDateTime.now().plusDays(1);
   private static final LocalDateTime START_DATE_UNIT = LocalDateTime.now().minusDays(9);
 
-  @Mock
-  private CommissionRightTypeConverter commissionRightTypeConverter;
+  @Mock private CommissionRightTypeConverter commissionRightTypeConverter;
 
-  @InjectMocks
-  private CommissionTypeConverter commissionTypeConverter;
+  @InjectMocks private CommissionTypeConverter commissionTypeConverter;
 
   @Test
   void shouldConvertNull() {
@@ -157,7 +173,8 @@ class CommissionTypeConverterTest {
     final var type = getType();
     final var response = commissionTypeConverter.convert(type);
 
-    assertEquals(truncateToSeconds(START_DATE_UNIT),
+    assertEquals(
+        truncateToSeconds(START_DATE_UNIT),
         truncateToSeconds(response.getHealthCareUnitStartDate()));
   }
 
@@ -166,8 +183,8 @@ class CommissionTypeConverterTest {
     final var type = getType();
     final var response = commissionTypeConverter.convert(type);
 
-    assertEquals(truncateToSeconds(END_DATE_UNIT),
-        truncateToSeconds(response.getHealthCareUnitEndDate()));
+    assertEquals(
+        truncateToSeconds(END_DATE_UNIT), truncateToSeconds(response.getHealthCareUnitEndDate()));
   }
 
   @Test
@@ -175,7 +192,8 @@ class CommissionTypeConverterTest {
     final var type = getType();
     final var response = commissionTypeConverter.convert(type);
 
-    assertEquals(truncateToSeconds(START_DATE),
+    assertEquals(
+        truncateToSeconds(START_DATE),
         truncateToSeconds(response.getHealthCareProviderStartDate()));
   }
 
@@ -184,8 +202,8 @@ class CommissionTypeConverterTest {
     final var type = getType();
     final var response = commissionTypeConverter.convert(type);
 
-    assertEquals(truncateToSeconds(END_DATE),
-        truncateToSeconds(response.getHealthCareProviderEndDate()));
+    assertEquals(
+        truncateToSeconds(END_DATE), truncateToSeconds(response.getHealthCareProviderEndDate()));
   }
 
   @Test
@@ -195,8 +213,7 @@ class CommissionTypeConverterTest {
     final var commissionRights = List.of(commissionRight, commissionRight);
     final var convertedCommissionRight = CommissionRight.builder().build();
     final var type = mock(CommissionType.class);
-    when(type.getCommissionRight())
-        .thenReturn(commissionRights);
+    when(type.getCommissionRight()).thenReturn(commissionRights);
     when(commissionRightTypeConverter.convert(any(CommissionRightType.class)))
         .thenReturn(convertedCommissionRight);
 

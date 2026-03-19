@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.integration.employee.client.converter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -43,8 +42,7 @@ class PersonInformationTypeConverterTest {
 
   public static final LocalDateTime END_DATE = LocalDateTime.now().minusDays(1);
   public static final LocalDateTime START_DATE = LocalDateTime.now();
-  @InjectMocks
-  private PersonInformationTypeConverter personInformationTypeConverter;
+  @InjectMocks private PersonInformationTypeConverter personInformationTypeConverter;
 
   @Test
   void shouldConvertAge() {
@@ -124,8 +122,7 @@ class PersonInformationTypeConverterTest {
 
     final var response = personInformationTypeConverter.convert(type);
 
-    assertEquals(truncateToSeconds(END_DATE),
-        truncateToSeconds(response.getPersonEndDate()));
+    assertEquals(truncateToSeconds(END_DATE), truncateToSeconds(response.getPersonEndDate()));
   }
 
   @Test
@@ -134,23 +131,20 @@ class PersonInformationTypeConverterTest {
 
     final var response = personInformationTypeConverter.convert(type);
 
-    assertEquals(truncateToSeconds(START_DATE),
+    assertEquals(
+        truncateToSeconds(START_DATE),
         response.getPersonStartDate().truncatedTo(ChronoUnit.SECONDS));
   }
 
   @Test
   void shouldConvertSpecialityLicense() {
     final var type = mock(PersonInformationType.class);
-    when(type.getHealthCareProfessionalLicence()).thenReturn(
-        List.of("SPECIALITY", "SPECIALITY_2")
-    );
+    when(type.getHealthCareProfessionalLicence()).thenReturn(List.of("SPECIALITY", "SPECIALITY_2"));
 
     final var response = personInformationTypeConverter.convert(type);
 
     assertEquals(
-        type.getHealthCareProfessionalLicence(),
-        response.getHealthCareProfessionalLicence()
-    );
+        type.getHealthCareProfessionalLicence(), response.getHealthCareProfessionalLicence());
   }
 
   @Test
@@ -160,8 +154,7 @@ class PersonInformationTypeConverterTest {
     pa1.setPaTitleCode("Code1");
     pa1.setPaTitleName("Code2");
 
-    when(type.getPaTitle())
-        .thenReturn(List.of(pa1));
+    when(type.getPaTitle()).thenReturn(List.of(pa1));
 
     final var response = personInformationTypeConverter.convert(type);
 
@@ -175,8 +168,7 @@ class PersonInformationTypeConverterTest {
     final var pa1 = new PaTitleType();
     final var pa2 = new PaTitleType();
 
-    when(type.getPaTitle())
-        .thenReturn(List.of(pa1, pa2));
+    when(type.getPaTitle()).thenReturn(List.of(pa1, pa2));
 
     final var response = personInformationTypeConverter.convert(type);
 
@@ -208,11 +200,8 @@ class PersonInformationTypeConverterTest {
       final var hcpCode = getHCPCode("CODE", "NAME", "LICENCE");
       final var hcpCode2 = getHCPCode("CODE2", "NAME2", "LICENCE2");
 
-      when(type.getHealthCareProfessionalLicenceSpeciality()).thenReturn(
-          List.of(
-              hcpCode, hcpCode2
-          )
-      );
+      when(type.getHealthCareProfessionalLicenceSpeciality())
+          .thenReturn(List.of(hcpCode, hcpCode2));
     }
 
     @Test
@@ -221,8 +210,7 @@ class PersonInformationTypeConverterTest {
 
       assertEquals(
           type.getHealthCareProfessionalLicenceSpeciality().get(0).getSpecialityCode(),
-          response.getHealthCareProfessionalLicenceSpeciality().get(0).getSpecialityCode()
-      );
+          response.getHealthCareProfessionalLicenceSpeciality().get(0).getSpecialityCode());
     }
 
     @Test
@@ -231,8 +219,7 @@ class PersonInformationTypeConverterTest {
 
       assertEquals(
           type.getHealthCareProfessionalLicenceSpeciality().get(0).getSpecialityName(),
-          response.getHealthCareProfessionalLicenceSpeciality().get(0).getSpecialityName()
-      );
+          response.getHealthCareProfessionalLicenceSpeciality().get(0).getSpecialityName());
     }
 
     @Test
@@ -240,11 +227,13 @@ class PersonInformationTypeConverterTest {
       final var response = personInformationTypeConverter.convert(type);
 
       assertEquals(
-          type.getHealthCareProfessionalLicenceSpeciality().get(0)
+          type.getHealthCareProfessionalLicenceSpeciality()
+              .get(0)
               .getHealthCareProfessionalLicence(),
-          response.getHealthCareProfessionalLicenceSpeciality().get(0)
-              .getHealthCareProfessionalLicenceCode()
-      );
+          response
+              .getHealthCareProfessionalLicenceSpeciality()
+              .get(0)
+              .getHealthCareProfessionalLicenceCode());
     }
   }
 
@@ -265,8 +254,8 @@ class PersonInformationTypeConverterTest {
     return type;
   }
 
-  private HealthCareProfessionalLicenceSpecialityType getHCPCode(String name, String code,
-      String licence) {
+  private HealthCareProfessionalLicenceSpecialityType getHCPCode(
+      String name, String code, String licence) {
     final var hcpCode = new HealthCareProfessionalLicenceSpecialityType();
 
     hcpCode.setSpecialityCode(code);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.integration.organization.client.converter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -45,19 +44,16 @@ class HealthCareUnitMemberTypeConverterTest {
   public static final LocalDateTime MEMBER_END_DATE = LocalDateTime.now().plusDays(15);
   public static final LocalDateTime MEMBER_START_DATE = LocalDateTime.now().plusDays(14);
 
-  @Mock
-  AddressTypeConverter addressTypeConverter;
+  @Mock AddressTypeConverter addressTypeConverter;
 
-  @InjectMocks
-  HealthCareUnitMemberTypeConverter healthCareUnitMemberTypeConverter;
+  @InjectMocks HealthCareUnitMemberTypeConverter healthCareUnitMemberTypeConverter;
 
   @Test
   void shouldConvertArchived() {
     final var type = getType();
     final var response = healthCareUnitMemberTypeConverter.convert(type);
 
-    assertEquals(type.isArchivedHealthCareUnitMember(),
-        response.getArchivedHealthCareUnitMember());
+    assertEquals(type.isArchivedHealthCareUnitMember(), response.getArchivedHealthCareUnitMember());
   }
 
   @Test
@@ -89,8 +85,8 @@ class HealthCareUnitMemberTypeConverterTest {
     final var type = getType();
     final var response = healthCareUnitMemberTypeConverter.convert(type);
 
-    assertEquals(type.getHealthCareUnitMemberPublicName(),
-        response.getHealthCareUnitMemberPublicName());
+    assertEquals(
+        type.getHealthCareUnitMemberPublicName(), response.getHealthCareUnitMemberPublicName());
   }
 
   @Test
@@ -98,7 +94,8 @@ class HealthCareUnitMemberTypeConverterTest {
     final var type = getType();
     final var response = healthCareUnitMemberTypeConverter.convert(type);
 
-    assertEquals(truncateToSeconds(MEMBER_END_DATE),
+    assertEquals(
+        truncateToSeconds(MEMBER_END_DATE),
         truncateToSeconds(response.getHealthCareUnitMemberEndDate()));
   }
 
@@ -107,7 +104,8 @@ class HealthCareUnitMemberTypeConverterTest {
     final var type = getType();
     final var response = healthCareUnitMemberTypeConverter.convert(type);
 
-    assertEquals(truncateToSeconds(MEMBER_START_DATE),
+    assertEquals(
+        truncateToSeconds(MEMBER_START_DATE),
         truncateToSeconds(response.getHealthCareUnitMemberStartDate()));
   }
 
@@ -120,9 +118,8 @@ class HealthCareUnitMemberTypeConverterTest {
     void setup() {
       type = mock(HealthCareUnitMemberType.class);
 
-      when(type.getHealthCareUnitMemberTelephoneNumber()).thenReturn(
-          Collections.singletonList("PHONENUMBER")
-      );
+      when(type.getHealthCareUnitMemberTelephoneNumber())
+          .thenReturn(Collections.singletonList("PHONENUMBER"));
       when(type.getHealthCareUnitMemberpostalCode()).thenReturn("POSTAL_CODE");
       when(type.getHealthCareUnitMemberPrescriptionCode()).thenReturn(List.of("CODE1", "CODE2"));
     }
@@ -136,10 +133,7 @@ class HealthCareUnitMemberTypeConverterTest {
 
       final var response = healthCareUnitMemberTypeConverter.convert(type);
 
-      assertEquals(
-          address,
-          response.getHealthCareUnitMemberpostalAddress()
-      );
+      assertEquals(address, response.getHealthCareUnitMemberpostalAddress());
     }
 
     @Test
@@ -148,8 +142,7 @@ class HealthCareUnitMemberTypeConverterTest {
 
       assertEquals(
           type.getHealthCareUnitMemberTelephoneNumber(),
-          response.getHealthCareUnitMemberTelephoneNumber()
-      );
+          response.getHealthCareUnitMemberTelephoneNumber());
     }
 
     @Test
@@ -157,9 +150,7 @@ class HealthCareUnitMemberTypeConverterTest {
       final var response = healthCareUnitMemberTypeConverter.convert(type);
 
       assertEquals(
-          type.getHealthCareUnitMemberpostalCode(),
-          response.getHealthCareUnitMemberpostalCode()
-      );
+          type.getHealthCareUnitMemberpostalCode(), response.getHealthCareUnitMemberpostalCode());
     }
 
     @Test
@@ -168,8 +159,7 @@ class HealthCareUnitMemberTypeConverterTest {
 
       assertEquals(
           type.getHealthCareUnitMemberPrescriptionCode(),
-          response.getHealthCareUnitMemberPrescriptionCode()
-      );
+          response.getHealthCareUnitMemberPrescriptionCode());
     }
   }
 

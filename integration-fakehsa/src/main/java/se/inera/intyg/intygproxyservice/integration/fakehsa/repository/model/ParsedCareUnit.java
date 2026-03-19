@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -26,7 +26,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Builder
 @Data
 @NoArgsConstructor
@@ -38,8 +37,7 @@ public class ParsedCareUnit {
   private LocalDateTime start;
   private LocalDateTime end;
 
-  @Builder.Default
-  private List<ParsedSubUnit> subUnits = new ArrayList<>();
+  @Builder.Default private List<ParsedSubUnit> subUnits = new ArrayList<>();
 
   private String id;
 
@@ -64,5 +62,4 @@ public class ParsedCareUnit {
   private String countyCode;
 
   private String municipalityCode;
-
 }

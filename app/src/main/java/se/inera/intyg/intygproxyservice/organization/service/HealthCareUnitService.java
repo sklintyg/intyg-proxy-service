@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.organization.service;
 
 import static se.inera.intyg.intygproxyservice.common.ValidationUtility.isStringInvalid;
@@ -41,18 +40,13 @@ public class HealthCareUnitService {
 
     log.info(String.format("Getting health care unit with hsaId: '%s'", request.getHsaId()));
 
-    final var response = getHealthCareUnitIntegrationService.get(
-        GetHealthCareUnitIntegrationRequest.builder()
-            .hsaId(request.getHsaId())
-            .build()
-    );
+    final var response =
+        getHealthCareUnitIntegrationService.get(
+            GetHealthCareUnitIntegrationRequest.builder().hsaId(request.getHsaId()).build());
 
     log.info(String.format("Health care unit with hsaId: '%s' was retrieved", request.getHsaId()));
 
-    return HealthCareUnitResponse
-        .builder()
-        .healthCareUnit(response.getHealthCareUnit())
-        .build();
+    return HealthCareUnitResponse.builder().healthCareUnit(response.getHealthCareUnit()).build();
   }
 
   private static void validateRequest(HealthCareUnitRequest request) {

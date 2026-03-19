@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.organization.service;
 
 import static se.inera.intyg.intygproxyservice.common.ValidationUtility.isStringInvalid;
@@ -42,26 +41,23 @@ public class HealthCareProviderService {
     log.info(
         String.format(
             "Getting health care provider with hsaId: '%s' and organizationNumber '%s'",
-            request.getHsaId(), request.getOrganizationNumber()
-        )
-    );
+            request.getHsaId(), request.getOrganizationNumber()));
 
-    final var response = getHealthCareProviderIntegrationService.get(
-        GetHealthCareProviderIntegrationRequest.builder()
-            .hsaId(request.getHsaId())
-            .organizationNumber(request.getOrganizationNumber())
-            .build()
-    );
+    final var response =
+        getHealthCareProviderIntegrationService.get(
+            GetHealthCareProviderIntegrationRequest.builder()
+                .hsaId(request.getHsaId())
+                .organizationNumber(request.getOrganizationNumber())
+                .build());
 
-    log.info(String.format(
-        "Health care provider with hsaId: '%s' and organizationNumber '%s' was retrieved. Number of results: '%s'",
-        request.getHsaId(),
-        request.getOrganizationNumber(),
-        response.getHealthCareProviders().size())
-    );
+    log.info(
+        String.format(
+            "Health care provider with hsaId: '%s' and organizationNumber '%s' was retrieved. Number of results: '%s'",
+            request.getHsaId(),
+            request.getOrganizationNumber(),
+            response.getHealthCareProviders().size()));
 
-    return HealthCareProviderResponse
-        .builder()
+    return HealthCareProviderResponse.builder()
         .healthCareProviders(response.getHealthCareProviders())
         .build();
   }

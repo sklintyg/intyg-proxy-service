@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.integration.authorization.client;
 
 import java.time.LocalDateTime;
@@ -51,17 +50,24 @@ import se.riv.infrastructure.directory.authorizationmanagement.handlehospcertifi
 public class HsaAuthorizationClient {
 
   private static final String PROFILE_EXTENDED_1 = "extended1";
-  private static final String RESPONSE_MESSAGE_DID_NOT_CONTAIN_PROPER_RESPONSE_DATA = "Response message did not contain proper response data.";
+  private static final String RESPONSE_MESSAGE_DID_NOT_CONTAIN_PROPER_RESPONSE_DATA =
+      "Response message did not contain proper response data.";
 
-  private final GetCredentialsForPersonIncludingProtectedPersonResponderInterface getCredentialsForPersonIncludingProtectedPersonResponderInterface;
+  private final GetCredentialsForPersonIncludingProtectedPersonResponderInterface
+      getCredentialsForPersonIncludingProtectedPersonResponderInterface;
   private final GetHospLastUpdateResponderInterface getHospLastUpdateResponderInterface;
-  private final GetHospCredentialsForPersonResponderInterface getHospCredentialsForPersonResponderInterface;
-  private final HandleHospCertificationPersonResponderInterface handleHospCertificationPersonResponderInterface;
+  private final GetHospCredentialsForPersonResponderInterface
+      getHospCredentialsForPersonResponderInterface;
+  private final HandleHospCertificationPersonResponderInterface
+      handleHospCertificationPersonResponderInterface;
 
-  private final GetCredentialInformationResponseTypeConverter getCredentialInformationResponseTypeConverter;
+  private final GetCredentialInformationResponseTypeConverter
+      getCredentialInformationResponseTypeConverter;
   private final GetLastUpdateResponseTypeConverter getLastUpdateResponseTypeConverter;
-  private final GetCredentialsForPersonResponseTypeConverter getCredentialsForPersonResponseTypeConverter;
-  private final HandleCertificationPersonResponseTypeConverter handleCertificationPersonResponseTypeConverter;
+  private final GetCredentialsForPersonResponseTypeConverter
+      getCredentialsForPersonResponseTypeConverter;
+  private final HandleCertificationPersonResponseTypeConverter
+      handleCertificationPersonResponseTypeConverter;
 
   @Value("${integration.hsa.logical.address}")
   private String logicalAddress;
@@ -70,19 +76,17 @@ public class HsaAuthorizationClient {
       GetCredentialInformationIntegrationRequest request) {
     final var parameters = getCredentialInformationParameters(request.getPersonHsaId());
 
-    final var type = getCredentialsForPersonIncludingProtectedPersonResponderInterface.getCredentialsForPersonIncludingProtectedPerson(
-        logicalAddress,
-        parameters
-    );
+    final var type =
+        getCredentialsForPersonIncludingProtectedPersonResponderInterface
+            .getCredentialsForPersonIncludingProtectedPerson(logicalAddress, parameters);
 
     return getCredentialInformationResponseTypeConverter.convert(type);
   }
 
   public LocalDateTime getLastUpdate() {
-    final var response = getHospLastUpdateResponderInterface.getHospLastUpdate(
-        logicalAddress,
-        new GetHospLastUpdateType()
-    );
+    final var response =
+        getHospLastUpdateResponderInterface.getHospLastUpdate(
+            logicalAddress, new GetHospLastUpdateType());
 
     return getLastUpdateResponseTypeConverter.convert(response);
   }
@@ -92,14 +96,15 @@ public class HsaAuthorizationClient {
     final var parameters = getHospCredentialsForPersonType(request.getPersonId());
 
     try {
-      final var type = getHospCredentialsForPersonResponderInterface.getHospCredentialsForPerson(
-          logicalAddress,
-          parameters
-      );
+      final var type =
+          getHospCredentialsForPersonResponderInterface.getHospCredentialsForPerson(
+              logicalAddress, parameters);
       return getCredentialsForPersonResponseTypeConverter.convert(type);
     } catch (Exception exception) {
-      if (exception.getMessage() != null && exception.getMessage()
-          .contains(RESPONSE_MESSAGE_DID_NOT_CONTAIN_PROPER_RESPONSE_DATA)) {
+      if (exception.getMessage() != null
+          && exception
+              .getMessage()
+              .contains(RESPONSE_MESSAGE_DID_NOT_CONTAIN_PROPER_RESPONSE_DATA)) {
         log.warn("Response message did not contain proper response data, returning null");
         return null;
       }
@@ -110,10 +115,9 @@ public class HsaAuthorizationClient {
   public Result handleCertificationPerson(HandleCertificationPersonIntegrationRequest request) {
     final var parameters = getHospHandleCertificationPersonType(request);
 
-    final var type = handleHospCertificationPersonResponderInterface.handleHospCertificationPerson(
-        logicalAddress,
-        parameters
-    );
+    final var type =
+        handleHospCertificationPersonResponderInterface.handleHospCertificationPerson(
+            logicalAddress, parameters);
 
     return handleCertificationPersonResponseTypeConverter.convert(type);
   }
@@ -137,8 +141,8 @@ public class HsaAuthorizationClient {
     return parameters;
   }
 
-  private static GetCredentialsForPersonIncludingProtectedPersonType getCredentialInformationParameters(
-      String hsaId) {
+  private static GetCredentialsForPersonIncludingProtectedPersonType
+      getCredentialInformationParameters(String hsaId) {
     final var parameters = new GetCredentialsForPersonIncludingProtectedPersonType();
     parameters.setPersonHsaId(hsaId);
     parameters.setIncludeFeignedObject(false);

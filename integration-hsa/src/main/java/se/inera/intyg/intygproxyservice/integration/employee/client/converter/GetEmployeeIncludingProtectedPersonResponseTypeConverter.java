@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.integration.employee.client.converter;
 
 import java.util.Collections;
@@ -33,17 +32,14 @@ public class GetEmployeeIncludingProtectedPersonResponseTypeConverter {
 
   public Employee convert(GetEmployeeIncludingProtectedPersonResponseType type) {
     if (type == null || type.getPersonInformation() == null) {
-      return Employee.builder()
-          .personInformation(Collections.emptyList())
-          .build();
+      return Employee.builder().personInformation(Collections.emptyList()).build();
     }
 
     return Employee.builder()
         .personInformation(
             type.getPersonInformation().stream()
                 .map(personInformationTypeConverter::convert)
-                .toList()
-        )
+                .toList())
         .build();
   }
 }

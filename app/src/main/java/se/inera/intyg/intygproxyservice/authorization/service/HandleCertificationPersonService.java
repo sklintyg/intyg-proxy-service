@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.authorization.service;
 
 import static se.inera.intyg.intygproxyservice.common.ValidationUtility.isStringInvalid;
@@ -35,7 +34,8 @@ import se.inera.intyg.intygproxyservice.logging.LogHashUtility;
 @Slf4j
 public class HandleCertificationPersonService {
 
-  private final HandleCertificationPersonIntegrationService handleCertificationPersonIntegrationService;
+  private final HandleCertificationPersonIntegrationService
+      handleCertificationPersonIntegrationService;
   private final LogHashUtility logHashUtility;
 
   public HandleCertificationPersonResponse handle(HandleCertificationPersonRequest request) {
@@ -46,18 +46,16 @@ public class HandleCertificationPersonService {
             "Performing operation '%s' with reason '%s' on certification person with personId: '%s'",
             request.getOperation(),
             request.getReason(),
-            logHashUtility.hash(request.getPersonId())
-        )
-    );
+            logHashUtility.hash(request.getPersonId())));
 
-    final var response = handleCertificationPersonIntegrationService.get(
-        HandleCertificationPersonIntegrationRequest.builder()
-            .personId(request.getPersonId())
-            .certificationId(request.getCertificationId())
-            .operation(request.getOperation())
-            .reason(request.getReason())
-            .build()
-    );
+    final var response =
+        handleCertificationPersonIntegrationService.get(
+            HandleCertificationPersonIntegrationRequest.builder()
+                .personId(request.getPersonId())
+                .certificationId(request.getCertificationId())
+                .operation(request.getOperation())
+                .reason(request.getReason())
+                .build());
 
     log.info(
         String.format(
@@ -66,14 +64,9 @@ public class HandleCertificationPersonService {
             request.getReason(),
             logHashUtility.hash(request.getPersonId()),
             response.getResult().getResultCode(),
-            response.getResult().getResultText()
-        )
-    );
+            response.getResult().getResultText()));
 
-    return HandleCertificationPersonResponse
-        .builder()
-        .result(response.getResult())
-        .build();
+    return HandleCertificationPersonResponse.builder().result(response.getResult()).build();
   }
 
   private void validateRequest(HandleCertificationPersonRequest request) {
@@ -88,12 +81,7 @@ public class HandleCertificationPersonService {
   private static void validateString(String value, String printValue, String label) {
     if (isStringInvalid(value)) {
       throw new IllegalArgumentException(
-          String.format(
-              "'%s' is not valid: '%s'",
-              label,
-              printValue
-          )
-      );
+          String.format("'%s' is not valid: '%s'", label, printValue));
     }
   }
 

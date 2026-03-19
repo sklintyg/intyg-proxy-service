@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.intygproxyservice.authorization.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,23 +44,18 @@ class CredentialsForPersonServiceTest {
 
   private static final String PERSON_ID = "PERSON_ID";
 
-  private static final CredentialsForPersonRequest REQUEST = CredentialsForPersonRequest
-      .builder()
-      .personId(PERSON_ID)
-      .build();
+  private static final CredentialsForPersonRequest REQUEST =
+      CredentialsForPersonRequest.builder().personId(PERSON_ID).build();
 
-  private static final GetCredentialsForPersonIntegrationResponse RESPONSE = GetCredentialsForPersonIntegrationResponse
-      .builder()
-      .credentials(CredentialsForPerson.builder().build())
-      .build();
+  private static final GetCredentialsForPersonIntegrationResponse RESPONSE =
+      GetCredentialsForPersonIntegrationResponse.builder()
+          .credentials(CredentialsForPerson.builder().build())
+          .build();
 
-  @Mock
-  private GetCredentialsForPersonIntegrationService getCredentialsForPersonIntegrationService;
-  @Mock
-  private LogHashUtility logHashUtility;
+  @Mock private GetCredentialsForPersonIntegrationService getCredentialsForPersonIntegrationService;
+  @Mock private LogHashUtility logHashUtility;
 
-  @InjectMocks
-  private CredentialsForPersonService credentialsForPersonService;
+  @InjectMocks private CredentialsForPersonService credentialsForPersonService;
 
   @Test
   void shouldThrowIllegalArgumentExceptionIfRequestIsNull() {
@@ -73,7 +86,7 @@ class CredentialsForPersonServiceTest {
     @BeforeEach
     void setUp() {
       when(getCredentialsForPersonIntegrationService.get(
-          any(GetCredentialsForPersonIntegrationRequest.class)))
+              any(GetCredentialsForPersonIntegrationRequest.class)))
           .thenReturn(RESPONSE);
     }
 

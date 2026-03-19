@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.integration.employee.client.converter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -42,17 +41,16 @@ import se.riv.infrastructure.directory.employee.v3.PersonInformationType;
 class GetEmployeeIncludingProtectedPersonResponseTypeConverterTest {
 
   public static final PersonInformation PERSON_INFORMATION = PersonInformation.builder().build();
-  @Mock
-  PersonInformationTypeConverter personInformationTypeConverter;
+  @Mock PersonInformationTypeConverter personInformationTypeConverter;
 
   @InjectMocks
-  GetEmployeeIncludingProtectedPersonResponseTypeConverter getEmployeeIncludingProtectedPersonResponseTypeConverter;
+  GetEmployeeIncludingProtectedPersonResponseTypeConverter
+      getEmployeeIncludingProtectedPersonResponseTypeConverter;
 
   @Test
   void shouldReturnEmployeeWithEmptyPersonalInformationIfTypeIsNull() {
-    final var expectedResponse = Employee.builder()
-        .personInformation(Collections.emptyList())
-        .build();
+    final var expectedResponse =
+        Employee.builder().personInformation(Collections.emptyList()).build();
 
     final var response = getEmployeeIncludingProtectedPersonResponseTypeConverter.convert(null);
 
@@ -61,9 +59,8 @@ class GetEmployeeIncludingProtectedPersonResponseTypeConverterTest {
 
   @Test
   void shouldReturnEmployeeWithEmptyPersonalInformationIfPersonalInformationIsNull() {
-    final var expectedResponse = Employee.builder()
-        .personInformation(Collections.emptyList())
-        .build();
+    final var expectedResponse =
+        Employee.builder().personInformation(Collections.emptyList()).build();
 
     final var type = mock(GetEmployeeIncludingProtectedPersonResponseType.class);
     when(type.getPersonInformation()).thenReturn(null);
@@ -78,8 +75,9 @@ class GetEmployeeIncludingProtectedPersonResponseTypeConverterTest {
     when(personInformationTypeConverter.convert(any(PersonInformationType.class)))
         .thenReturn(PERSON_INFORMATION);
 
-    final var response = getEmployeeIncludingProtectedPersonResponseTypeConverter
-        .convert(getType(List.of(new PersonInformationType())));
+    final var response =
+        getEmployeeIncludingProtectedPersonResponseTypeConverter.convert(
+            getType(List.of(new PersonInformationType())));
 
     assertEquals(1, response.getPersonInformation().size());
     assertEquals(PERSON_INFORMATION, response.getPersonInformation().get(0));
@@ -90,11 +88,11 @@ class GetEmployeeIncludingProtectedPersonResponseTypeConverterTest {
     when(personInformationTypeConverter.convert(any(PersonInformationType.class)))
         .thenReturn(PERSON_INFORMATION);
 
-    final var response = getEmployeeIncludingProtectedPersonResponseTypeConverter
-        .convert(getType(List.of(new PersonInformationType(), new PersonInformationType())));
+    final var response =
+        getEmployeeIncludingProtectedPersonResponseTypeConverter.convert(
+            getType(List.of(new PersonInformationType(), new PersonInformationType())));
 
-    verify(personInformationTypeConverter, times(2))
-        .convert(any(PersonInformationType.class));
+    verify(personInformationTypeConverter, times(2)).convert(any(PersonInformationType.class));
 
     assertEquals(2, response.getPersonInformation().size());
   }

@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.intygproxyservice.citizen.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -22,9 +40,7 @@ class Elva77ResponseConverterTest {
 
   @Test
   void shouldConvertResponseWithErrorResult() {
-    final var expectedResponse = CitizenResponse.builder()
-        .status(Status.NOT_FOUND)
-        .build();
+    final var expectedResponse = CitizenResponse.builder().status(Status.NOT_FOUND).build();
 
     final var error = Elva77Response.error();
     final var response = elva77ResponseConverter.convert(error);
@@ -35,15 +51,11 @@ class Elva77ResponseConverterTest {
   @Test
   void shouldConvertResponseWithInfoResult() {
     final var personId = "personId";
-    final var expectedResponse = CitizenResponse.builder()
-        .citizen(
-            CitizenDTO.builder()
-                .personnummer(personId)
-                .isActive(false)
-                .build()
-        )
-        .status(Status.FOUND)
-        .build();
+    final var expectedResponse =
+        CitizenResponse.builder()
+            .citizen(CitizenDTO.builder().personnummer(personId).isActive(false).build())
+            .status(Status.FOUND)
+            .build();
 
     final var inactive = Elva77Response.inactive(personId);
     final var response = elva77ResponseConverter.convert(inactive);
@@ -59,35 +71,35 @@ class Elva77ResponseConverterTest {
     final var zip = "12345";
     final var streetAddress = "streetAddress";
     final var city = "city";
-    final var expectedResponse = CitizenResponse.builder()
-        .citizen(
-            CitizenDTO.builder()
-                .personnummer(personId)
-                .fornamn(firstName)
-                .efternamn(lastName)
-                .postort(city)
-                .postadress(streetAddress)
-                .postnummer(zip)
-                .isActive(true)
-                .build()
-        )
-        .status(Status.FOUND)
-        .build();
+    final var expectedResponse =
+        CitizenResponse.builder()
+            .citizen(
+                CitizenDTO.builder()
+                    .personnummer(personId)
+                    .fornamn(firstName)
+                    .efternamn(lastName)
+                    .postort(city)
+                    .postadress(streetAddress)
+                    .postnummer(zip)
+                    .isActive(true)
+                    .build())
+            .status(Status.FOUND)
+            .build();
 
-    final var elva77Response = Elva77Response.builder()
-        .citizen(
-            Citizen.builder()
-                .subjectOfCareId(personId)
-                .firstname(firstName)
-                .lastname(lastName)
-                .zip(zip)
-                .streetAddress(streetAddress)
-                .city(city)
-                .isActive(true)
-                .build()
-        )
-        .result(Result.OK)
-        .build();
+    final var elva77Response =
+        Elva77Response.builder()
+            .citizen(
+                Citizen.builder()
+                    .subjectOfCareId(personId)
+                    .firstname(firstName)
+                    .lastname(lastName)
+                    .zip(zip)
+                    .streetAddress(streetAddress)
+                    .city(city)
+                    .isActive(true)
+                    .build())
+            .result(Result.OK)
+            .build();
 
     final var response = elva77ResponseConverter.convert(elva77Response);
 

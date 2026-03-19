@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.intygproxyservice.integration.pu.v5.client;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -19,7 +37,6 @@ import se.riv.strategicresourcemanagement.persons.person.getpersonsforprofileres
 import se.riv.strategicresourcemanagement.persons.person.v5.IIType;
 import se.riv.strategicresourcemanagement.persons.person.v5.PersonRecordType;
 import se.riv.strategicresourcemanagement.persons.person.v5.RequestedPersonRecordType;
-
 
 @ExtendWith(MockitoExtension.class)
 class GetPersonsForProfileResponseTypeHandlerV5Test {
@@ -43,9 +60,7 @@ class GetPersonsForProfileResponseTypeHandlerV5Test {
         final var requestedPersonRecordType = new RequestedPersonRecordType();
         requestedPersonRecordType.setPersonRecord(new PersonRecordType());
         getPersonsForProfileResponseType = new GetPersonsForProfileResponseType();
-        getPersonsForProfileResponseType.getRequestedPersonRecord().add(
-            requestedPersonRecordType
-        );
+        getPersonsForProfileResponseType.getRequestedPersonRecord().add(requestedPersonRecordType);
 
         doReturn(PERSON)
             .when(getPersonsForProfileResponseTypeConverterV5)
@@ -55,9 +70,8 @@ class GetPersonsForProfileResponseTypeHandlerV5Test {
       @Test
       void shallReturnStatusFound() {
 
-        final var actualPuResponse = getPersonsForProfileResponseTypeHandlerV5.handle(
-            getPersonsForProfileResponseType
-        );
+        final var actualPuResponse =
+            getPersonsForProfileResponseTypeHandlerV5.handle(getPersonsForProfileResponseType);
 
         assertEquals(Status.FOUND, actualPuResponse.status());
       }
@@ -65,9 +79,8 @@ class GetPersonsForProfileResponseTypeHandlerV5Test {
       @Test
       void shallReturnPerson() {
 
-        final var actualPuResponse = getPersonsForProfileResponseTypeHandlerV5.handle(
-            getPersonsForProfileResponseType
-        );
+        final var actualPuResponse =
+            getPersonsForProfileResponseTypeHandlerV5.handle(getPersonsForProfileResponseType);
 
         assertEquals(PERSON, actualPuResponse.person());
       }
@@ -85,25 +98,20 @@ class GetPersonsForProfileResponseTypeHandlerV5Test {
 
       @Test
       void shallReturnStatusErrorIfMoreThanOnePersonIsReturned() {
-        getPersonsForProfileReponseType.getRequestedPersonRecord()
-            .addAll(
-                List.of(
-                    new RequestedPersonRecordType(),
-                    new RequestedPersonRecordType())
-            );
+        getPersonsForProfileReponseType
+            .getRequestedPersonRecord()
+            .addAll(List.of(new RequestedPersonRecordType(), new RequestedPersonRecordType()));
 
-        final var actualPuResponse = getPersonsForProfileResponseTypeHandlerV5.handle(
-            getPersonsForProfileReponseType
-        );
+        final var actualPuResponse =
+            getPersonsForProfileResponseTypeHandlerV5.handle(getPersonsForProfileReponseType);
 
         assertEquals(Status.ERROR, actualPuResponse.status());
       }
 
       @Test
       void shallReturnStatusNotFoundIfNoRecordIsReturned() {
-        final var actualPuResponse = getPersonsForProfileResponseTypeHandlerV5.handle(
-            getPersonsForProfileReponseType
-        );
+        final var actualPuResponse =
+            getPersonsForProfileResponseTypeHandlerV5.handle(getPersonsForProfileReponseType);
 
         assertEquals(Status.NOT_FOUND, actualPuResponse.status());
       }
@@ -111,12 +119,10 @@ class GetPersonsForProfileResponseTypeHandlerV5Test {
       @Test
       void shallReturnStatusNotFoundIfNoPersonInRecordIsReturned() {
         final var requestedPersonRecordType = new RequestedPersonRecordType();
-        getPersonsForProfileReponseType.getRequestedPersonRecord()
-            .add(requestedPersonRecordType);
+        getPersonsForProfileReponseType.getRequestedPersonRecord().add(requestedPersonRecordType);
 
-        final var actualPuResponse = getPersonsForProfileResponseTypeHandlerV5.handle(
-            getPersonsForProfileReponseType
-        );
+        final var actualPuResponse =
+            getPersonsForProfileResponseTypeHandlerV5.handle(getPersonsForProfileReponseType);
 
         assertEquals(Status.NOT_FOUND, actualPuResponse.status());
       }
@@ -136,9 +142,7 @@ class GetPersonsForProfileResponseTypeHandlerV5Test {
         final var requestedPersonRecordType = new RequestedPersonRecordType();
         requestedPersonRecordType.setPersonRecord(new PersonRecordType());
         getPersonsForProfileResponseType = new GetPersonsForProfileResponseType();
-        getPersonsForProfileResponseType.getRequestedPersonRecord().add(
-            requestedPersonRecordType
-        );
+        getPersonsForProfileResponseType.getRequestedPersonRecord().add(requestedPersonRecordType);
 
         doReturn(PERSON)
             .when(getPersonsForProfileResponseTypeConverterV5)
@@ -148,22 +152,19 @@ class GetPersonsForProfileResponseTypeHandlerV5Test {
       @Test
       void shallReturnStatusFound() {
 
-        final var actualPuResponse = getPersonsForProfileResponseTypeHandlerV5.handle(
-            getPersonsForProfileResponseType
-        );
+        final var actualPuResponse =
+            getPersonsForProfileResponseTypeHandlerV5.handle(getPersonsForProfileResponseType);
 
         assertAll(
             () -> assertEquals(Status.FOUND, actualPuResponse.status()),
-            () -> assertEquals(PERSON, actualPuResponse.person())
-        );
+            () -> assertEquals(PERSON, actualPuResponse.person()));
       }
 
       @Test
       void shallReturnPerson() {
 
-        final var actualPuResponse = getPersonsForProfileResponseTypeHandlerV5.handle(
-            getPersonsForProfileResponseType
-        );
+        final var actualPuResponse =
+            getPersonsForProfileResponseTypeHandlerV5.handle(getPersonsForProfileResponseType);
 
         assertEquals(PERSON, actualPuResponse.person());
       }
@@ -221,80 +222,70 @@ class GetPersonsForProfileResponseTypeHandlerV5Test {
 
       @Test
       void shallReturnStatusErrorIfMoreThanOnePersonIsReturnedForTheSamePersonId() {
-        getPersonsForProfileReponseType.getRequestedPersonRecord()
-            .addAll(
-                List.of(
-                    recordPatient1,
-                    recordPatient11,
-                    recordPatient2
-                )
-            );
+        getPersonsForProfileReponseType
+            .getRequestedPersonRecord()
+            .addAll(List.of(recordPatient1, recordPatient11, recordPatient2));
 
-        final var actualPuResponse = getPersonsForProfileResponseTypeHandlerV5.handle(
-            List.of(PATIENT_ID_1, PATIENT_ID_2),
-            getPersonsForProfileReponseType
-        );
+        final var actualPuResponse =
+            getPersonsForProfileResponseTypeHandlerV5.handle(
+                List.of(PATIENT_ID_1, PATIENT_ID_2), getPersonsForProfileReponseType);
 
         assertAll(
             () -> assertEquals(Status.ERROR, actualPuResponse.getPersons().getFirst().status()),
-            () -> assertEquals(PATIENT_ID_1,
-                actualPuResponse.getPersons().getFirst().person().getPersonnummer().id())
-        );
+            () ->
+                assertEquals(
+                    PATIENT_ID_1,
+                    actualPuResponse.getPersons().getFirst().person().getPersonnummer().id()));
       }
 
       @Test
       void shallReturnStatusNotFoundIfNoRecordIsReturned() {
-        final var actualPuResponse = getPersonsForProfileResponseTypeHandlerV5.handle(
-            List.of(PATIENT_ID_1),
-            getPersonsForProfileReponseType
-        );
+        final var actualPuResponse =
+            getPersonsForProfileResponseTypeHandlerV5.handle(
+                List.of(PATIENT_ID_1), getPersonsForProfileReponseType);
 
         assertAll(
-            () -> assertEquals(Status.NOT_FOUND,
-                actualPuResponse.getPersons().getFirst().status()),
-            () -> assertEquals(PATIENT_ID_1,
-                actualPuResponse.getPersons().getFirst().person().getPersonnummer().id())
-        );
+            () -> assertEquals(Status.NOT_FOUND, actualPuResponse.getPersons().getFirst().status()),
+            () ->
+                assertEquals(
+                    PATIENT_ID_1,
+                    actualPuResponse.getPersons().getFirst().person().getPersonnummer().id()));
       }
 
       @Test
       void shallReturnStatusNotFoundIfNoPersonInRecordIsReturned() {
-        getPersonsForProfileReponseType.getRequestedPersonRecord()
-            .add(recordPatient1);
+        getPersonsForProfileReponseType.getRequestedPersonRecord().add(recordPatient1);
 
-        final var actualPuResponse = getPersonsForProfileResponseTypeHandlerV5.handle(
-            List.of(PATIENT_ID_1, PATIENT_ID_2),
-            getPersonsForProfileReponseType
-        );
+        final var actualPuResponse =
+            getPersonsForProfileResponseTypeHandlerV5.handle(
+                List.of(PATIENT_ID_1, PATIENT_ID_2), getPersonsForProfileReponseType);
 
         assertAll(
             () -> assertEquals(Status.NOT_FOUND, actualPuResponse.getPersons().get(1).status()),
             () -> assertEquals(Status.FOUND, actualPuResponse.getPersons().getFirst().status()),
-            () -> assertEquals(
-                PATIENT_ID_2,
-                actualPuResponse.getPersons().get(1).person().getPersonnummer().id()
-            )
-        );
+            () ->
+                assertEquals(
+                    PATIENT_ID_2,
+                    actualPuResponse.getPersons().get(1).person().getPersonnummer().id()));
       }
 
       @Test
       void shallReturnStatusNotFoundIfNullPersonRecordIsReturned() {
-        getPersonsForProfileReponseType.getRequestedPersonRecord()
+        getPersonsForProfileReponseType
+            .getRequestedPersonRecord()
             .addAll(List.of(recordWithNull, recordPatient1));
 
-        final var actualPuResponse = getPersonsForProfileResponseTypeHandlerV5.handle(
-            List.of(PATIENT_ID_1, PATIENT_ID_3),
-            getPersonsForProfileReponseType
-        );
+        final var actualPuResponse =
+            getPersonsForProfileResponseTypeHandlerV5.handle(
+                List.of(PATIENT_ID_1, PATIENT_ID_3), getPersonsForProfileReponseType);
 
         assertAll(
             () -> assertEquals(Status.NOT_FOUND, actualPuResponse.getPersons().get(1).status()),
             () -> assertEquals(Status.FOUND, actualPuResponse.getPersons().getFirst().status()),
-            () -> assertEquals(
-                PATIENT_ID_3,
-                actualPuResponse.getPersons().get(1).person().getPersonnummer().id()
-            )
-        );
+            () ->
+                assertEquals(
+                    PATIENT_ID_3,
+                    actualPuResponse.getPersons().get(1).person().getPersonnummer().id()));
       }
     }
   }

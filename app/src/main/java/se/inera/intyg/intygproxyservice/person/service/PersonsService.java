@@ -1,5 +1,22 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.intygproxyservice.person.service;
-
 
 import static se.inera.intyg.intygproxyservice.config.RedisConfig.PERSON_CACHE;
 
@@ -37,8 +54,7 @@ public class PersonsService {
 
     final var personsFromCache = getPersonsFromCache(request);
     final var personsFromPu = getPersonsFromPu(request, personsFromCache);
-    personsFromPu.getPersons()
-        .stream()
+    personsFromPu.getPersons().stream()
         .filter(person -> person.status().equals(Status.FOUND))
         .forEach(this::savePersonInCache);
 
@@ -54,33 +70,22 @@ public class PersonsService {
             .filter(person -> person.person().getPersonnummer().id() != null)
             .collect(
                 Collectors.groupingBy(
-                    person -> person.person().getPersonnummer().id(),
-                    Collectors.counting()
-                )
-            )
+                    person -> person.person().getPersonnummer().id(), Collectors.counting()))
             .values()
             .stream()
             .filter(count -> count > 1)
-            .count()
-    );
+            .count());
 
-    return convert(
-        PuPersonsResponse.builder()
-            .persons(persons)
-            .build()
-    );
+    return convert(PuPersonsResponse.builder().persons(persons).build());
   }
 
-  private static List<PuResponse> mergeResponses(PuPersonsResponse personsFromPu,
-      List<PuResponse> personsFromCache) {
-    return Stream.concat(
-        personsFromPu.getPersons().stream(),
-        personsFromCache.stream()
-    ).toList();
+  private static List<PuResponse> mergeResponses(
+      PuPersonsResponse personsFromPu, List<PuResponse> personsFromCache) {
+    return Stream.concat(personsFromPu.getPersons().stream(), personsFromCache.stream()).toList();
   }
 
-  private PuPersonsResponse getPersonsFromPu(PersonsRequest request,
-      List<PuResponse> personsFromCache) {
+  private PuPersonsResponse getPersonsFromPu(
+      PersonsRequest request, List<PuResponse> personsFromCache) {
     final var requestWithIdsNotInCache = getPersonIdsNotInCache(request, personsFromCache);
     return requestWithIdsNotInCache.getPersonIds().isEmpty()
         ? PuPersonsResponse.empty()
@@ -88,8 +93,7 @@ public class PersonsService {
   }
 
   private List<PuResponse> getPersonsFromCache(PersonsRequest request) {
-    return request.getPersonIds()
-        .stream()
+    return request.getPersonIds().stream()
         .map(this::getPersonFromCache)
         .filter(Optional::isPresent)
         .map(Optional::get)
@@ -101,43 +105,38 @@ public class PersonsService {
   }
 
   private void savePersonInCache(PuResponse puResponse) {
-    CacheUtility.save(cacheManager, objectMapper, puResponse,
-        HashUtility.hash(puResponse.person().getPersonnummer().id()), PERSON_CACHE);
+    CacheUtility.save(
+        cacheManager,
+        objectMapper,
+        puResponse,
+        HashUtility.hash(puResponse.person().getPersonnummer().id()),
+        PERSON_CACHE);
   }
 
-  private static PersonsRequest getPersonIdsNotInCache(PersonsRequest request,
-      List<PuResponse> personsFromCache) {
+  private static PersonsRequest getPersonIdsNotInCache(
+      PersonsRequest request, List<PuResponse> personsFromCache) {
     return PersonsRequest.builder()
         .personIds(
-            request.getPersonIds()
-                .stream()
+            request.getPersonIds().stream()
                 .filter(
-                    id -> personsFromCache.stream()
-                        .noneMatch(person -> person.person().getPersonnummer().id().equals(id))
-                )
-                .toList()
-        )
+                    id ->
+                        personsFromCache.stream()
+                            .noneMatch(person -> person.person().getPersonnummer().id().equals(id)))
+                .toList())
         .build();
   }
 
   private PuPersonsResponse findPersonsInPu(PersonsRequest personRequest) {
     return puService.findPersons(
-        PuPersonsRequest.builder()
-            .personIds(
-                personRequest.getPersonIds()
-            )
-            .build()
-    );
+        PuPersonsRequest.builder().personIds(personRequest.getPersonIds()).build());
   }
 
   private PersonsResponse convert(PuPersonsResponse puResponse) {
     return PersonsResponse.builder()
         .persons(
-            puResponse.getPersons()
-                .stream()
+            puResponse.getPersons().stream()
                 .map(response -> PuResponseConverter.convert(personDTOMapper, response))
-                .toList()
-        )
+                .toList())
         .build();
   }
 

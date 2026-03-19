@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.intygproxyservice.integration.fakehsa.converters;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,83 +37,64 @@ import se.inera.intyg.intygproxyservice.integration.fakehsa.repository.model.Par
 @ExtendWith(MockitoExtension.class)
 class CredentialInformationConverterTest {
 
-  @Mock
-  private CommissonListConverter converter;
-  @InjectMocks
-  private CredentialInformationConverter credentialInformationConverter;
+  @Mock private CommissonListConverter converter;
+  @InjectMocks private CredentialInformationConverter credentialInformationConverter;
   private static final String CARE_PROVIDER_ID = "careProviderId";
   private static final String CARE_UNIT_ID = "careUnitId";
   private static final String HSA_PERSON_ID = "hsaPersonId";
   private static final String HSA_PERSON_PRESCRIPTION_CODE = "hsaPersonPrescriptionCode";
   private static final String HSA_PERSON_TITLE_CODE = "hsaPersonTitleCode";
   private static final String HSA_PERSON_SYSTEM_ROLE = "systemRole";
-  private static final Map<String, ParsedCareProvider> CARE_PROVIDER_MAP = Map.of(
-      CARE_PROVIDER_ID,
-      ParsedCareProvider.builder()
-          .build()
-  );
-  private static final Map<String, ParsedCareUnit> CARE_UNIT_MAP = Map.of(
-      CARE_UNIT_ID,
-      ParsedCareUnit.builder()
-          .build()
-  );
+  private static final Map<String, ParsedCareProvider> CARE_PROVIDER_MAP =
+      Map.of(CARE_PROVIDER_ID, ParsedCareProvider.builder().build());
+  private static final Map<String, ParsedCareUnit> CARE_UNIT_MAP =
+      Map.of(CARE_UNIT_ID, ParsedCareUnit.builder().build());
 
-  private static final ParsedHsaPerson PARSED_HSA_PERSON = ParsedHsaPerson.builder()
-      .hsaId(HSA_PERSON_ID)
-      .personalPrescriptionCode(HSA_PERSON_PRESCRIPTION_CODE)
-      .paTitle(
-          List.of(
-              ParsedPaTitle.builder()
-                  .titleCode(HSA_PERSON_TITLE_CODE)
-                  .build()
-          )
-      )
-      .systemRoles(
-          List.of(
-              HSA_PERSON_SYSTEM_ROLE
-          )
-      )
-      .build();
-  private static final ParsedCredentialInformation CREDENTIAL_INFORMATION =
-      ParsedCredentialInformation.builder()
+  private static final ParsedHsaPerson PARSED_HSA_PERSON =
+      ParsedHsaPerson.builder()
+          .hsaId(HSA_PERSON_ID)
+          .personalPrescriptionCode(HSA_PERSON_PRESCRIPTION_CODE)
+          .paTitle(List.of(ParsedPaTitle.builder().titleCode(HSA_PERSON_TITLE_CODE).build()))
+          .systemRoles(List.of(HSA_PERSON_SYSTEM_ROLE))
           .build();
-
+  private static final ParsedCredentialInformation CREDENTIAL_INFORMATION =
+      ParsedCredentialInformation.builder().build();
 
   @Test
   void shouldConvertHsaIdFromPerson() {
-    final var result = credentialInformationConverter.convert(CREDENTIAL_INFORMATION,
-        PARSED_HSA_PERSON, CARE_PROVIDER_MAP, CARE_UNIT_MAP);
+    final var result =
+        credentialInformationConverter.convert(
+            CREDENTIAL_INFORMATION, PARSED_HSA_PERSON, CARE_PROVIDER_MAP, CARE_UNIT_MAP);
 
     assertEquals(HSA_PERSON_ID, result.getPersonHsaId());
   }
 
   @Test
   void shouldConvertPersonalPrescriptionCode() {
-    final var result = credentialInformationConverter.convert(CREDENTIAL_INFORMATION,
-        PARSED_HSA_PERSON, CARE_PROVIDER_MAP, CARE_UNIT_MAP);
+    final var result =
+        credentialInformationConverter.convert(
+            CREDENTIAL_INFORMATION, PARSED_HSA_PERSON, CARE_PROVIDER_MAP, CARE_UNIT_MAP);
 
     assertEquals(HSA_PERSON_PRESCRIPTION_CODE, result.getPersonalPrescriptionCode());
   }
 
   @Test
   void shouldConvertPaTitle() {
-    final var result = credentialInformationConverter.convert(CREDENTIAL_INFORMATION,
-        PARSED_HSA_PERSON, CARE_PROVIDER_MAP, CARE_UNIT_MAP);
+    final var result =
+        credentialInformationConverter.convert(
+            CREDENTIAL_INFORMATION, PARSED_HSA_PERSON, CARE_PROVIDER_MAP, CARE_UNIT_MAP);
 
     assertEquals(List.of(HSA_PERSON_TITLE_CODE), result.getPaTitleCode());
   }
 
   @Test
   void shouldConvertSystemRoles() {
-    final var result = credentialInformationConverter.convert(CREDENTIAL_INFORMATION,
-        PARSED_HSA_PERSON, CARE_PROVIDER_MAP, CARE_UNIT_MAP);
+    final var result =
+        credentialInformationConverter.convert(
+            CREDENTIAL_INFORMATION, PARSED_HSA_PERSON, CARE_PROVIDER_MAP, CARE_UNIT_MAP);
 
     assertEquals(
-        List.of(
-            HsaSystemRole.builder()
-                .role(HSA_PERSON_SYSTEM_ROLE)
-                .build()
-        ),
+        List.of(HsaSystemRole.builder().role(HSA_PERSON_SYSTEM_ROLE).build()),
         result.getHsaSystemRole());
   }
 }

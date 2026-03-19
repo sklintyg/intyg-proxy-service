@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.intygproxyservice.integration.fakehsa.converters;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,53 +45,45 @@ class CredentialsForPersonConverterTest {
   private static final String PERONSAL_IDENTITY_NUMBER = "peronsalIdentityNumber";
   private static final String PERSONAL_PRESCRIPTION_CODE = "personalPrescriptionCode";
   private static final List<String> EDUCATION_CODES = List.of("educationCode1", "educationCode2");
-  private static final List<Restrictions> RESTRICTIONS = List.of(
-      Restrictions.builder()
-          .restrictionName(RESTRICTION_NAME)
-          .restrictionCode(RESTRICTION_CODE)
-          .build()
-  );
+  private static final List<Restrictions> RESTRICTIONS =
+      List.of(
+          Restrictions.builder()
+              .restrictionName(RESTRICTION_NAME)
+              .restrictionCode(RESTRICTION_CODE)
+              .build());
   private static final String SPECIALITY_NAME = "specialityName";
   private static final String SPECIALITY_CODE = "specialityCode";
-  private static final List<Speciality> SPECIALITIES = List.of(
-      Speciality.builder()
-          .specialityName(SPECIALITY_NAME)
-          .specialityCode(SPECIALITY_CODE)
-          .build()
-  );
-  private static final String HEALTH_CARE_PROFESSIONAL_LICENCE_NAME = "healthCareProfessionalLicenceName";
-  private static final String HEALTH_CARE_PROFESSIONAL_LICENCE_CODE = "healthCareProfessionalLicenceCode";
-  private static final List<HealthCareProfessionalLicenceType> HEALTH_CARE_PROFESSIONAL_LICENCE_TYPES = List.of(
-      HealthCareProfessionalLicenceType.builder()
-          .healthCareProfessionalLicenceName(HEALTH_CARE_PROFESSIONAL_LICENCE_NAME)
-          .healthCareProfessionalLicenceCode(HEALTH_CARE_PROFESSIONAL_LICENCE_CODE)
-          .build()
-  );
-  private static final ParsedHsaPerson PARSED_HSA_PERSON = ParsedHsaPerson.builder()
-      .personalIdentityNumber(PERONSAL_IDENTITY_NUMBER)
-      .personalPrescriptionCode(PERSONAL_PRESCRIPTION_CODE)
-      .educationCodes(
-          EDUCATION_CODES
-      )
-      .restrictions(
-          RESTRICTIONS
-      )
-      .specialities(
-          SPECIALITIES
-      )
-      .healthCareProfessionalLicenceType(
-          HEALTH_CARE_PROFESSIONAL_LICENCE_TYPES
-      )
-      .build();
+  private static final List<Speciality> SPECIALITIES =
+      List.of(
+          Speciality.builder()
+              .specialityName(SPECIALITY_NAME)
+              .specialityCode(SPECIALITY_CODE)
+              .build());
+  private static final String HEALTH_CARE_PROFESSIONAL_LICENCE_NAME =
+      "healthCareProfessionalLicenceName";
+  private static final String HEALTH_CARE_PROFESSIONAL_LICENCE_CODE =
+      "healthCareProfessionalLicenceCode";
+  private static final List<HealthCareProfessionalLicenceType>
+      HEALTH_CARE_PROFESSIONAL_LICENCE_TYPES =
+          List.of(
+              HealthCareProfessionalLicenceType.builder()
+                  .healthCareProfessionalLicenceName(HEALTH_CARE_PROFESSIONAL_LICENCE_NAME)
+                  .healthCareProfessionalLicenceCode(HEALTH_CARE_PROFESSIONAL_LICENCE_CODE)
+                  .build());
+  private static final ParsedHsaPerson PARSED_HSA_PERSON =
+      ParsedHsaPerson.builder()
+          .personalIdentityNumber(PERONSAL_IDENTITY_NUMBER)
+          .personalPrescriptionCode(PERSONAL_PRESCRIPTION_CODE)
+          .educationCodes(EDUCATION_CODES)
+          .restrictions(RESTRICTIONS)
+          .specialities(SPECIALITIES)
+          .healthCareProfessionalLicenceType(HEALTH_CARE_PROFESSIONAL_LICENCE_TYPES)
+          .build();
 
-  @Mock
-  private RestrictionConverter restrictionConverter;
-  @Mock
-  private SpecialitiesConverter specialitiesConverter;
-  @Mock
-  private ProfessionalLicenceTypeConverter licenceTypeConverter;
-  @InjectMocks
-  private CredentialsForPersonConverter credentialsForPersonConverter;
+  @Mock private RestrictionConverter restrictionConverter;
+  @Mock private SpecialitiesConverter specialitiesConverter;
+  @Mock private ProfessionalLicenceTypeConverter licenceTypeConverter;
+  @InjectMocks private CredentialsForPersonConverter credentialsForPersonConverter;
 
   @Test
   void shouldReturnEmptyResponseIfHsaPersonIsNull() {
@@ -107,14 +117,13 @@ class CredentialsForPersonConverterTest {
 
   @Test
   void shouldConvertRestrictions() {
-    final var restriction = Restriction.builder()
-        .restrictionName(RESTRICTION_NAME)
-        .restrictionCode(RESTRICTION_CODE)
-        .build();
+    final var restriction =
+        Restriction.builder()
+            .restrictionName(RESTRICTION_NAME)
+            .restrictionCode(RESTRICTION_CODE)
+            .build();
 
-    final var expectedResult = List.of(
-        restriction
-    );
+    final var expectedResult = List.of(restriction);
 
     when(restrictionConverter.convert(RESTRICTIONS.get(0))).thenReturn(restriction);
 
@@ -125,14 +134,13 @@ class CredentialsForPersonConverterTest {
 
   @Test
   void shouldConvertSpecialities() {
-    final var hcpSpecialityCodes = HCPSpecialityCodes.builder()
-        .specialityName(SPECIALITY_NAME)
-        .specialityCode(SPECIALITY_CODE)
-        .build();
+    final var hcpSpecialityCodes =
+        HCPSpecialityCodes.builder()
+            .specialityName(SPECIALITY_NAME)
+            .specialityCode(SPECIALITY_CODE)
+            .build();
 
-    final var expectedResult = List.of(
-        hcpSpecialityCodes
-    );
+    final var expectedResult = List.of(hcpSpecialityCodes);
 
     when(specialitiesConverter.convert(SPECIALITIES.get(0))).thenReturn(hcpSpecialityCodes);
     final var result = credentialsForPersonConverter.convert(PARSED_HSA_PERSON);
@@ -142,17 +150,16 @@ class CredentialsForPersonConverterTest {
 
   @Test
   void shouldConvertHealthCareProfessionalLicenceType() {
-    final var healthCareProfessionalLicence = HealthCareProfessionalLicence.builder()
-        .healthCareProfessionalLicenceCode(HEALTH_CARE_PROFESSIONAL_LICENCE_CODE)
-        .healthCareProfessionalLicenceName(HEALTH_CARE_PROFESSIONAL_LICENCE_NAME)
-        .build();
+    final var healthCareProfessionalLicence =
+        HealthCareProfessionalLicence.builder()
+            .healthCareProfessionalLicenceCode(HEALTH_CARE_PROFESSIONAL_LICENCE_CODE)
+            .healthCareProfessionalLicenceName(HEALTH_CARE_PROFESSIONAL_LICENCE_NAME)
+            .build();
 
-    final var expectedResult = List.of(
-        healthCareProfessionalLicence
-    );
+    final var expectedResult = List.of(healthCareProfessionalLicence);
 
-    when(licenceTypeConverter.convert(HEALTH_CARE_PROFESSIONAL_LICENCE_TYPES.get(0))).thenReturn(
-        healthCareProfessionalLicence);
+    when(licenceTypeConverter.convert(HEALTH_CARE_PROFESSIONAL_LICENCE_TYPES.get(0)))
+        .thenReturn(healthCareProfessionalLicence);
     final var result = credentialsForPersonConverter.convert(PARSED_HSA_PERSON);
 
     assertEquals(expectedResult, result.getHealthCareProfessionalLicence());

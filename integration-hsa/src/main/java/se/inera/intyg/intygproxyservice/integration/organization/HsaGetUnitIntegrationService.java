@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,9 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.integration.organization;
-
 
 import static se.inera.intyg.intygproxyservice.integration.api.constants.HsaConstants.FAKE_HSA_PROFILE;
 
@@ -38,12 +36,9 @@ public class HsaGetUnitIntegrationService implements GetUnitIntegrationService {
   private final HsaOrganizationClient hsaOrganizationClient;
 
   @Override
-  public GetUnitIntegrationResponse get(
-      GetUnitIntegrationRequest request) {
+  public GetUnitIntegrationResponse get(GetUnitIntegrationRequest request) {
     final var unit = hsaOrganizationClient.getUnit(request);
 
-    return GetUnitIntegrationResponse.builder()
-        .unit(unit)
-        .build();
+    return GetUnitIntegrationResponse.builder().unit(unit).build();
   }
 }

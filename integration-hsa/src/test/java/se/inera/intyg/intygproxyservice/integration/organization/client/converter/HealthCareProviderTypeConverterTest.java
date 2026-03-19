@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.integration.organization.client.converter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -37,8 +36,7 @@ class HealthCareProviderTypeConverterTest {
   public static final LocalDateTime PROVIDER_END_DATE = LocalDateTime.now().plusDays(5);
   public static final LocalDateTime PROVIDER_START_DATE = LocalDateTime.now().plusDays(4);
 
-  @InjectMocks
-  HealthCareProviderTypeConverter healthCareProviderTypeConverter;
+  @InjectMocks HealthCareProviderTypeConverter healthCareProviderTypeConverter;
 
   @Nested
   class TestV2 {
@@ -88,7 +86,8 @@ class HealthCareProviderTypeConverterTest {
       final var type = getType();
       final var response = healthCareProviderTypeConverter.convertV2(type);
 
-      assertEquals(truncateToSeconds(PROVIDER_END_DATE),
+      assertEquals(
+          truncateToSeconds(PROVIDER_END_DATE),
           truncateToSeconds(response.getHealthCareProviderEndDate()));
     }
 
@@ -97,7 +96,8 @@ class HealthCareProviderTypeConverterTest {
       final var type = getType();
       final var response = healthCareProviderTypeConverter.convertV2(type);
 
-      assertEquals(truncateToSeconds(PROVIDER_START_DATE),
+      assertEquals(
+          truncateToSeconds(PROVIDER_START_DATE),
           truncateToSeconds(response.getHealthCareProviderStartDate()));
     }
 
@@ -164,7 +164,8 @@ class HealthCareProviderTypeConverterTest {
       final var type = getType();
       final var response = healthCareProviderTypeConverter.convertV1(type);
 
-      assertEquals(truncateToSeconds(PROVIDER_END_DATE),
+      assertEquals(
+          truncateToSeconds(PROVIDER_END_DATE),
           truncateToSeconds(response.getHealthCareProviderEndDate()));
     }
 
@@ -173,12 +174,17 @@ class HealthCareProviderTypeConverterTest {
       final var type = getType();
       final var response = healthCareProviderTypeConverter.convertV1(type);
 
-      assertEquals(truncateToSeconds(PROVIDER_START_DATE),
+      assertEquals(
+          truncateToSeconds(PROVIDER_START_DATE),
           truncateToSeconds(response.getHealthCareProviderStartDate()));
     }
 
-    private se.riv.infrastructure.directory.organization.gethealthcareproviderresponder.v1.HealthCareProviderType getType() {
-      final var type = new se.riv.infrastructure.directory.organization.gethealthcareproviderresponder.v1.HealthCareProviderType();
+    private se.riv.infrastructure.directory.organization.gethealthcareproviderresponder.v1
+            .HealthCareProviderType
+        getType() {
+      final var type =
+          new se.riv.infrastructure.directory.organization.gethealthcareproviderresponder.v1
+              .HealthCareProviderType();
       type.setArchivedHealthCareProvider(true);
       type.setFeignedHealthCareProvider(true);
       type.setHealthCareProviderName("PROVIDER_NAME");

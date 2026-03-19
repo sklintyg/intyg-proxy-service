@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.integration.api.organization.model;
 
 import java.time.LocalDateTime;
@@ -34,12 +33,9 @@ public class HealthCareUnitMember {
   String healthCareUnitMemberHsaId;
   LocalDateTime healthCareUnitMemberStartDate;
   LocalDateTime healthCareUnitMemberEndDate;
-  @Builder.Default
-  List<String> healthCareUnitMemberPrescriptionCode = new ArrayList<>();
-  @Builder.Default
-  List<String> healthCareUnitMemberTelephoneNumber = new ArrayList<>();
-  @Builder.Default
-  List<String> healthCareUnitMemberpostalAddress = new ArrayList<>();
+  @Builder.Default List<String> healthCareUnitMemberPrescriptionCode = new ArrayList<>();
+  @Builder.Default List<String> healthCareUnitMemberTelephoneNumber = new ArrayList<>();
+  @Builder.Default List<String> healthCareUnitMemberpostalAddress = new ArrayList<>();
   String healthCareUnitMemberpostalCode;
   Boolean feignedHealthCareUnitMember;
   Boolean archivedHealthCareUnitMember;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -43,32 +43,27 @@ public class ParsedHsaPerson {
 
   private boolean protectedPerson;
 
-  @Builder.Default
-  private List<Speciality> specialities = new ArrayList<>();
-  @Builder.Default
-  private List<String> unitIds = new ArrayList<>();
+  @Builder.Default private List<Speciality> specialities = new ArrayList<>();
+  @Builder.Default private List<String> unitIds = new ArrayList<>();
 
   private String title;
-  @Builder.Default
-  private List<String> healthCareProfessionalLicence = new ArrayList<>();
-  @Builder.Default
-  private List<ParsedPaTitle> paTitle = new ArrayList<>();
+  @Builder.Default private List<String> healthCareProfessionalLicence = new ArrayList<>();
+  @Builder.Default private List<ParsedPaTitle> paTitle = new ArrayList<>();
 
   private String personalPrescriptionCode;
-  @Builder.Default
-  private List<String> systemRoles = new ArrayList<>();
-  @Builder.Default
-  private List<String> educationCodes = new ArrayList<>();
-  @Builder.Default
-  private List<Restrictions> restrictions = new ArrayList<>();
+  @Builder.Default private List<String> systemRoles = new ArrayList<>();
+  @Builder.Default private List<String> educationCodes = new ArrayList<>();
+  @Builder.Default private List<Restrictions> restrictions = new ArrayList<>();
 
   private FakeProperties fakeProperties;
 
   private String gender;
 
   private String age;
+
   @Builder.Default
-  private List<HealthCareProfessionalLicenceType> healthCareProfessionalLicenceType = new ArrayList<>();
+  private List<HealthCareProfessionalLicenceType> healthCareProfessionalLicenceType =
+      new ArrayList<>();
 
   @Data
   @Builder

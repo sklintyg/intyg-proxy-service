@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.intygproxyservice.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,20 +34,20 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 public class RedisConfig {
 
   public static final String PERSON_CACHE = "intygProxyService::personCache";
+
   @Value("${integration.pu.cache.seconds}")
   private int puCacheSeconds;
 
   @Bean
   public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
     return RedisCacheManager.builder(connectionFactory)
-        .withCacheConfiguration(PERSON_CACHE,
-            redisCacheConfiguration(Duration.ofSeconds(puCacheSeconds)))
+        .withCacheConfiguration(
+            PERSON_CACHE, redisCacheConfiguration(Duration.ofSeconds(puCacheSeconds)))
         .build();
   }
 
   private RedisCacheConfiguration redisCacheConfiguration(Duration duration) {
-    return RedisCacheConfiguration
-        .defaultCacheConfig()
+    return RedisCacheConfiguration.defaultCacheConfig()
         .entryTtl(duration)
         .serializeValuesWith(serializationPair());
   }

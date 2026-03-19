@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.organization.service;
 
 import static se.inera.intyg.intygproxyservice.common.ValidationUtility.isStringInvalid;
@@ -41,11 +40,9 @@ public class UnitService {
 
     log.info(String.format("Getting unit with hsaId: '%s'", request.getHsaId()));
 
-    final var response = getUnitIntegrationService.get(
-        GetUnitIntegrationRequest.builder()
-            .hsaId(request.getHsaId())
-            .build()
-    );
+    final var response =
+        getUnitIntegrationService.get(
+            GetUnitIntegrationRequest.builder().hsaId(request.getHsaId()).build());
 
     if (response.getUnit() != null) {
       log.info(String.format("Unit with hsaId: '%s' was retrieved", request.getHsaId()));
@@ -53,10 +50,7 @@ public class UnitService {
       log.warn("No unit was found with hsaId '{}', returning empty unit", request.getHsaId());
     }
 
-    return UnitResponse
-        .builder()
-        .unit(response.getUnit())
-        .build();
+    return UnitResponse.builder().unit(response.getUnit()).build();
   }
 
   private static void validateRequest(UnitRequest request) {

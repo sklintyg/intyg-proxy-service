@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.integration.api.organization.model;
 
 import java.time.LocalDateTime;
@@ -29,12 +28,9 @@ import lombok.Value;
 @Builder
 public class Unit {
 
-  @Builder.Default
-  List<String> businessType = new ArrayList<>();
-  @Builder.Default
-  List<BusinessClassification> businessClassification = new ArrayList<>();
-  @Builder.Default
-  List<String> careType = new ArrayList<>();
+  @Builder.Default List<String> businessType = new ArrayList<>();
+  @Builder.Default List<BusinessClassification> businessClassification = new ArrayList<>();
+  @Builder.Default List<String> careType = new ArrayList<>();
   String countyName;
   String countyCode;
   GeoCoordRt90 geographicalCoordinatesRt90;
@@ -47,13 +43,10 @@ public class Unit {
   Boolean feignedUnit;
   String unitHsaId;
   String unitName;
-  @Builder.Default
-  List<String> postalAddress = new ArrayList<>();
+  @Builder.Default List<String> postalAddress = new ArrayList<>();
 
-  @Builder.Default
-  List<String> telephoneNumber = new ArrayList<>();
+  @Builder.Default List<String> telephoneNumber = new ArrayList<>();
   String postalCode;
   String mail;
-  @Builder.Default
-  List<String> management = new ArrayList<>();
+  @Builder.Default List<String> management = new ArrayList<>();
 }

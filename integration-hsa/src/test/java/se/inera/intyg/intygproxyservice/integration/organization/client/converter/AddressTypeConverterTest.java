@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Inera AB (http://www.inera.se)
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
  *
  * This file is part of sklintyg (https://github.com/sklintyg).
  *
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package se.inera.intyg.intygproxyservice.integration.organization.client.converter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,8 +34,7 @@ import se.riv.infrastructure.directory.organization.v2.AddressType;
 @ExtendWith(MockitoExtension.class)
 class AddressTypeConverterTest {
 
-  @InjectMocks
-  AddressTypeConverter addressTypeConverter;
+  @InjectMocks AddressTypeConverter addressTypeConverter;
 
   @Nested
   class V2 {
@@ -45,8 +43,7 @@ class AddressTypeConverterTest {
     void shouldConvertAddressType() {
       final var address = List.of("A1", "A2");
       final var type = mock(AddressType.class);
-      when(type.getAddressLine())
-          .thenReturn(address);
+      when(type.getAddressLine()).thenReturn(address);
 
       final var response = addressTypeConverter.convertV2(type);
 
@@ -56,8 +53,7 @@ class AddressTypeConverterTest {
     @Test
     void shouldReturnEmptyListIfAddressLineIsNull() {
       final var type = mock(AddressType.class);
-      when(type.getAddressLine())
-          .thenReturn(null);
+      when(type.getAddressLine()).thenReturn(null);
 
       final var response = addressTypeConverter.convertV2(type);
 
@@ -79,8 +75,7 @@ class AddressTypeConverterTest {
     void shouldConvertAddressType() {
       final var address = List.of("A1", "A2");
       final var type = mock(se.riv.infrastructure.directory.organization.v3.AddressType.class);
-      when(type.getAddressLine())
-          .thenReturn(address);
+      when(type.getAddressLine()).thenReturn(address);
 
       final var response = addressTypeConverter.convertV3(type);
 
@@ -90,8 +85,7 @@ class AddressTypeConverterTest {
     @Test
     void shouldReturnEmptyListIfAddressLineIsNull() {
       final var type = mock(se.riv.infrastructure.directory.organization.v3.AddressType.class);
-      when(type.getAddressLine())
-          .thenReturn(null);
+      when(type.getAddressLine()).thenReturn(null);
 
       final var response = addressTypeConverter.convertV3(type);
 

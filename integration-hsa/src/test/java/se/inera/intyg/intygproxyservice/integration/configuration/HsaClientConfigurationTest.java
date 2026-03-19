@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.intygproxyservice.integration.configuration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,8 +31,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 import se.inera.intyg.intygproxyservice.integration.common.WebServiceClientFactory;
 import se.riv.infrastructure.directory.authorizationmanagement.gethospcredentialsforperson.v1.rivtabp21.GetHospCredentialsForPersonResponderInterface;
-import se.riv.infrastructure.directory.authorizationmanagement.handlehospcertificationperson.v1.rivtabp21.HandleHospCertificationPersonResponderInterface;
 import se.riv.infrastructure.directory.authorizationmanagement.gethosplastupdate.v1.rivtabp21.GetHospLastUpdateResponderInterface;
+import se.riv.infrastructure.directory.authorizationmanagement.handlehospcertificationperson.v1.rivtabp21.HandleHospCertificationPersonResponderInterface;
 import se.riv.infrastructure.directory.employee.getemployeeincludingprotectedperson.v3.rivtabp21.GetEmployeeIncludingProtectedPersonResponderInterface;
 import se.riv.infrastructure.directory.organization.gethealthcareprovider.v1.rivtabp21.GetHealthCareProviderResponderInterface;
 import se.riv.infrastructure.directory.organization.gethealthcareunit.v2.rivtabp21.GetHealthCareUnitResponderInterface;
@@ -23,57 +41,46 @@ import se.riv.infrastructure.directory.organization.gethealthcareunitmembers.v2.
 @ExtendWith(MockitoExtension.class)
 class HsaClientConfigurationTest {
 
-  public static final String GET_EMPLOYEE_INCLUDING_PROTECTED_PERSON_ENDPOINT = "GET_EMPLOYEE_INCLUDING_PROTECTED_PERSON_ENDPOINT";
+  public static final String GET_EMPLOYEE_INCLUDING_PROTECTED_PERSON_ENDPOINT =
+      "GET_EMPLOYEE_INCLUDING_PROTECTED_PERSON_ENDPOINT";
   public static final String GET_HEALTH_CARE_UNIT_ENDPOINT = "GET_HEALTH_CARE_UNIT_ENDPOINT";
-  public static final String GET_HEALTH_CARE_PROVIDER_ENDPOINT = "GET_HEALTH_CARE_PROVIDER_ENDPOINT";
-  public static final String GET_HEALTH_CARE_UNIT_MEMBERS_ENDPOINT = "GET_HEALTH_CARE_UNIT_MEMBERS_ENDPOINT";
+  public static final String GET_HEALTH_CARE_PROVIDER_ENDPOINT =
+      "GET_HEALTH_CARE_PROVIDER_ENDPOINT";
+  public static final String GET_HEALTH_CARE_UNIT_MEMBERS_ENDPOINT =
+      "GET_HEALTH_CARE_UNIT_MEMBERS_ENDPOINT";
   public static final String GET_LAST_UPDATE_ENDPOINT = "GET_LAST_UPDATE_ENDPOINT";
   public static final String GET_CREDENTIALS_FOR_PERSON_ENDPOINT = "GET_CREDENTIALS_FOR_PERSON";
-  public static final String HANDLE_CERTIFICATION_PERSON_ENDPOINT = "HANDLE_CERTIFICATION_PERSON_ENDPOINT";
+  public static final String HANDLE_CERTIFICATION_PERSON_ENDPOINT =
+      "HANDLE_CERTIFICATION_PERSON_ENDPOINT";
 
-  @Mock
-  private WebServiceClientFactory webServiceClientFactory;
+  @Mock private WebServiceClientFactory webServiceClientFactory;
 
-  @InjectMocks
-  private HsaClientConfiguration hsaClientConfiguration;
+  @InjectMocks private HsaClientConfiguration hsaClientConfiguration;
 
   @BeforeEach
   void setUp() {
     ReflectionTestUtils.setField(
         hsaClientConfiguration,
         "getEmployeeIncludingProtectedPersonEndpoint",
-        GET_EMPLOYEE_INCLUDING_PROTECTED_PERSON_ENDPOINT
-    );
+        GET_EMPLOYEE_INCLUDING_PROTECTED_PERSON_ENDPOINT);
     ReflectionTestUtils.setField(
-        hsaClientConfiguration,
-        "getHealthCareUnitEndpoint",
-        GET_HEALTH_CARE_UNIT_ENDPOINT
-    );
+        hsaClientConfiguration, "getHealthCareUnitEndpoint", GET_HEALTH_CARE_UNIT_ENDPOINT);
     ReflectionTestUtils.setField(
         hsaClientConfiguration,
         "getHealthCareUnitMembersEndpoint",
-        GET_HEALTH_CARE_UNIT_MEMBERS_ENDPOINT
-    );
+        GET_HEALTH_CARE_UNIT_MEMBERS_ENDPOINT);
     ReflectionTestUtils.setField(
-        hsaClientConfiguration,
-        "getHealthCareProviderEndpoint",
-        GET_HEALTH_CARE_PROVIDER_ENDPOINT
-    );
+        hsaClientConfiguration, "getHealthCareProviderEndpoint", GET_HEALTH_CARE_PROVIDER_ENDPOINT);
     ReflectionTestUtils.setField(
         hsaClientConfiguration,
         "getCredentialsForPersonEndpoint",
-        GET_CREDENTIALS_FOR_PERSON_ENDPOINT
-    );
+        GET_CREDENTIALS_FOR_PERSON_ENDPOINT);
     ReflectionTestUtils.setField(
         hsaClientConfiguration,
         "handleCertificationPersonEndpoint",
-        HANDLE_CERTIFICATION_PERSON_ENDPOINT
-    );
+        HANDLE_CERTIFICATION_PERSON_ENDPOINT);
     ReflectionTestUtils.setField(
-        hsaClientConfiguration,
-        "getLastUpdateEndpoint",
-        GET_LAST_UPDATE_ENDPOINT
-    );
+        hsaClientConfiguration, "getLastUpdateEndpoint", GET_LAST_UPDATE_ENDPOINT);
   }
 
   @Test
@@ -84,8 +91,7 @@ class HsaClientConfigurationTest {
         .when(webServiceClientFactory)
         .create(
             GetEmployeeIncludingProtectedPersonResponderInterface.class,
-            GET_EMPLOYEE_INCLUDING_PROTECTED_PERSON_ENDPOINT
-        );
+            GET_EMPLOYEE_INCLUDING_PROTECTED_PERSON_ENDPOINT);
 
     final var actual = hsaClientConfiguration.getEmployeeIncludingProtectedPerson();
     assertEquals(expected, actual);
@@ -97,10 +103,7 @@ class HsaClientConfigurationTest {
 
     doReturn(expected)
         .when(webServiceClientFactory)
-        .create(
-            GetHealthCareUnitResponderInterface.class,
-            GET_HEALTH_CARE_UNIT_ENDPOINT
-        );
+        .create(GetHealthCareUnitResponderInterface.class, GET_HEALTH_CARE_UNIT_ENDPOINT);
 
     final var actual = hsaClientConfiguration.getHealthCareUnitResponderInterface();
     assertEquals(expected, actual);
@@ -114,8 +117,7 @@ class HsaClientConfigurationTest {
         .when(webServiceClientFactory)
         .create(
             GetHealthCareUnitMembersResponderInterface.class,
-            GET_HEALTH_CARE_UNIT_MEMBERS_ENDPOINT
-        );
+            GET_HEALTH_CARE_UNIT_MEMBERS_ENDPOINT);
 
     final var actual = hsaClientConfiguration.getHealthCareUnitMembersResponderInterface();
     assertEquals(expected, actual);
@@ -127,10 +129,7 @@ class HsaClientConfigurationTest {
 
     doReturn(expected)
         .when(webServiceClientFactory)
-        .create(
-            GetHealthCareProviderResponderInterface.class,
-            GET_HEALTH_CARE_PROVIDER_ENDPOINT
-        );
+        .create(GetHealthCareProviderResponderInterface.class, GET_HEALTH_CARE_PROVIDER_ENDPOINT);
 
     final var actual = hsaClientConfiguration.getHealthCareProviderResponderInterface();
     assertEquals(expected, actual);
@@ -142,10 +141,7 @@ class HsaClientConfigurationTest {
 
     doReturn(expected)
         .when(webServiceClientFactory)
-        .create(
-            GetHospLastUpdateResponderInterface.class,
-            GET_LAST_UPDATE_ENDPOINT
-        );
+        .create(GetHospLastUpdateResponderInterface.class, GET_LAST_UPDATE_ENDPOINT);
 
     final var actual = hsaClientConfiguration.getLastUpdate();
     assertEquals(expected, actual);
@@ -159,8 +155,7 @@ class HsaClientConfigurationTest {
         .when(webServiceClientFactory)
         .create(
             GetHospCredentialsForPersonResponderInterface.class,
-            GET_CREDENTIALS_FOR_PERSON_ENDPOINT
-        );
+            GET_CREDENTIALS_FOR_PERSON_ENDPOINT);
 
     final var actual = hsaClientConfiguration.getCredentialsForPerson();
     assertEquals(expected, actual);
@@ -174,8 +169,7 @@ class HsaClientConfigurationTest {
         .when(webServiceClientFactory)
         .create(
             HandleHospCertificationPersonResponderInterface.class,
-            HANDLE_CERTIFICATION_PERSON_ENDPOINT
-        );
+            HANDLE_CERTIFICATION_PERSON_ENDPOINT);
 
     final var actual = hsaClientConfiguration.getHandleCertificationPersonInterface();
     assertEquals(expected, actual);
