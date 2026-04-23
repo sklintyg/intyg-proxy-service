@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'
+           xmlns:core='urn:riv:infrastructure:directory:organization:2.2'
+           targetNamespace='urn:riv:infrastructure:directory:organization:GetHealthCareUnitMembersResponder:2.1'
+           elementFormDefault='qualified' attributeFormDefault='unqualified' version='2.1'>
+    <xs:import schemaLocation='../../core_components/infrastructure_directory_organization_2.2_ext.xsd'
+               namespace='urn:riv:infrastructure:directory:organization:2.2'/>
+
+    <xs:element name="structuredPostalAddress" type="core:StructuredPostalAddressType"/>
+    <xs:element name="healthCareUnitMemberstructuredPostalAddress" type="core:StructuredPostalAddressType"/>
+
+</xs:schema>
