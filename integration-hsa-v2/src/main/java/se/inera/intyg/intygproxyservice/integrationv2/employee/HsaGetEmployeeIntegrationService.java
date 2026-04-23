@@ -19,6 +19,7 @@
 package se.inera.intyg.intygproxyservice.integrationv2.employee;
 
 import static se.inera.intyg.intygproxyservice.integration.api.constants.HsaConstants.FAKE_HSA_PROFILE;
+import static se.inera.intyg.intygproxyservice.integration.api.constants.HsaConstants.HSA_V2_PROFILE;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +33,7 @@ import se.inera.intyg.intygproxyservice.integrationv2.employee.client.HsaEmploye
 @Service
 @Slf4j
 @RequiredArgsConstructor
-@Profile("!" + FAKE_HSA_PROFILE)
+@Profile(HSA_V2_PROFILE + "!" + FAKE_HSA_PROFILE)
 public class HsaGetEmployeeIntegrationService implements GetEmployeeIntegrationService {
 
   private final HsaEmployeeClient hsaEmployeeClient;
