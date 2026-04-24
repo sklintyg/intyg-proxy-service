@@ -51,7 +51,6 @@ public class UnitTypeConverter {
         .postalCode(type.getPostalCode())
         .postalAddress(addressTypeConverter.convertV5(type.getPostalAddress()))
         .structuredPostalAddress(structuredAddressConverter.convert(type.getStructuredPostalAddress()))
-        .structuredVisitingAddress(structuredAddressConverter.convert(type.getStructuredVisitingAddress()))
         .careType(type.getCareType())
         .businessType(type.getBusinessType())
         .management(type.getManagement())
