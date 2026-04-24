@@ -23,7 +23,6 @@ import static se.inera.intyg.intygproxyservice.integration.common.TypeConverterH
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import se.inera.intyg.intygproxyservice.integration.api.authorization.model.Commission;
-import se.inera.intyg.intygproxyservice.integrationv2.authorization.client.converter.CommissionRightTypeConverter;
 import se.riv.infrastructure.directory.authorizationmanagement.v2.CommissionType;
 
 @Component

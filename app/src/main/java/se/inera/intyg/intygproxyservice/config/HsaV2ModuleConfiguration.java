@@ -27,6 +27,4 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 @Profile(HSA_V2_PROFILE)
 @ComponentScan("se.inera.intyg.intygproxyservice.integrationv2")
-public class HsaV2ModuleConfiguration {
-
-}
+public class HsaV2ModuleConfiguration {}

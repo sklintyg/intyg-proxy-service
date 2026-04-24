@@ -22,7 +22,6 @@ import java.util.Collections;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.intygproxyservice.integration.api.employee.Employee;
-import se.inera.intyg.intygproxyservice.integrationv2.employee.client.converter.PersonInformationTypeConverter;
 import se.riv.infrastructure.directory.employee.getemployeeincludingprotectedpersonresponder.v4.GetEmployeeIncludingProtectedPersonResponseType;
 
 @AllArgsConstructor

@@ -28,11 +28,9 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 @Profile("!" + FAKE_HSA_PROFILE + " & !" + HSA_V2_PROFILE)
 @ComponentScan({
-    "se.inera.intyg.intygproxyservice.integration.configuration",
-    "se.inera.intyg.intygproxyservice.integration.employee",
-    "se.inera.intyg.intygproxyservice.integration.organization",
-    "se.inera.intyg.intygproxyservice.integration.authorization"
+  "se.inera.intyg.intygproxyservice.integration.configuration",
+  "se.inera.intyg.intygproxyservice.integration.employee",
+  "se.inera.intyg.intygproxyservice.integration.organization",
+  "se.inera.intyg.intygproxyservice.integration.authorization"
 })
-public class HsaModuleConfiguration {
-
-}
+public class HsaModuleConfiguration {}

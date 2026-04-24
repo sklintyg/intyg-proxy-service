@@ -23,7 +23,6 @@ import static se.inera.intyg.intygproxyservice.integration.common.TypeConverterH
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.HealthCareUnitMember;
-import se.inera.intyg.intygproxyservice.integrationv2.organization.client.converter.AddressTypeConverter;
 import se.riv.infrastructure.directory.organization.gethealthcareunitmembersresponder.v2.HealthCareUnitMemberType;
 
 @Service

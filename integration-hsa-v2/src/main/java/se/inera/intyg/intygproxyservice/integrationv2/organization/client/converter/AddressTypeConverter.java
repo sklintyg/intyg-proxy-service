@@ -27,13 +27,12 @@ import org.springframework.stereotype.Component;
 public class AddressTypeConverter {
 
   public List<String> convertV2(se.riv.infrastructure.directory.organization.v2.AddressType type) {
-    return convert(type,
-        se.riv.infrastructure.directory.organization.v2.AddressType::getAddressLine);
+    return convert(
+        type, se.riv.infrastructure.directory.organization.v2.AddressType::getAddressLine);
   }
 
   public List<String> convertV5(riv.infrastructure.directory.organization._5.AddressType type) {
-    return convert(
-        type, riv.infrastructure.directory.organization._5.AddressType::getAddressLine);
+    return convert(type, riv.infrastructure.directory.organization._5.AddressType::getAddressLine);
   }
 
   private <T> List<String> convert(T type, Function<T, List<String>> getValues) {

@@ -32,20 +32,18 @@ import org.springframework.context.annotation.FilterType;
 @ComponentScan(
     basePackages = "se.inera.intyg.intygproxyservice",
     excludeFilters = {
-        @Filter(type = FilterType.CUSTOM, classes = TypeExcludeFilter.class),
-        @Filter(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class),
-        @Filter(
-            type = FilterType.REGEX,
-            pattern = {
-                "se\\.inera\\.intyg\\.intygproxyservice\\.integrationv2\\..*",
-                "se\\.inera\\.intyg\\.intygproxyservice\\.integration\\.configuration\\..*",
-                "se\\.inera\\.intyg\\.intygproxyservice\\.integration\\.employee\\..*",
-                "se\\.inera\\.intyg\\.intygproxyservice\\.integration\\.organization\\..*",
-                "se\\.inera\\.intyg\\.intygproxyservice\\.integration\\.authorization\\..*"
-            }
-        )
-    }
-)
+      @Filter(type = FilterType.CUSTOM, classes = TypeExcludeFilter.class),
+      @Filter(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class),
+      @Filter(
+          type = FilterType.REGEX,
+          pattern = {
+            "se\\.inera\\.intyg\\.intygproxyservice\\.integrationv2\\..*",
+            "se\\.inera\\.intyg\\.intygproxyservice\\.integration\\.configuration\\..*",
+            "se\\.inera\\.intyg\\.intygproxyservice\\.integration\\.employee\\..*",
+            "se\\.inera\\.intyg\\.intygproxyservice\\.integration\\.organization\\..*",
+            "se\\.inera\\.intyg\\.intygproxyservice\\.integration\\.authorization\\..*"
+          })
+    })
 public class IntygProxyServiceApplication {
 
   public static void main(String[] args) {

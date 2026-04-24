@@ -21,9 +21,6 @@ package se.inera.intyg.intygproxyservice.integrationv2.authorization.client.conv
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import se.inera.intyg.intygproxyservice.integration.api.authorization.model.CredentialsForPerson;
-import se.inera.intyg.intygproxyservice.integrationv2.authorization.client.converter.HCPSpecialityCodeTypeConverter;
-import se.inera.intyg.intygproxyservice.integrationv2.authorization.client.converter.NursePrescriptionRightTypeConverter;
-import se.inera.intyg.intygproxyservice.integrationv2.authorization.client.converter.RestrictionTypeConverter;
 import se.riv.infrastructure.directory.authorizationmanagement.gethospcredentialsforpersonresponder.v1.GetHospCredentialsForPersonResponseType;
 import se.riv.infrastructure.directory.authorizationmanagement.v2.IIType;
 
