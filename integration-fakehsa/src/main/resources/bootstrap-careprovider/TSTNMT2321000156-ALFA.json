@@ -8,6 +8,17 @@
             "mail" : "AlfaVC@webcert.invalid.se",
             "telephoneNumber" : "0101234567890",
             "postalAddress" : "Storgatan 1",
+            "structuredPostalAddress": {
+                "addressee": [
+                    {
+                        "name": "Alfa Vårdcentral"
+                    }
+                ],
+                "street": "Storgatan",
+                "premisesNumber": "1",
+                "postalCode": "12345",
+                "postalTown": "Småmåla"
+            },
             "postalCode" : "12345",
             "postalTown" : "Småmåla",
             "prescriptionCode" : "1234567890",
@@ -18,6 +29,17 @@
                     "mail" : "AlfaLM@webcert.invalid.se",
                     "telephoneNumber" : "0101234567890",
                     "postalAddress" : "Storgatan 1",
+                    "structuredPostalAddress": {
+                        "addressee": [
+                            {
+                                "name": "Alfa Läkarmottagningen"
+                            }
+                        ],
+                        "street": "Storgatan",
+                        "premisesNumber": "1",
+                        "postalCode": "12345",
+                        "postalTown": "Småmåla"
+                    },
                     "postalCode" : "12345",
                     "postalTown" : "Småmåla",
                     "prescriptionCode" : "1234567890"
@@ -31,6 +53,17 @@
             "mail" : "AlfaMC@webcert.invalid.se",
             "telephoneNumber" : "0101234567890",
             "postalAddress" : "Storgatan 1",
+            "structuredPostalAddress": {
+                "addressee": [
+                    {
+                        "name": "Alfa Medicincentrum"
+                    }
+                ],
+                "street": "Storgatan",
+                "premisesNumber": "1",
+                "postalCode": "12345",
+                "postalTown": "Småmåla"
+            },
             "postalCode" : "12345",
             "postalTown" : "Småmåla",
             "prescriptionCode" : "1234567890",
@@ -41,6 +74,17 @@
                     "mail" : "AlfaAM@webcert.invalid.se",
                     "telephoneNumber" : "0101234567890",
                     "postalAddress" : "Storgatan 1",
+                    "structuredPostalAddress": {
+                        "addressee": [
+                            {
+                                "name": "Alfa Allergimottagningen"
+                            }
+                        ],
+                        "street": "Storgatan",
+                        "premisesNumber": "1",
+                        "postalCode": "12345",
+                        "postalTown": "Småmåla"
+                    },
                     "postalCode" : "12345",
                     "postalTown" : "Småmåla",
                     "prescriptionCode" : "1234567890"
@@ -51,6 +95,17 @@
                     "mail" : "AlfaHM@webcert.invalid.se",
                     "telephoneNumber" : "0101234567890",
                     "postalAddress" : "Storgatan 1",
+                    "structuredPostalAddress": {
+                        "addressee": [
+                            {
+                                "name": "Alfa Hudmottagningen"
+                            }
+                        ],
+                        "street": "Storgatan",
+                        "premisesNumber": "1",
+                        "postalCode": "12345",
+                        "postalTown": "Småmåla"
+                    },
                     "postalCode" : "12345",
                     "postalTown" : "Småmåla",
                     "prescriptionCode" : "1234567890"
@@ -61,6 +116,17 @@
                     "mail" : "AlfaIM@webcert.invalid.se",
                     "telephoneNumber" : "0101234567890",
                     "postalAddress" : "Storgatan 1",
+                    "structuredPostalAddress": {
+                        "addressee": [
+                            {
+                                "name": "Alfa Infektionsmottagningen"
+                            }
+                        ],
+                        "street": "Storgatan",
+                        "premisesNumber": "1",
+                        "postalCode": "12345",
+                        "postalTown": "Småmåla"
+                    },
                     "postalCode" : "12345",
                     "postalTown" : "Småmåla",
                     "prescriptionCode" : "1234567890"
@@ -74,6 +140,17 @@
             "mail" : "AlfaPC@webcert.invalid.se",
             "telephoneNumber" : "0101234567890",
             "postalAddress" : "Storgatan 1",
+            "structuredPostalAddress": {
+                "addressee": [
+                    {
+                        "name": "Alfa Psykiatricentrum"
+                    }
+                ],
+                "street": "Storgatan",
+                "premisesNumber": "1",
+                "postalCode": "12345",
+                "postalTown": "Småmåla"
+            },
             "postalCode" : "12345",
             "postalTown" : "Småmåla",
             "prescriptionCode" : "1234567890",
@@ -84,6 +161,17 @@
                     "mail" : "AlfaPM@webcert.invalid.se",
                     "telephoneNumber" : "0101234567890",
                     "postalAddress" : "Storgatan 1",
+                    "structuredPostalAddress": {
+                        "addressee": [
+                            {
+                                "name": "Alfa Psykologiskamottagningen"
+                            }
+                        ],
+                        "street": "Storgatan",
+                        "premisesNumber": "1",
+                        "postalCode": "12345",
+                        "postalTown": "Småmåla"
+                    },
                     "postalCode" : "12345",
                     "postalTown" : "Småmåla",
                     "prescriptionCode" : "1234567890"
@@ -94,6 +182,17 @@
                     "mail" : "AlfaBM@webcert.invalid.se",
                     "telephoneNumber" : "0101234567890",
                     "postalAddress" : "Storgatan 1",
+                    "structuredPostalAddress": {
+                        "addressee": [
+                            {
+                                "name": "Alfa Barn och Ungdoms Psykologiska-mottagningen"
+                            }
+                        ],
+                        "street": "Storgatan",
+                        "premisesNumber": "1",
+                        "postalCode": "12345",
+                        "postalTown": "Småmåla"
+                    },
                     "postalCode" : "12345",
                     "postalTown" : "Småmåla",
                     "prescriptionCode" : "1234567890"
@@ -107,6 +206,17 @@
             "mail" : "AlfaOC@webcert.invalid.se",
             "telephoneNumber" : "0101234567890",
             "postalAddress" : "Storgatan 1",
+            "structuredPostalAddress": {
+                "addressee": [
+                    {
+                        "name": "Alfa Ortopedicentrum"
+                    }
+                ],
+                "street": "Storgatan",
+                "premisesNumber": "1",
+                "postalCode": "12345",
+                "postalTown": "Småmåla"
+            },
             "postalCode" : "12345",
             "postalTown" : "Småmåla",
             "prescriptionCode" : "1234567890",
@@ -117,6 +227,17 @@
                     "mail" : "AlfaKM@webcert.invalid.se",
                     "telephoneNumber" : "0101234567890",
                     "postalAddress" : "Storgatan 1",
+                    "structuredPostalAddress": {
+                        "addressee": [
+                            {
+                                "name": "Alfa Kirurgiska mottagningen"
+                            }
+                        ],
+                        "street": "Storgatan",
+                        "premisesNumber": "1",
+                        "postalCode": "12345",
+                        "postalTown": "Småmåla"
+                    },
                     "postalCode" : "12345",
                     "postalTown" : "Småmåla",
                     "prescriptionCode" : "1234567890"
@@ -130,6 +251,17 @@
             "mail" : "AlfaHC@webcert.invalid.se",
             "telephoneNumber" : "0101234567890",
             "postalAddress" : "Storgatan 1",
+            "structuredPostalAddress": {
+                "addressee": [
+                    {
+                        "name": "Alfa Hjärtcentrum"
+                    }
+                ],
+                "street": "Storgatan",
+                "premisesNumber": "1",
+                "postalCode": "12345",
+                "postalTown": "Småmåla"
+            },
             "postalCode" : "12345",
             "postalTown" : "Småmåla",
             "prescriptionCode" : "1234567890",
@@ -140,6 +272,17 @@
                     "mail" : "AlfaFM@webcert.invalid.se",
                     "telephoneNumber" : "0101234567890",
                     "postalAddress" : "Storgatan 1",
+                    "structuredPostalAddress": {
+                        "addressee": [
+                            {
+                                "name": "Alfa Fysiologiskamottagningen"
+                            }
+                        ],
+                        "street": "Storgatan",
+                        "premisesNumber": "1",
+                        "postalCode": "12345",
+                        "postalTown": "Småmåla"
+                    },
                     "postalCode" : "12345",
                     "postalTown" : "Småmåla",
                     "prescriptionCode" : "1234567890"
