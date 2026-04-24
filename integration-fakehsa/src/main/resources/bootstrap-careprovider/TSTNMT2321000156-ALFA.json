@@ -41,7 +41,7 @@
                         "postalTown": "Småmåla"
                     },
                     "postalCode" : "12345",
-                    "postalTown" : "Småmåla",
+                    "town" : "Småmåla",
                     "prescriptionCode" : "1234567890"
                 }
             ],
@@ -62,7 +62,7 @@
                 "street": "Storgatan",
                 "premisesNumber": "1",
                 "postalCode": "12345",
-                "postalTown": "Småmåla"
+                "town": "Småmåla"
             },
             "postalCode" : "12345",
             "postalTown" : "Småmåla",
@@ -83,7 +83,7 @@
                         "street": "Storgatan",
                         "premisesNumber": "1",
                         "postalCode": "12345",
-                        "postalTown": "Småmåla"
+                        "town": "Småmåla"
                     },
                     "postalCode" : "12345",
                     "postalTown" : "Småmåla",
@@ -104,7 +104,7 @@
                         "street": "Storgatan",
                         "premisesNumber": "1",
                         "postalCode": "12345",
-                        "postalTown": "Småmåla"
+                        "town": "Småmåla"
                     },
                     "postalCode" : "12345",
                     "postalTown" : "Småmåla",
@@ -125,7 +125,7 @@
                         "street": "Storgatan",
                         "premisesNumber": "1",
                         "postalCode": "12345",
-                        "postalTown": "Småmåla"
+                        "town": "Småmåla"
                     },
                     "postalCode" : "12345",
                     "postalTown" : "Småmåla",
@@ -149,7 +149,7 @@
                 "street": "Storgatan",
                 "premisesNumber": "1",
                 "postalCode": "12345",
-                "postalTown": "Småmåla"
+                "town": "Småmåla"
             },
             "postalCode" : "12345",
             "postalTown" : "Småmåla",
@@ -170,7 +170,7 @@
                         "street": "Storgatan",
                         "premisesNumber": "1",
                         "postalCode": "12345",
-                        "postalTown": "Småmåla"
+                        "town": "Småmåla"
                     },
                     "postalCode" : "12345",
                     "postalTown" : "Småmåla",
@@ -191,7 +191,7 @@
                         "street": "Storgatan",
                         "premisesNumber": "1",
                         "postalCode": "12345",
-                        "postalTown": "Småmåla"
+                        "town": "Småmåla"
                     },
                     "postalCode" : "12345",
                     "postalTown" : "Småmåla",
@@ -215,7 +215,7 @@
                 "street": "Storgatan",
                 "premisesNumber": "1",
                 "postalCode": "12345",
-                "postalTown": "Småmåla"
+                "town": "Småmåla"
             },
             "postalCode" : "12345",
             "postalTown" : "Småmåla",
@@ -236,7 +236,7 @@
                         "street": "Storgatan",
                         "premisesNumber": "1",
                         "postalCode": "12345",
-                        "postalTown": "Småmåla"
+                        "town": "Småmåla"
                     },
                     "postalCode" : "12345",
                     "postalTown" : "Småmåla",
@@ -260,7 +260,7 @@
                 "street": "Storgatan",
                 "premisesNumber": "1",
                 "postalCode": "12345",
-                "postalTown": "Småmåla"
+                "town": "Småmåla"
             },
             "postalCode" : "12345",
             "postalTown" : "Småmåla",
@@ -281,7 +281,7 @@
                         "street": "Storgatan",
                         "premisesNumber": "1",
                         "postalCode": "12345",
-                        "postalTown": "Småmåla"
+                        "town": "Småmåla"
                     },
                     "postalCode" : "12345",
                     "postalTown" : "Småmåla",
