@@ -25,6 +25,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import se.inera.intyg.intygproxyservice.integration.api.organization.model.StructuredPostalAddress;
 
 @Builder
 @Data
@@ -50,6 +51,8 @@ public class ParsedCareUnit {
   private String postalCode;
 
   private String postalTown;
+
+  private StructuredPostalAddress structuredPostalAddress;
 
   private String telephoneNumber;
 
