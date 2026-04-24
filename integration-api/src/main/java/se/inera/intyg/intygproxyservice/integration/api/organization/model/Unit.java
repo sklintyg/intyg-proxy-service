@@ -47,6 +47,8 @@ public class Unit {
 
   @Builder.Default List<String> telephoneNumber = new ArrayList<>();
   String postalCode;
+  StructuredPostalAddress structuredPostalAddress;
+  StructuredVisitingAddress structuredVisitingAddress;
   String mail;
   @Builder.Default List<String> management = new ArrayList<>();
 }

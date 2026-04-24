@@ -30,6 +30,7 @@ import se.riv.infrastructure.directory.organization.getunitresponder.v5.UnitType
 public class UnitTypeConverter {
 
   private final AddressTypeConverter addressTypeConverter;
+  private final StructuredAddressConverter structuredAddressConverter;
   private final GeoCoordRt90TypeConverter geoCoordRt90TypeConverter;
   private final GeoCoordSweref99TypeConverter geoCoordSweref99TypeConverter;
   private final BusinessClassificationTypeConverter businessClassificationTypeConverter;
@@ -49,6 +50,8 @@ public class UnitTypeConverter {
         .unitEndDate(toLocalDate(type.getUnitEndDate()))
         .postalCode(type.getPostalCode())
         .postalAddress(addressTypeConverter.convertV5(type.getPostalAddress()))
+        .structuredPostalAddress(structuredAddressConverter.convert(type.getStructuredPostalAddress()))
+        .structuredVisitingAddress(structuredAddressConverter.convert(type.getStructuredVisitingAddress()))
         .careType(type.getCareType())
         .businessType(type.getBusinessType())
         .management(type.getManagement())
