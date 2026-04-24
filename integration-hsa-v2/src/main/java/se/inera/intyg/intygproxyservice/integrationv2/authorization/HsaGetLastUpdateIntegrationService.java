@@ -31,7 +31,7 @@ import se.inera.intyg.intygproxyservice.integrationv2.authorization.client.HsaAu
 import se.inera.intyg.intygproxyservice.logging.PerformanceLogging;
 
 @Service
-@Profile(HSA_V2_PROFILE + "!" + FAKE_HSA_PROFILE)
+@Profile(HSA_V2_PROFILE + " & !" + FAKE_HSA_PROFILE)
 @RequiredArgsConstructor
 public class HsaGetLastUpdateIntegrationService implements GetLastUpdateIntegrationService {
 

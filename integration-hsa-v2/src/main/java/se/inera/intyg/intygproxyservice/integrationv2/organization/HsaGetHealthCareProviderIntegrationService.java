@@ -30,7 +30,7 @@ import se.inera.intyg.intygproxyservice.integration.api.organization.GetHealthCa
 import se.inera.intyg.intygproxyservice.integrationv2.organization.client.HsaOrganizationClient;
 
 @Service
-@Profile(HSA_V2_PROFILE + "!" + FAKE_HSA_PROFILE)
+@Profile(HSA_V2_PROFILE + " & !" + FAKE_HSA_PROFILE)
 @RequiredArgsConstructor
 public class HsaGetHealthCareProviderIntegrationService
     implements GetHealthCareProviderIntegrationService {

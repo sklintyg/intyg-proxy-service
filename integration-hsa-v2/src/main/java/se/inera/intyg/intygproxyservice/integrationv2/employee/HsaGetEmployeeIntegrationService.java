@@ -33,7 +33,7 @@ import se.inera.intyg.intygproxyservice.integrationv2.employee.client.HsaEmploye
 @Service
 @Slf4j
 @RequiredArgsConstructor
-@Profile(HSA_V2_PROFILE + "!" + FAKE_HSA_PROFILE)
+@Profile(HSA_V2_PROFILE + " & !" + FAKE_HSA_PROFILE)
 public class HsaGetEmployeeIntegrationService implements GetEmployeeIntegrationService {
 
   private final HsaEmployeeClient hsaEmployeeClient;
