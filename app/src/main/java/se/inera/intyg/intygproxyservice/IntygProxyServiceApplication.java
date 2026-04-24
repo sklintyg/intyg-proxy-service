@@ -19,9 +19,33 @@
 package se.inera.intyg.intygproxyservice;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.autoconfigure.AutoConfigurationExcludeFilter;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.context.TypeExcludeFilter;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScan.Filter;
+import org.springframework.context.annotation.FilterType;
 
-@SpringBootApplication
+@SpringBootConfiguration
+@EnableAutoConfiguration
+@ComponentScan(
+    basePackages = "se.inera.intyg.intygproxyservice",
+    excludeFilters = {
+        @Filter(type = FilterType.CUSTOM, classes = TypeExcludeFilter.class),
+        @Filter(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class),
+        @Filter(
+            type = FilterType.REGEX,
+            pattern = {
+                "se\\.inera\\.intyg\\.intygproxyservice\\.integrationv2\\..*",
+                "se\\.inera\\.intyg\\.intygproxyservice\\.integration\\.configuration\\..*",
+                "se\\.inera\\.intyg\\.intygproxyservice\\.integration\\.employee\\..*",
+                "se\\.inera\\.intyg\\.intygproxyservice\\.integration\\.organization\\..*",
+                "se\\.inera\\.intyg\\.intygproxyservice\\.integration\\.authorization\\..*"
+            }
+        )
+    }
+)
 public class IntygProxyServiceApplication {
 
   public static void main(String[] args) {
