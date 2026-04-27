@@ -3,7 +3,6 @@ package se.inera.intyg.intygproxyservice.integrationv2.organization.client.conve
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import riv.infrastructure.directory.organization._5.StructuredPostalAddressType;
-import se.inera.intyg.intygproxyservice.integration.api.organization.model.PostalAddress;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.StructuredPostalAddress;
 
 @Component
@@ -12,13 +11,11 @@ public class StructuredAddressConverter {
 
   public StructuredPostalAddress convert(StructuredPostalAddressType type) {
     return StructuredPostalAddress.builder()
-        .addressee(type.getAddressee().stream()
-            .map(PostalAddress::new)
-            .toList())
+        .addressee(type.getAddressee())
         .street(type.getStreet())
         .premisesNumber(type.getPremisesNumber())
         .premisesLetter(type.getPremisesLetter())
-        .postalCode(type.getPostCode())
+        .postCode(type.getPostCode())
         .town(type.getTown())
         .build();
   }

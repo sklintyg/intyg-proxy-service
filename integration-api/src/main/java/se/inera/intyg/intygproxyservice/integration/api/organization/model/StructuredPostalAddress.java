@@ -8,10 +8,10 @@ import lombok.Value;
 @Value
 @Builder
 public class StructuredPostalAddress {
-  @Builder.Default List<PostalAddress> addressee = Collections.emptyList();
+  @Builder.Default List<String> addressee = Collections.emptyList();
   String street;
   String premisesNumber;
   String premisesLetter;
-  String postalCode;
+  String postCode;
   String town;
 }
