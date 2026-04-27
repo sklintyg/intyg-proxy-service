@@ -25,5 +25,5 @@ import lombok.Value;
 @Builder
 public class UnitResponseV2 {
 
-  Unit unit;
+  UnitDTO unit;
 }
