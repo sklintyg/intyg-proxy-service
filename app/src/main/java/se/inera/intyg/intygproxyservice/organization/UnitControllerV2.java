@@ -18,9 +18,12 @@
  */
 package se.inera.intyg.intygproxyservice.organization;
 
+import static se.inera.intyg.intygproxyservice.integration.api.constants.HsaConstants.FAKE_HSA_PROFILE;
+import static se.inera.intyg.intygproxyservice.integration.api.constants.HsaConstants.HSA_V2_PROFILE;
 import static se.inera.intyg.intygproxyservice.logging.MdcLogConstants.EVENT_TYPE_ACCESSED;
 
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +36,7 @@ import se.inera.intyg.intygproxyservice.organization.service.UnitServiceV2;
 @RestController()
 @RequestMapping("/api/v3/unit")
 @AllArgsConstructor
+@Profile(HSA_V2_PROFILE + " | " + FAKE_HSA_PROFILE)
 public class UnitControllerV2 {
 
   private final UnitServiceV2 unitService;

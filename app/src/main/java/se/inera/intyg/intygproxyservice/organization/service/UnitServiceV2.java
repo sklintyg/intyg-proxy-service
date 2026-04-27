@@ -35,7 +35,7 @@ import se.inera.intyg.intygproxyservice.organization.dto.UnitResponseV2;
 @Service
 @AllArgsConstructor
 @Slf4j
-@Profile(HSA_V2_PROFILE + " & !" + FAKE_HSA_PROFILE)
+@Profile(HSA_V2_PROFILE + " | " + FAKE_HSA_PROFILE)
 public class UnitServiceV2 {
 
   private final GetUnitIntegrationService getUnitIntegrationService;
