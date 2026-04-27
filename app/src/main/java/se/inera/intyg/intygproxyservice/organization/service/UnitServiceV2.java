@@ -28,7 +28,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.intygproxyservice.integration.api.organization.GetUnitIntegrationRequest;
 import se.inera.intyg.intygproxyservice.integration.api.organization.GetUnitIntegrationService;
-import se.inera.intyg.intygproxyservice.integration.api.organization.model.Unit;
 import se.inera.intyg.intygproxyservice.organization.dto.UnitRequest;
 import se.inera.intyg.intygproxyservice.organization.dto.UnitResponseV2;
 
@@ -39,6 +38,7 @@ import se.inera.intyg.intygproxyservice.organization.dto.UnitResponseV2;
 public class UnitServiceV2 {
 
   private final GetUnitIntegrationService getUnitIntegrationService;
+  private final UnitConverter unitConverter;
 
   public UnitResponseV2 get(UnitRequest request) {
     validateRequest(request);
@@ -55,23 +55,7 @@ public class UnitServiceV2 {
       log.warn("No unit was found with hsaId '{}', returning empty unit", request.getHsaId());
     }
 
-    se.inera.intyg.intygproxyservice.organization.dto.Unit dtoUnit = null;
-    Unit unit = response.getUnit();
-    if (unit != null) {
-      dtoUnit =
-          se.inera.intyg.intygproxyservice.organization.dto.Unit.builder()
-              .unitStartDate(unit.getUnitStartDate())
-              .unitEndDate(unit.getUnitEndDate())
-              .feignedUnit(unit.getFeignedUnit())
-              .unitHsaId(unit.getUnitHsaId())
-              .unitName(unit.getUnitName())
-              .telephoneNumber(unit.getTelephoneNumber())
-              .address(unit.getAddress())
-              .mail(unit.getMail())
-              .build();
-    }
-
-    return UnitResponseV2.builder().unit(dtoUnit).build();
+    return UnitResponseV2.builder().unit(unitConverter.convert(response.getUnit())).build();
   }
 
   private static void validateRequest(UnitRequest request) {

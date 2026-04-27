@@ -27,7 +27,7 @@ import se.inera.intyg.intygproxyservice.integration.api.organization.model.Addre
 
 @Value
 @Builder
-public class Unit {
+public class UnitDTO {
 
   LocalDateTime unitStartDate;
   LocalDateTime unitEndDate;
