@@ -25,7 +25,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import se.inera.intyg.intygproxyservice.integration.api.organization.model.StructuredPostalAddress;
+import se.inera.intyg.intygproxyservice.integration.api.organization.model.Address;
 
 @Builder
 @Data
@@ -38,7 +38,8 @@ public class ParsedCareUnit {
   private LocalDateTime start;
   private LocalDateTime end;
 
-  @Builder.Default private List<ParsedSubUnit> subUnits = new ArrayList<>();
+  @Builder.Default
+  private List<ParsedSubUnit> subUnits = new ArrayList<>();
 
   private String id;
 
@@ -52,7 +53,7 @@ public class ParsedCareUnit {
 
   private String postalTown;
 
-  private StructuredPostalAddress structuredPostalAddress;
+  private Address address;
 
   private String telephoneNumber;
 

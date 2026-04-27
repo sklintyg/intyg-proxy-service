@@ -50,7 +50,7 @@ public class UnitTypeConverter {
         .unitEndDate(toLocalDate(type.getUnitEndDate()))
         .postalCode(type.getPostalCode())
         .postalAddress(addressTypeConverter.convertV5(type.getPostalAddress()))
-        .structuredPostalAddress(structuredAddressConverter.convert(type.getStructuredPostalAddress()))
+        .address(structuredAddressConverter.convert(type.getStructuredPostalAddress()))
         .careType(type.getCareType())
         .businessType(type.getBusinessType())
         .management(type.getManagement())

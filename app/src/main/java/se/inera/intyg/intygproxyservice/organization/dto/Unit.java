@@ -16,48 +16,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.intyg.intygproxyservice.integration.fakehsa.repository.model;
+package se.inera.intyg.intygproxyservice.organization.dto;
 
 import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Value;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.Address;
 
-@Data
+@Value
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class ParsedSubUnit {
+public class Unit {
 
-  private LocalDateTime start;
-  private LocalDateTime end;
-  private String parentHsaId;
-
-  private String id;
-
-  private String name;
-
-  private String mail;
-
-  private String postalAddress;
-
-  private Address address;
-
-  private String postalCode;
-
-  private String postalTown;
-
-  private String telephoneNumber;
-
-  private String prescriptionCode;
-
-  private String healthCareProviderOrgno;
-
-  private String careProviderHsaId;
-
-  private String countyCode;
-
-  private String municipalityCode;
+  LocalDateTime unitStartDate;
+  LocalDateTime unitEndDate;
+  Boolean feignedUnit;
+  String unitHsaId;
+  String unitName;
+  @Builder.Default
+  List<String> telephoneNumber = new ArrayList<>();
+  Address address;
+  String mail;
 }
