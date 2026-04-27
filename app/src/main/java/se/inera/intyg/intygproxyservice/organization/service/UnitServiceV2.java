@@ -19,6 +19,8 @@
 package se.inera.intyg.intygproxyservice.organization.service;
 
 import static se.inera.intyg.intygproxyservice.common.ValidationUtility.isStringInvalid;
+import static se.inera.intyg.intygproxyservice.integration.api.constants.HsaConstants.FAKE_HSA_PROFILE;
+import static se.inera.intyg.intygproxyservice.integration.api.constants.HsaConstants.HSA_V2_PROFILE;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +35,7 @@ import se.inera.intyg.intygproxyservice.organization.dto.UnitResponseV2;
 @Service
 @AllArgsConstructor
 @Slf4j
-@Profile("v2")
+@Profile(HSA_V2_PROFILE + " & !" + FAKE_HSA_PROFILE)
 public class UnitServiceV2 {
 
   private final GetUnitIntegrationService getUnitIntegrationService;
