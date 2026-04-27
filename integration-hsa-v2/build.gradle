@@ -128,6 +128,33 @@ wsdl2java {
                     "classpath:interactions/GetEmployeeIncludingProtectedPersonInteraction/GetEmployeeIncludingProtectedPersonInteraction_4.0_RIVTABP21.wsdl",
                     "$wsdlDir/employee/$employeeVersion/interactions/GetEmployeeIncludingProtectedPersonInteraction/GetEmployeeIncludingProtectedPersonInteraction_4.0_RIVTABP21.wsdl"],
 
+            commonEmployeeOptions + [
+                    "-p",
+                    "urn:riv:infrastructure:directory:employee:GetEmployee:4:rivtabp21=se.riv.infrastructure.directory.employee.getemployee.v4.rivtabp21",
+                    "-p",
+                    "urn:riv:infrastructure:directory:employee:GetEmployeeResponder:4=se.riv.infrastructure.directory.employee.getemployeeresponder.v4",
+                    "-wsdlLocation",
+                    "classpath:interactions/GetEmployeeInteraction/GetEmployeeInteraction_4.0_RIVTABP21.wsdl",
+                    "$wsdlDir/employee/$employeeVersion/interactions/GetEmployeeInteraction/GetEmployeeInteraction_4.0_RIVTABP21.wsdl"],
+
+            commonEmployeeOptions + [
+                    "-p",
+                    "urn:riv:infrastructure:directory:employee:GetCommissionMembers:3:rivtabp21=se.riv.infrastructure.directory.employee.getcommissionmembers.v3.rivtabp21",
+                    "-p",
+                    "urn:riv:infrastructure:directory:employee:GetCommissionMembersResponder:3=se.riv.infrastructure.directory.employee.getcommissionmembersresponder.v3",
+                    "-wsdlLocation",
+                    "classpath:interactions/GetCommissionMembersInteraction/GetCommissionMembersInteraction_3.0_RIVTABP21.wsdl",
+                    "$wsdlDir/employee/$employeeVersion/interactions/GetCommissionMembersInteraction/GetCommissionMembersInteraction_3.0_RIVTABP21.wsdl"],
+
+            commonEmployeeOptions + [
+                    "-p",
+                    "urn:riv:infrastructure:directory:employee:GetCommissionMembersIncludingProtectedPerson:3:rivtabp21=se.riv.infrastructure.directory.employee.getcommissionmembersincludingprotectedperson.v3.rivtabp21",
+                    "-p",
+                    "urn:riv:infrastructure:directory:employee:GetCommissionMembersIncludingProtectedPersonResponder:3=se.riv.infrastructure.directory.employee.getcommissionmembersincludingprotectedpersonresponder.v3",
+                    "-wsdlLocation",
+                    "classpath:interactions/GetCommissionMembersIncludingProtectedPersonInteraction/GetCommissionMembersIncludingProtectedPersonInteraction_3.0_RIVTABP21.wsdl",
+                    "$wsdlDir/employee/$employeeVersion/interactions/GetCommissionMembersIncludingProtectedPersonInteraction/GetCommissionMembersIncludingProtectedPersonInteraction_3.0_RIVTABP21.wsdl"],
+
             commonOrganizationOptions + [
                     "-p",
                     "urn:riv:infrastructure:directory:organization:GetHealthCareUnit:2:rivtabp21=se.riv.infrastructure.directory.organization.gethealthcareunit.v2.rivtabp21",
