@@ -2,20 +2,20 @@ package se.inera.intyg.intygproxyservice.integrationv2.organization.client.conve
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import riv.infrastructure.directory.organization._5.StructuredPostalAddressType;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.Address;
+import se.riv.infrastructure.directory.organization.getunitresponder.v5.UnitType;
 
 @Component
 @RequiredArgsConstructor
 public class StructuredAddressConverter {
 
-  public Address convert(StructuredPostalAddressType type) {
+  public Address convert(UnitType type) {
     return Address.builder()
         .street(type.getStreet())
-        .streetNumber(type.getPremisesNumber())
-        .streetLetter(type.getPremisesLetter())
-        .zipCode(type.getPostCode())
-        .city(type.getTown())
+        .streetNumber(type.getStructuredPostalAddress().getPremisesNumber())
+        .streetLetter(type.getStructuredPostalAddress().getPremisesLetter())
+        .zipCode(type.getStructuredPostalAddress().getPostCode())
+        .city(type.getStructuredPostalAddress().getTown())
         .build();
   }
 }

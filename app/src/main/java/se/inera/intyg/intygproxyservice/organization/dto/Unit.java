@@ -34,8 +34,7 @@ public class Unit {
   Boolean feignedUnit;
   String unitHsaId;
   String unitName;
-  @Builder.Default
-  List<String> telephoneNumber = new ArrayList<>();
+  @Builder.Default List<String> telephoneNumber = new ArrayList<>();
   Address address;
   String mail;
 }

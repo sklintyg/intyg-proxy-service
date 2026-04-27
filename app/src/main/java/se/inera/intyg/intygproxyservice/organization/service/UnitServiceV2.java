@@ -26,6 +26,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.intygproxyservice.integration.api.organization.GetUnitIntegrationRequest;
 import se.inera.intyg.intygproxyservice.integration.api.organization.GetUnitIntegrationService;
+import se.inera.intyg.intygproxyservice.integration.api.organization.AddressConverter;
+import se.inera.intyg.intygproxyservice.integration.api.organization.model.Unit;
 import se.inera.intyg.intygproxyservice.organization.dto.UnitRequest;
 import se.inera.intyg.intygproxyservice.organization.dto.UnitResponseV2;
 
@@ -52,7 +54,23 @@ public class UnitServiceV2 {
       log.warn("No unit was found with hsaId '{}', returning empty unit", request.getHsaId());
     }
 
-    return UnitResponseV2.builder().build();
+    se.inera.intyg.intygproxyservice.organization.dto.Unit dtoUnit = null;
+    if (response.getUnit() != null) {
+      Unit convertedUnit = AddressConverter.convert(response.getUnit());
+      dtoUnit =
+          se.inera.intyg.intygproxyservice.organization.dto.Unit.builder()
+              .unitStartDate(convertedUnit.getUnitStartDate())
+              .unitEndDate(convertedUnit.getUnitEndDate())
+              .feignedUnit(convertedUnit.getFeignedUnit())
+              .unitHsaId(convertedUnit.getUnitHsaId())
+              .unitName(convertedUnit.getUnitName())
+              .telephoneNumber(convertedUnit.getTelephoneNumber())
+              .address(convertedUnit.getAddress())
+              .mail(convertedUnit.getMail())
+              .build();
+    }
+
+    return UnitResponseV2.builder().unit(dtoUnit).build();
   }
 
   private static void validateRequest(UnitRequest request) {
