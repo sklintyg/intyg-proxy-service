@@ -16,23 +16,27 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import riv.infrastructure.directory.organization._5.AddressType;
 import riv.infrastructure.directory.organization._5.StructuredPostalAddressType;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.Address;
-import se.inera.intyg.intygproxyservice.integrationv2.organization.client.factory.AddressFactory;
 import se.riv.infrastructure.directory.organization.getunitresponder.v5.UnitType;
 
 @ExtendWith(MockitoExtension.class)
 class StructuredAddressConverterTest {
 
   @Mock private AddressTypeConverter addressTypeConverter;
-  @Mock private AddressFactory addressFactory;
   @InjectMocks private StructuredAddressConverter addressConverter;
 
   @Test
   void shouldConvertAddressWhenStructuredPostalAddressExists() {
     final var type = mock(UnitType.class);
     final var structuredPostalAddress = createStructuredPostalAddressType();
-    final var expected = Address.builder().street("Test Street").build();
+    final var expected =
+        Address.builder()
+            .street("Test Street")
+            .streetNumber("1")
+            .streetLetter("A")
+            .zipCode("12345")
+            .city("Test town")
+            .build();
     when(type.getStructuredPostalAddress()).thenReturn(structuredPostalAddress);
-    when(addressFactory.create(structuredPostalAddress)).thenReturn(expected);
 
     final var result = addressConverter.convert(type);
 

@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.Address;
-import se.inera.intyg.intygproxyservice.integrationv2.organization.client.factory.AddressFactory;
 import se.riv.infrastructure.directory.organization.getunitresponder.v5.UnitType;
 
 @Component
@@ -14,8 +13,6 @@ import se.riv.infrastructure.directory.organization.getunitresponder.v5.UnitType
 public class StructuredAddressConverter {
 
   private static final int CITY_START_INDEX = 6;
-
-  private final AddressFactory addressFactory;
   private final AddressTypeConverter addressTypeConverter;
 
   public Address convert(UnitType type) {
@@ -25,7 +22,13 @@ public class StructuredAddressConverter {
 
     return type.getStructuredPostalAddress() == null
         ? convertAddress(type)
-        : addressFactory.create(type.getStructuredPostalAddress());
+        : Address.builder()
+            .street(type.getStructuredPostalAddress().getStreet())
+            .streetNumber(type.getStructuredPostalAddress().getPremisesNumber())
+            .streetLetter(type.getStructuredPostalAddress().getPremisesLetter())
+            .zipCode(type.getStructuredPostalAddress().getPostCode())
+            .city(type.getStructuredPostalAddress().getTown())
+            .build();
   }
 
   private Address convertAddress(UnitType type) {
