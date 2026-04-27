@@ -16,6 +16,7 @@ dependencies {
     runtimeOnly project(':integration-pu-v5')
     runtimeOnly project(':integration-fakepu')
     runtimeOnly project(':integration-hsa')
+    runtimeOnly project(':integration-hsa-v2')
     runtimeOnly project(':integration-fakehsa')
     runtimeOnly project(':integration-elva77')
 

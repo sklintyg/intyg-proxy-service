@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="urn:riv:infrastructure:directory:organization:2.2"
+        elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.2">
+
+    <xs:complexType name="StructuredVisitingAddressType">
+        <xs:sequence>
+            <xs:element name="street" type="xs:string"/>
+            <xs:element name="premisesNumber" type="xs:string" minOccurs="0"/>
+            <xs:element name="premisesLetter" type="xs:string" minOccurs="0"/>
+            <xs:element name="town" type="xs:string"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StructuredPostalAddressType">
+        <xs:sequence>
+            <xs:element name="addressee" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="street" type="xs:string" minOccurs="0"/>
+            <xs:element name="premisesNumber" type="xs:string" minOccurs="0"/>
+            <xs:element name="premisesLetter" type="xs:string" minOccurs="0"/>
+            <xs:element name="postCode" type="xs:string"/>
+            <xs:element name="town" type="xs:string"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>
