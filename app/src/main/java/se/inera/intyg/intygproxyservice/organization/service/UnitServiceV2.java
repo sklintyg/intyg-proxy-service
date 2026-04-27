@@ -26,7 +26,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.intygproxyservice.integration.api.organization.GetUnitIntegrationRequest;
 import se.inera.intyg.intygproxyservice.integration.api.organization.GetUnitIntegrationService;
-import se.inera.intyg.intygproxyservice.integration.api.organization.AddressConverter;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.Unit;
 import se.inera.intyg.intygproxyservice.organization.dto.UnitRequest;
 import se.inera.intyg.intygproxyservice.organization.dto.UnitResponseV2;
@@ -55,18 +54,18 @@ public class UnitServiceV2 {
     }
 
     se.inera.intyg.intygproxyservice.organization.dto.Unit dtoUnit = null;
-    if (response.getUnit() != null) {
-      Unit convertedUnit = AddressConverter.convert(response.getUnit());
+    Unit unit = response.getUnit();
+    if (unit != null) {
       dtoUnit =
           se.inera.intyg.intygproxyservice.organization.dto.Unit.builder()
-              .unitStartDate(convertedUnit.getUnitStartDate())
-              .unitEndDate(convertedUnit.getUnitEndDate())
-              .feignedUnit(convertedUnit.getFeignedUnit())
-              .unitHsaId(convertedUnit.getUnitHsaId())
-              .unitName(convertedUnit.getUnitName())
-              .telephoneNumber(convertedUnit.getTelephoneNumber())
-              .address(convertedUnit.getAddress())
-              .mail(convertedUnit.getMail())
+              .unitStartDate(unit.getUnitStartDate())
+              .unitEndDate(unit.getUnitEndDate())
+              .feignedUnit(unit.getFeignedUnit())
+              .unitHsaId(unit.getUnitHsaId())
+              .unitName(unit.getUnitName())
+              .telephoneNumber(unit.getTelephoneNumber())
+              .address(unit.getAddress())
+              .mail(unit.getMail())
               .build();
     }
 
