@@ -41,7 +41,7 @@ import se.inera.intyg.intygproxyservice.integration.fakehsa.converters.Credentia
 import se.inera.intyg.intygproxyservice.integration.fakehsa.converters.EmployeeConverter;
 import se.inera.intyg.intygproxyservice.integration.fakehsa.converters.HealthCareUnitConverter;
 import se.inera.intyg.intygproxyservice.integration.fakehsa.converters.HealthCareUnitMembersConverter;
-import se.inera.intyg.intygproxyservice.integration.fakehsa.converters.UnitConverter;
+import se.inera.intyg.intygproxyservice.integration.fakehsa.converters.ParsedUnitConverter;
 import se.inera.intyg.intygproxyservice.integration.fakehsa.repository.model.ParsedCareProvider;
 import se.inera.intyg.intygproxyservice.integration.fakehsa.repository.model.ParsedCareUnit;
 import se.inera.intyg.intygproxyservice.integration.fakehsa.repository.model.ParsedCredentialInformation;
@@ -56,7 +56,7 @@ public class FakeHsaRepository {
   private final EmployeeConverter employeeConverter;
   private final HealthCareUnitMembersConverter healthCareUnitMembersConverter;
   private final HealthCareUnitConverter healthCareUnitConverter;
-  private final UnitConverter unitConverter;
+  private final ParsedUnitConverter parsedUnitConverter;
   private final CredentialInformationConverter credentialInformationConverter;
   private final CareProviderConverter careProviderConverter;
 
@@ -134,12 +134,12 @@ public class FakeHsaRepository {
 
     final var parsedCareUnit = careUnitMap.get(id);
     if (parsedCareUnit != null) {
-      return unitConverter.convert(parsedCareUnit);
+      return parsedUnitConverter.convert(parsedCareUnit);
     }
 
     final var parsedSubUnit = subUnitMap.get(id);
     if (parsedSubUnit != null) {
-      return unitConverter.convert(parsedSubUnit);
+      return parsedUnitConverter.convert(parsedSubUnit);
     }
 
     return null;

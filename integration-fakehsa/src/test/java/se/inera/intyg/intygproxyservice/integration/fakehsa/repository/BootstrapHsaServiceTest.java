@@ -30,7 +30,7 @@ import se.inera.intyg.intygproxyservice.integration.fakehsa.converters.Credentia
 import se.inera.intyg.intygproxyservice.integration.fakehsa.converters.EmployeeConverter;
 import se.inera.intyg.intygproxyservice.integration.fakehsa.converters.HealthCareUnitConverter;
 import se.inera.intyg.intygproxyservice.integration.fakehsa.converters.HealthCareUnitMembersConverter;
-import se.inera.intyg.intygproxyservice.integration.fakehsa.converters.UnitConverter;
+import se.inera.intyg.intygproxyservice.integration.fakehsa.converters.ParsedUnitConverter;
 
 class BootstrapHsaServiceTest {
 
@@ -39,7 +39,7 @@ class BootstrapHsaServiceTest {
   private HealthCareUnitMembersConverter healthCareUnitMembersConverter;
   private HealthCareUnitConverter healthCareUnitConverter;
   private BootstrapHsaService bootstrapHsaService;
-  private UnitConverter unitConverter;
+  private ParsedUnitConverter parsedUnitConverter;
   private CredentialInformationConverter credentialInformationConverter;
   private CredentialsForPersonConverter credentialsForPersonConverter;
   private CareProviderConverter careProviderConverter;
@@ -55,7 +55,7 @@ class BootstrapHsaServiceTest {
             employeeConverter,
             healthCareUnitMembersConverter,
             healthCareUnitConverter,
-            unitConverter,
+            parsedUnitConverter,
             credentialInformationConverter,
             careProviderConverter,
             credentialsForPersonConverter);

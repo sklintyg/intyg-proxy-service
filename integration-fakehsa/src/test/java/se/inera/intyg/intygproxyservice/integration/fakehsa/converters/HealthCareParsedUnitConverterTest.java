@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 import se.inera.intyg.intygproxyservice.integration.fakehsa.repository.model.ParsedCareUnit;
 import se.inera.intyg.intygproxyservice.integration.fakehsa.repository.model.ParsedSubUnit;
 
-class HealthCareUnitConverterTest {
+class HealthCareParsedUnitConverterTest {
 
   private HealthCareUnitConverter healthCareUnitConverter;
 
@@ -43,7 +43,7 @@ class HealthCareUnitConverterTest {
   }
 
   @Nested
-  class ParsedCareHealthHealthCareUnitConverter {
+  class ParsedCareHealthHealthCareParsedUnitConverter {
 
     @Test
     void shouldSetIsHealthCareUnitToTrue() {
@@ -162,7 +162,7 @@ class HealthCareUnitConverterTest {
   }
 
   @Nested
-  class ParsedSubHealthHealthCareUnitConverter {
+  class ParsedSubHealthHealthCareParsedUnitConverter {
 
     @Test
     void shouldSetIsHealthCareUnitToFalse() {

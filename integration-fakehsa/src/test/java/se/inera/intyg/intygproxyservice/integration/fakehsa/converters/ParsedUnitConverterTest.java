@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 import se.inera.intyg.intygproxyservice.integration.fakehsa.repository.model.ParsedCareUnit;
 import se.inera.intyg.intygproxyservice.integration.fakehsa.repository.model.ParsedSubUnit;
 
-class UnitConverterTest {
+class ParsedUnitConverterTest {
 
   private static final String HSA_ID = "hsaId";
   private static final String UNIT_NAME = "unitName";
@@ -37,56 +37,56 @@ class UnitConverterTest {
   private static final String MAIL = "mail";
   private static final String COUNTRY_CODE = "countryCode";
   private static final String PHONE_NUMBER = "phoneNumber";
-  private UnitConverter unitConverter = new UnitConverter();
+  private ParsedUnitConverter parsedUnitConverter = new ParsedUnitConverter();
 
   @Nested
   class ParsedUnitTest {
 
     @Test
     void shouldConvertId() {
-      final var result = unitConverter.convert(getParsedUnit()).getUnitHsaId();
+      final var result = parsedUnitConverter.convert(getParsedUnit()).getUnitHsaId();
       assertEquals(HSA_ID, result);
     }
 
     @Test
     void shouldConvertName() {
-      final var result = unitConverter.convert(getParsedUnit()).getUnitName();
+      final var result = parsedUnitConverter.convert(getParsedUnit()).getUnitName();
       assertEquals(UNIT_NAME, result);
     }
 
     @Test
     void shouldConvertMail() {
-      final var result = unitConverter.convert(getParsedUnit()).getMail();
+      final var result = parsedUnitConverter.convert(getParsedUnit()).getMail();
       assertEquals(MAIL, result);
     }
 
     @Test
     void shouldConvertPostalCode() {
-      final var result = unitConverter.convert(getParsedUnit()).getPostalCode();
+      final var result = parsedUnitConverter.convert(getParsedUnit()).getPostalCode();
       assertEquals(POSTAL_CODE, result);
     }
 
     @Test
     void shouldConvertPostalAddress() {
-      final var result = unitConverter.convert(getParsedUnit()).getPostalAddress();
+      final var result = parsedUnitConverter.convert(getParsedUnit()).getPostalAddress();
       assertEquals(List.of(POSTAL_ADDRESS, POSTAL_TOWN), result);
     }
 
     @Test
     void shouldConvertCountryCode() {
-      final var result = unitConverter.convert(getParsedUnit()).getCountyCode();
+      final var result = parsedUnitConverter.convert(getParsedUnit()).getCountyCode();
       assertEquals(COUNTRY_CODE, result);
     }
 
     @Test
     void shouldConvertMunicipalityCode() {
-      final var result = unitConverter.convert(getParsedUnit()).getMunicipalityCode();
+      final var result = parsedUnitConverter.convert(getParsedUnit()).getMunicipalityCode();
       assertEquals(MUNICIPALITY_CODE, result);
     }
 
     @Test
     void shouldConvertPhoneNumber() {
-      final var result = unitConverter.convert(getParsedUnit()).getTelephoneNumber();
+      final var result = parsedUnitConverter.convert(getParsedUnit()).getTelephoneNumber();
       assertEquals(List.of(PHONE_NUMBER), result);
     }
   }
@@ -96,49 +96,49 @@ class UnitConverterTest {
 
     @Test
     void shouldConvertId() {
-      final var result = unitConverter.convert(getParsedSubUnit()).getUnitHsaId();
+      final var result = parsedUnitConverter.convert(getParsedSubUnit()).getUnitHsaId();
       assertEquals(HSA_ID, result);
     }
 
     @Test
     void shouldConvertName() {
-      final var result = unitConverter.convert(getParsedSubUnit()).getUnitName();
+      final var result = parsedUnitConverter.convert(getParsedSubUnit()).getUnitName();
       assertEquals(UNIT_NAME, result);
     }
 
     @Test
     void shouldConvertMail() {
-      final var result = unitConverter.convert(getParsedSubUnit()).getMail();
+      final var result = parsedUnitConverter.convert(getParsedSubUnit()).getMail();
       assertEquals(MAIL, result);
     }
 
     @Test
     void shouldConvertPostalCode() {
-      final var result = unitConverter.convert(getParsedSubUnit()).getPostalCode();
+      final var result = parsedUnitConverter.convert(getParsedSubUnit()).getPostalCode();
       assertEquals(POSTAL_CODE, result);
     }
 
     @Test
     void shouldConvertPostalAddress() {
-      final var result = unitConverter.convert(getParsedSubUnit()).getPostalAddress();
+      final var result = parsedUnitConverter.convert(getParsedSubUnit()).getPostalAddress();
       assertEquals(List.of(POSTAL_ADDRESS, POSTAL_TOWN), result);
     }
 
     @Test
     void shouldConvertCountryCode() {
-      final var result = unitConverter.convert(getParsedSubUnit()).getCountyCode();
+      final var result = parsedUnitConverter.convert(getParsedSubUnit()).getCountyCode();
       assertEquals(COUNTRY_CODE, result);
     }
 
     @Test
     void shouldConvertMunicipalityCode() {
-      final var result = unitConverter.convert(getParsedSubUnit()).getMunicipalityCode();
+      final var result = parsedUnitConverter.convert(getParsedSubUnit()).getMunicipalityCode();
       assertEquals(MUNICIPALITY_CODE, result);
     }
 
     @Test
     void shouldConvertPhoneNumber() {
-      final var result = unitConverter.convert(getParsedSubUnit()).getTelephoneNumber();
+      final var result = parsedUnitConverter.convert(getParsedSubUnit()).getTelephoneNumber();
       assertEquals(List.of(PHONE_NUMBER), result);
     }
   }

@@ -99,17 +99,17 @@ class UnitServiceV2Test {
 
       assertEquals(convertedUnit, response.unit());
     }
+  }
 
-    @Test
-    void shallReturnNullUnitWhenUnitIsMissingInResponse() {
-      final var emptyResponse = GetUnitIntegrationResponse.builder().build();
-      when(getUnitIntegrationService.get(any(GetUnitIntegrationRequest.class)))
-          .thenReturn(emptyResponse);
-      when(unitConverter.convert(null)).thenReturn(null);
+  @Test
+  void shallReturnNullUnitWhenUnitIsMissingInResponse() {
+    final var emptyResponse = GetUnitIntegrationResponse.builder().build();
+    when(getUnitIntegrationService.get(any(GetUnitIntegrationRequest.class)))
+        .thenReturn(emptyResponse);
+    when(unitConverter.convert(null)).thenReturn(null);
 
-      final var response = unitService.get(REQUEST);
+    final var response = unitService.get(REQUEST);
 
-      assertNull(response.unit());
-    }
+    assertNull(response.unit());
   }
 }

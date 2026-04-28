@@ -33,6 +33,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import riv.infrastructure.directory.organization._5.AddressType;
+import se.inera.intyg.intygproxyservice.integration.api.organization.model.Address;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.BusinessClassification;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.GeoCoordRt90;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.GeoCoordSweref99;
@@ -51,7 +52,7 @@ class UnitTypeConverterTest {
   @Mock private GeoCoordSweref99TypeConverter geoCoordSweref99TypeConverter;
 
   @Mock private BusinessClassificationTypeConverter businessClassificationTypeConverter;
-
+  @Mock private StructuredAddressConverter structuredAddressConverter;
   @InjectMocks private UnitTypeConverter unitTypeConverter;
 
   public static final LocalDateTime UNIT_END_DATE = LocalDateTime.now().plusDays(10);
@@ -246,6 +247,18 @@ class UnitTypeConverterTest {
     final var response = unitTypeConverter.convert(type);
 
     assertEquals(business, response.getBusinessClassification().get(0));
+  }
+
+  @Test
+  void shouldConvertStructuredAddress() {
+    final var type = mock(UnitType.class);
+    final var address =
+        Address.builder().address("Test Street 1").zipCode("12345").city("Test City").build();
+    when(structuredAddressConverter.convert(any(UnitType.class))).thenReturn(address);
+
+    final var response = unitTypeConverter.convert(type);
+
+    assertEquals(address, response.getAddress());
   }
 
   @Test
