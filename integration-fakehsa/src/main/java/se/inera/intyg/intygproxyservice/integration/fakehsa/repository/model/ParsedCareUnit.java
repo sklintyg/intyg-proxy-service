@@ -33,13 +33,10 @@ import se.inera.intyg.intygproxyservice.integration.api.organization.model.Addre
 @AllArgsConstructor
 public class ParsedCareUnit {
 
-  private static final long serialVersionUID = 460424685142490104L;
-
   private LocalDateTime start;
   private LocalDateTime end;
 
-  @Builder.Default
-  private List<ParsedSubUnit> subUnits = new ArrayList<>();
+  @Builder.Default private List<ParsedSubUnit> subUnits = new ArrayList<>();
 
   private String id;
 

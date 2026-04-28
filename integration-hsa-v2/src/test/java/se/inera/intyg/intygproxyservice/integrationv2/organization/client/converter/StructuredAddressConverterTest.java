@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2026 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package se.inera.intyg.intygproxyservice.integrationv2.organization.client.converter;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -10,6 +28,8 @@ import static org.mockito.Mockito.when;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -29,13 +49,7 @@ class StructuredAddressConverterTest {
     final var type = mock(UnitType.class);
     final var structuredPostalAddress = createStructuredPostalAddressType();
     final var expected =
-        Address.builder()
-            .street("Test Street")
-            .streetNumber("1")
-            .streetLetter("A")
-            .zipCode("12345")
-            .city("Test town")
-            .build();
+        Address.builder().address("Test Street 1 A").zipCode("12345").city("Test town").build();
     when(type.getStructuredPostalAddress()).thenReturn(structuredPostalAddress);
 
     final var result = addressConverter.convert(type);
@@ -56,7 +70,7 @@ class StructuredAddressConverterTest {
     final var result = addressConverter.convert(type);
 
     assertAll(
-        () -> assertEquals("Test Street 1", result.street()),
+        () -> assertEquals("Test Street 1", result.address()),
         () -> assertEquals("12345", result.zipCode()),
         () -> assertEquals("Test town", result.city()));
   }
@@ -87,9 +101,22 @@ class StructuredAddressConverterTest {
 
     final var result = addressConverter.convert(type);
 
-    assertEquals("", result.street());
+    assertNull(result.address());
     assertNull(result.zipCode());
     assertNull(result.city());
+  }
+
+  @ParameterizedTest
+  @NullAndEmptySource
+  void shouldReturnNullAddressWhenStreetIsMissing(String street) {
+    final var type = mock(UnitType.class);
+    final var structuredAddress = createStructuredPostalAddressType();
+    structuredAddress.setStreet(street);
+    when(type.getStructuredPostalAddress()).thenReturn(structuredAddress);
+
+    final var result = addressConverter.convert(type);
+
+    assertNull(result.address());
   }
 
   @Test

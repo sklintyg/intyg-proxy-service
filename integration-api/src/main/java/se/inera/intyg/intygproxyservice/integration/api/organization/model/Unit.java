@@ -28,12 +28,9 @@ import lombok.Value;
 @Builder
 public class Unit {
 
-  @Builder.Default
-  List<String> businessType = new ArrayList<>();
-  @Builder.Default
-  List<BusinessClassification> businessClassification = new ArrayList<>();
-  @Builder.Default
-  List<String> careType = new ArrayList<>();
+  @Builder.Default List<String> businessType = new ArrayList<>();
+  @Builder.Default List<BusinessClassification> businessClassification = new ArrayList<>();
+  @Builder.Default List<String> careType = new ArrayList<>();
   String countyName;
   String countyCode;
   GeoCoordRt90 geographicalCoordinatesRt90;
@@ -46,14 +43,10 @@ public class Unit {
   Boolean feignedUnit;
   String unitHsaId;
   String unitName;
-  @Builder.Default
-  List<String> postalAddress = new ArrayList<>();
-
-  @Builder.Default
-  List<String> telephoneNumber = new ArrayList<>();
+  @Builder.Default List<String> postalAddress = new ArrayList<>();
+  @Builder.Default List<String> telephoneNumber = new ArrayList<>();
   String postalCode;
   Address address;
   String mail;
-  @Builder.Default
-  List<String> management = new ArrayList<>();
+  @Builder.Default List<String> management = new ArrayList<>();
 }

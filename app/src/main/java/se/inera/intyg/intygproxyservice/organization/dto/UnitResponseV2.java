@@ -19,11 +19,6 @@
 package se.inera.intyg.intygproxyservice.organization.dto;
 
 import lombok.Builder;
-import lombok.Value;
 
-@Value
 @Builder
-public class UnitResponseV2 {
-
-  UnitDTO unit;
-}
+public record UnitResponseV2(UnitDTO unit) {}
