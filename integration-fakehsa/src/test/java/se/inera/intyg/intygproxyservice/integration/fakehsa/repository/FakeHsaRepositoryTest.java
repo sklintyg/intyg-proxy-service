@@ -46,7 +46,7 @@ import se.inera.intyg.intygproxyservice.integration.fakehsa.converters.Credentia
 import se.inera.intyg.intygproxyservice.integration.fakehsa.converters.EmployeeConverter;
 import se.inera.intyg.intygproxyservice.integration.fakehsa.converters.HealthCareUnitConverter;
 import se.inera.intyg.intygproxyservice.integration.fakehsa.converters.HealthCareUnitMembersConverter;
-import se.inera.intyg.intygproxyservice.integration.fakehsa.converters.ParsedUnitConverter;
+import se.inera.intyg.intygproxyservice.integration.fakehsa.converters.UnitConverter;
 import se.inera.intyg.intygproxyservice.integration.fakehsa.repository.model.ParsedCareProvider;
 import se.inera.intyg.intygproxyservice.integration.fakehsa.repository.model.ParsedCareUnit;
 import se.inera.intyg.intygproxyservice.integration.fakehsa.repository.model.ParsedCredentialInformation;
@@ -57,22 +57,14 @@ import se.inera.intyg.intygproxyservice.integration.fakehsa.repository.model.Par
 class FakeHsaRepositoryTest {
 
   private static final String UNIT_NAME = "unitName";
-  @Mock
-  private EmployeeConverter employeeConverter;
-  @Mock
-  private HealthCareUnitConverter healthCareUnitConverter;
-  @Mock
-  private HealthCareUnitMembersConverter healthCareUnitMembersConverter;
-  @Mock
-  private CareProviderConverter careProviderConverter;
-  @Mock
-  private CredentialInformationConverter credentialInformationConverter;
-  @Mock
-  private ParsedUnitConverter parsedUnitConverter;
-  @Mock
-  private CredentialsForPersonConverter credentialsForPersonConverter;
-  @InjectMocks
-  private FakeHsaRepository fakeHsaRepository;
+  @Mock private EmployeeConverter employeeConverter;
+  @Mock private HealthCareUnitConverter healthCareUnitConverter;
+  @Mock private HealthCareUnitMembersConverter healthCareUnitMembersConverter;
+  @Mock private CareProviderConverter careProviderConverter;
+  @Mock private CredentialInformationConverter credentialInformationConverter;
+  @Mock private UnitConverter unitConverter;
+  @Mock private CredentialsForPersonConverter credentialsForPersonConverter;
+  @InjectMocks private FakeHsaRepository fakeHsaRepository;
 
   private static final String HSA_ID = "HSAID";
   private static final String SUB_UNIT_HSA_ID = "SUBUNITHSAID";
@@ -229,7 +221,7 @@ class FakeHsaRepositoryTest {
 
       fakeHsaRepository.addParsedCareProvider(parsedCareProvider);
 
-      when(parsedUnitConverter.convert(parsedCareUnit)).thenReturn(expectedUnit);
+      when(unitConverter.convert(parsedCareUnit)).thenReturn(expectedUnit);
 
       final var result = fakeHsaRepository.getUnit(HSA_ID);
       assertEquals(expectedUnit, result);
@@ -248,7 +240,7 @@ class FakeHsaRepositoryTest {
 
       fakeHsaRepository.addParsedCareProvider(parsedCareProvider);
 
-      when(parsedUnitConverter.convert(parsedSubUnit)).thenReturn(expectedUnit);
+      when(unitConverter.convert(parsedSubUnit)).thenReturn(expectedUnit);
 
       final var result = fakeHsaRepository.getUnit(HSA_ID);
       assertEquals(expectedUnit, result);
@@ -289,7 +281,7 @@ class FakeHsaRepositoryTest {
       final var credentialInformation = CredentialInformation.builder().personHsaId(HSA_ID).build();
 
       when(credentialInformationConverter.convert(
-          eq(parsedCredentialInformation), eq(parsedHsaPerson), anyMap(), anyMap()))
+              eq(parsedCredentialInformation), eq(parsedHsaPerson), anyMap(), anyMap()))
           .thenReturn(credentialInformation);
 
       final var result = fakeHsaRepository.getCredentialInformation(HSA_ID);

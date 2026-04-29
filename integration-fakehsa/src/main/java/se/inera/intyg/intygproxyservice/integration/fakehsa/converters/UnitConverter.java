@@ -25,7 +25,7 @@ import se.inera.intyg.intygproxyservice.integration.fakehsa.repository.model.Par
 import se.inera.intyg.intygproxyservice.integration.fakehsa.repository.model.ParsedSubUnit;
 
 @Component
-public class ParsedUnitConverter {
+public class UnitConverter {
 
   public Unit convert(ParsedSubUnit parsedSubUnit) {
     return Unit.builder()
