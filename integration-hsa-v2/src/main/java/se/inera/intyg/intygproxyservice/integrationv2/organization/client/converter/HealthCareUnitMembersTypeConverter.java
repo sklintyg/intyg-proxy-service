@@ -32,6 +32,7 @@ public class HealthCareUnitMembersTypeConverter {
   private final HealthCareUnitMemberTypeConverter healthCareUnitMemberTypeConverter;
   private final HealthCareProviderTypeConverter healthCareProviderTypeConverter;
   private final AddressTypeConverter addressTypeConverter;
+  private final StructuredAddressConverter structuredAddressConverter;
 
   public HealthCareUnitMembers convert(HealthCareUnitMembersType type) {
     return HealthCareUnitMembers.builder()
@@ -46,6 +47,9 @@ public class HealthCareUnitMembersTypeConverter {
         .postalCode(type.getPostalCode())
         .telephoneNumber(type.getTelephoneNumber())
         .postalAddress(addressTypeConverter.convertV2(type.getPostalAddress()))
+        .address(
+            structuredAddressConverter.convertV2(
+                type.getPostalAddress(), type.getPostalCode(), type.getStructuredPostalAddress()))
         .healthCareUnitMember(
             type.getHealthCareUnitMember().stream()
                 .map(healthCareUnitMemberTypeConverter::convert)

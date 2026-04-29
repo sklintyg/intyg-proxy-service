@@ -37,6 +37,7 @@ public class HealthCareUnitMembers {
   @Builder.Default List<String> telephoneNumber = new ArrayList<>();
   @Builder.Default List<String> postalAddress = new ArrayList<>();
   String postalCode;
+  Address address;
   Boolean feignedHealthCareUnit;
   Boolean archivedHealthCareUnit;
   HealthCareProvider healthCareProvider;

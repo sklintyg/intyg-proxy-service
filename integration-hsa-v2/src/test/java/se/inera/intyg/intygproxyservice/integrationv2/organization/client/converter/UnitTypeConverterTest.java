@@ -45,15 +45,21 @@ import se.riv.infrastructure.directory.organization.getunitresponder.v5.UnitType
 @ExtendWith(MockitoExtension.class)
 class UnitTypeConverterTest {
 
-  @Mock private AddressTypeConverter addressTypeConverter;
+  @Mock
+  private AddressTypeConverter addressTypeConverter;
 
-  @Mock private GeoCoordRt90TypeConverter geoCoordRt90TypeConverter;
+  @Mock
+  private GeoCoordRt90TypeConverter geoCoordRt90TypeConverter;
 
-  @Mock private GeoCoordSweref99TypeConverter geoCoordSweref99TypeConverter;
+  @Mock
+  private GeoCoordSweref99TypeConverter geoCoordSweref99TypeConverter;
 
-  @Mock private BusinessClassificationTypeConverter businessClassificationTypeConverter;
-  @Mock private StructuredAddressConverter structuredAddressConverter;
-  @InjectMocks private UnitTypeConverter unitTypeConverter;
+  @Mock
+  private BusinessClassificationTypeConverter businessClassificationTypeConverter;
+  @Mock
+  private StructuredAddressConverter structuredAddressConverter;
+  @InjectMocks
+  private UnitTypeConverter unitTypeConverter;
 
   public static final LocalDateTime UNIT_END_DATE = LocalDateTime.now().plusDays(10);
   public static final LocalDateTime UNIT_START_DATE = LocalDateTime.now().plusDays(9);
@@ -246,7 +252,7 @@ class UnitTypeConverterTest {
 
     final var response = unitTypeConverter.convert(type);
 
-    assertEquals(business, response.getBusinessClassification().get(0));
+    assertEquals(business, response.getBusinessClassification().getFirst());
   }
 
   @Test
@@ -254,7 +260,7 @@ class UnitTypeConverterTest {
     final var type = mock(UnitType.class);
     final var address =
         Address.builder().address("Test Street 1").zipCode("12345").city("Test City").build();
-    when(structuredAddressConverter.convert(any(UnitType.class))).thenReturn(address);
+    when(structuredAddressConverter.convertV5(any(UnitType.class))).thenReturn(address);
 
     final var response = unitTypeConverter.convert(type);
 
