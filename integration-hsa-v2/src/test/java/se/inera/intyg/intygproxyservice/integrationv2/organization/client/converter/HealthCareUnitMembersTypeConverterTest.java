@@ -50,17 +50,12 @@ class HealthCareUnitMembersTypeConverterTest {
   public static final LocalDateTime UNIT_END_DATE = LocalDateTime.now().plusDays(10);
   public static final LocalDateTime UNIT_START_DATE = LocalDateTime.now().plusDays(9);
 
-  @Mock
-  HealthCareProviderTypeConverter healthCareProviderTypeConverter;
-  @Mock
-  HealthCareUnitMemberTypeConverter healthCareUnitMemberTypeConverter;
-  @Mock
-  AddressTypeConverter addressTypeConverter;
-  @Mock
-  StructuredAddressConverter structuredAddressConverter;
+  @Mock HealthCareProviderTypeConverter healthCareProviderTypeConverter;
+  @Mock HealthCareUnitMemberTypeConverter healthCareUnitMemberTypeConverter;
+  @Mock AddressTypeConverter addressTypeConverter;
+  @Mock StructuredAddressConverter structuredAddressConverter;
 
-  @InjectMocks
-  HealthCareUnitMembersTypeConverter healthCareUnitMembersTypeConverter;
+  @InjectMocks HealthCareUnitMembersTypeConverter healthCareUnitMembersTypeConverter;
 
   @Nested
   class HealthCareUnit {
