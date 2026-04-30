@@ -168,8 +168,7 @@ class StructuredAddressConverterTest {
       when(type.getStructuredPostalAddress()).thenReturn(null);
       when(type.getPostalAddress()).thenReturn(postalAddress);
       when(type.getPostalCode()).thenReturn(null);
-      when(addressTypeConverter.convertV5(postalAddress))
-          .thenReturn(List.of("12345 Test town"));
+      when(addressTypeConverter.convertV5(postalAddress)).thenReturn(List.of("12345 Test town"));
 
       final var result = addressConverter.convertV5(type);
 
@@ -318,8 +317,7 @@ class StructuredAddressConverterTest {
     void shouldReturnEmptyAddressWhenOnlyLastLinePresent() {
       final var postalAddress =
           mock(se.riv.infrastructure.directory.organization.v2.AddressType.class);
-      when(addressTypeConverter.convertV2(postalAddress))
-          .thenReturn(List.of("12345 Test town"));
+      when(addressTypeConverter.convertV2(postalAddress)).thenReturn(List.of("12345 Test town"));
 
       final var result = addressConverter.convertV2(postalAddress, null, null);
 
