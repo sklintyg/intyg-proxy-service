@@ -95,6 +95,21 @@ class StructuredAddressConverterTest {
     }
 
     @Test
+    void shouldIgnoreBlankPostalCodeAndExtractZipFromAddressLines() {
+      final var type = mock(UnitType.class);
+      final var postalAddress = mock(AddressType.class);
+      when(type.getStructuredPostalAddress()).thenReturn(null);
+      when(type.getPostalAddress()).thenReturn(postalAddress);
+      when(type.getPostalCode()).thenReturn("   ");
+      when(addressTypeConverter.convertV5(postalAddress))
+          .thenReturn(List.of("Test Street 1", "12345 Test town"));
+
+      final var result = addressConverter.convertV5(type);
+
+      assertEquals("12345", result.zipCode());
+    }
+
+    @Test
     void shouldHandleMissingAddressLines() {
       final var type = mock(UnitType.class);
       final var postalAddress = mock(AddressType.class);
@@ -144,6 +159,39 @@ class StructuredAddressConverterTest {
           () -> assertEquals("Test Street 1", result.address()),
           () -> assertNull(result.zipCode()),
           () -> assertEquals("Test town", result.city()));
+    }
+
+    @Test
+    void shouldReturnEmptyAddressWhenOnlyLastLinePresent() {
+      final var type = mock(UnitType.class);
+      final var postalAddress = mock(AddressType.class);
+      when(type.getStructuredPostalAddress()).thenReturn(null);
+      when(type.getPostalAddress()).thenReturn(postalAddress);
+      when(type.getPostalCode()).thenReturn(null);
+      when(addressTypeConverter.convertV5(postalAddress))
+          .thenReturn(List.of("12345 Test town"));
+
+      final var result = addressConverter.convertV5(type);
+
+      assertAll(
+          () -> assertEquals("", result.address()),
+          () -> assertEquals("12345", result.zipCode()),
+          () -> assertEquals("Test town", result.city()));
+    }
+
+    @Test
+    void shouldJoinMultipleStreetLines() {
+      final var type = mock(UnitType.class);
+      final var postalAddress = mock(AddressType.class);
+      when(type.getStructuredPostalAddress()).thenReturn(null);
+      when(type.getPostalAddress()).thenReturn(postalAddress);
+      when(type.getPostalCode()).thenReturn(null);
+      when(addressTypeConverter.convertV5(postalAddress))
+          .thenReturn(List.of("Line 1", "Line 2", "12345 Test town"));
+
+      final var result = addressConverter.convertV5(type);
+
+      assertEquals("Line 1 Line 2", result.address());
     }
 
     @Test
@@ -264,6 +312,45 @@ class StructuredAddressConverterTest {
           () -> assertEquals("Test Street 1", result.address()),
           () -> assertNull(result.zipCode()),
           () -> assertEquals("Test town", result.city()));
+    }
+
+    @Test
+    void shouldReturnEmptyAddressWhenOnlyLastLinePresent() {
+      final var postalAddress =
+          mock(se.riv.infrastructure.directory.organization.v2.AddressType.class);
+      when(addressTypeConverter.convertV2(postalAddress))
+          .thenReturn(List.of("12345 Test town"));
+
+      final var result = addressConverter.convertV2(postalAddress, null, null);
+
+      assertAll(
+          () -> assertEquals("", result.address()),
+          () -> assertEquals("12345", result.zipCode()),
+          () -> assertEquals("Test town", result.city()));
+    }
+
+    @Test
+    void shouldJoinMultipleStreetLines() {
+      final var postalAddress =
+          mock(se.riv.infrastructure.directory.organization.v2.AddressType.class);
+      when(addressTypeConverter.convertV2(postalAddress))
+          .thenReturn(List.of("Line 1", "Line 2", "12345 Test town"));
+
+      final var result = addressConverter.convertV2(postalAddress, null, null);
+
+      assertEquals("Line 1 Line 2", result.address());
+    }
+
+    @Test
+    void shouldIgnoreBlankPostalCodeAndExtractZipFromAddressLines() {
+      final var postalAddress =
+          mock(se.riv.infrastructure.directory.organization.v2.AddressType.class);
+      when(addressTypeConverter.convertV2(postalAddress))
+          .thenReturn(List.of("Test Street 1", "12345 Test town"));
+
+      final var result = addressConverter.convertV2(postalAddress, "   ", null);
+
+      assertEquals("12345", result.zipCode());
     }
 
     @Test
