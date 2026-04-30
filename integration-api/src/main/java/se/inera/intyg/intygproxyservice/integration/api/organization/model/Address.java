@@ -18,28 +18,7 @@
  */
 package se.inera.intyg.intygproxyservice.integration.api.organization.model;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.Builder;
-import lombok.Value;
 
-@Value
 @Builder
-public class HealthCareUnitMembers {
-
-  String healthCareUnitName;
-  String healthCareUnitPublicName;
-  String healthCareUnitHsaId;
-  LocalDateTime healthCareUnitStartDate;
-  LocalDateTime healthCareUnitEndDate;
-  @Builder.Default List<String> healthCareUnitPrescriptionCode = new ArrayList<>();
-  @Builder.Default List<String> telephoneNumber = new ArrayList<>();
-  @Builder.Default List<String> postalAddress = new ArrayList<>();
-  String postalCode;
-  Address address;
-  Boolean feignedHealthCareUnit;
-  Boolean archivedHealthCareUnit;
-  HealthCareProvider healthCareProvider;
-  @Builder.Default List<HealthCareUnitMember> healthCareUnitMember = new ArrayList<>();
-}
+public record Address(String address, String zipCode, String city) {}

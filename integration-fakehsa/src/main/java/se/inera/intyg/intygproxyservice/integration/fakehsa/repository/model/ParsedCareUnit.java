@@ -25,14 +25,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import se.inera.intyg.intygproxyservice.integration.api.organization.model.Address;
 
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ParsedCareUnit {
-
-  private static final long serialVersionUID = 460424685142490104L;
 
   private LocalDateTime start;
   private LocalDateTime end;
@@ -50,6 +49,8 @@ public class ParsedCareUnit {
   private String postalCode;
 
   private String postalTown;
+
+  private Address address;
 
   private String telephoneNumber;
 

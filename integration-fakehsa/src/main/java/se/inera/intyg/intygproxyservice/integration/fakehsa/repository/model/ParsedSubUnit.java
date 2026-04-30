@@ -23,6 +23,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import se.inera.intyg.intygproxyservice.integration.api.organization.model.Address;
 
 @Data
 @Builder
@@ -41,6 +42,8 @@ public class ParsedSubUnit {
   private String mail;
 
   private String postalAddress;
+
+  private Address address;
 
   private String postalCode;
 

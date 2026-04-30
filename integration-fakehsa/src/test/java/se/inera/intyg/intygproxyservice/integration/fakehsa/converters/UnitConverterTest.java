@@ -37,7 +37,7 @@ class UnitConverterTest {
   private static final String MAIL = "mail";
   private static final String COUNTRY_CODE = "countryCode";
   private static final String PHONE_NUMBER = "phoneNumber";
-  private UnitConverter unitConverter = new UnitConverter();
+  private static final UnitConverter unitConverter = new UnitConverter();
 
   @Nested
   class ParsedUnitTest {

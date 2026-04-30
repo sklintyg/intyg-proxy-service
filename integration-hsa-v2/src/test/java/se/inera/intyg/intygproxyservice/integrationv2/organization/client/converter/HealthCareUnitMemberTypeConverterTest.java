@@ -35,6 +35,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import se.inera.intyg.intygproxyservice.integration.api.organization.model.Address;
 import se.riv.infrastructure.directory.organization.gethealthcareunitmembersresponder.v2.HealthCareUnitMemberType;
 import se.riv.infrastructure.directory.organization.v2.AddressType;
 
@@ -45,6 +46,7 @@ class HealthCareUnitMemberTypeConverterTest {
   public static final LocalDateTime MEMBER_START_DATE = LocalDateTime.now().plusDays(14);
 
   @Mock AddressTypeConverter addressTypeConverter;
+  @Mock StructuredAddressConverter structuredAddressConverter;
 
   @InjectMocks HealthCareUnitMemberTypeConverter healthCareUnitMemberTypeConverter;
 
@@ -134,6 +136,17 @@ class HealthCareUnitMemberTypeConverterTest {
       final var response = healthCareUnitMemberTypeConverter.convert(type);
 
       assertEquals(address, response.getHealthCareUnitMemberpostalAddress());
+    }
+
+    @Test
+    void shouldConvertStructuredAddress() {
+      final var expected =
+          Address.builder().address("Street 1").zipCode("12345").city("City").build();
+      when(structuredAddressConverter.convertV2(any(), any(), any())).thenReturn(expected);
+
+      final var response = healthCareUnitMemberTypeConverter.convert(type);
+
+      assertEquals(expected, response.getAddress());
     }
 
     @Test

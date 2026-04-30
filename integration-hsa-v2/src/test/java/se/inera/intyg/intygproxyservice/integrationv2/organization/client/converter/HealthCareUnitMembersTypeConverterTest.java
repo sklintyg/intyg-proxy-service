@@ -36,6 +36,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import se.inera.intyg.intygproxyservice.integration.api.organization.model.Address;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.HealthCareProvider;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.HealthCareUnitMember;
 import se.riv.infrastructure.directory.organization.gethealthcareunitmembersresponder.v2.HealthCareProviderType;
@@ -49,11 +50,17 @@ class HealthCareUnitMembersTypeConverterTest {
   public static final LocalDateTime UNIT_END_DATE = LocalDateTime.now().plusDays(10);
   public static final LocalDateTime UNIT_START_DATE = LocalDateTime.now().plusDays(9);
 
-  @Mock HealthCareProviderTypeConverter healthCareProviderTypeConverter;
-  @Mock HealthCareUnitMemberTypeConverter healthCareUnitMemberTypeConverter;
-  @Mock AddressTypeConverter addressTypeConverter;
+  @Mock
+  HealthCareProviderTypeConverter healthCareProviderTypeConverter;
+  @Mock
+  HealthCareUnitMemberTypeConverter healthCareUnitMemberTypeConverter;
+  @Mock
+  AddressTypeConverter addressTypeConverter;
+  @Mock
+  StructuredAddressConverter structuredAddressConverter;
 
-  @InjectMocks HealthCareUnitMembersTypeConverter healthCareUnitMembersTypeConverter;
+  @InjectMocks
+  HealthCareUnitMembersTypeConverter healthCareUnitMembersTypeConverter;
 
   @Nested
   class HealthCareUnit {
@@ -168,7 +175,7 @@ class HealthCareUnitMembersTypeConverterTest {
         .convert(any(HealthCareUnitMemberType.class));
 
     assertEquals(2, response.getHealthCareUnitMember().size());
-    assertEquals(member, response.getHealthCareUnitMember().get(0));
+    assertEquals(member, response.getHealthCareUnitMember().getFirst());
   }
 
   @Test
@@ -193,6 +200,19 @@ class HealthCareUnitMembersTypeConverterTest {
     final var response = healthCareUnitMembersTypeConverter.convert(type);
 
     assertEquals(address, response.getPostalAddress());
+  }
+
+  @Test
+  void shouldConvertStructuredAddress() {
+    final var type = mock(HealthCareUnitMembersType.class);
+    final var expected =
+        Address.builder().address("Street 1").zipCode("12345").city("City").build();
+
+    when(structuredAddressConverter.convertV2(any(), any(), any())).thenReturn(expected);
+
+    final var response = healthCareUnitMembersTypeConverter.convert(type);
+
+    assertEquals(expected, response.getAddress());
   }
 
   private HealthCareUnitMembersType getType() {
