@@ -38,9 +38,9 @@ import org.springframework.test.util.ReflectionTestUtils;
 import se.inera.intyg.intygproxyservice.integration.api.employee.Employee;
 import se.inera.intyg.intygproxyservice.integration.api.employee.GetEmployeeIntegrationRequest;
 import se.inera.intyg.intygproxyservice.integrationv2.employee.client.converter.GetEmployeeIncludingProtectedPersonResponseTypeConverter;
-import se.riv.infrastructure.directory.employee.getemployeeincludingprotectedperson.v4.rivtabp21.GetEmployeeIncludingProtectedPersonResponderInterface;
-import se.riv.infrastructure.directory.employee.getemployeeincludingprotectedpersonresponder.v4.GetEmployeeIncludingProtectedPersonResponseType;
-import se.riv.infrastructure.directory.employee.getemployeeincludingprotectedpersonresponder.v4.GetEmployeeIncludingProtectedPersonType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.employee.getemployeeincludingprotectedperson.v4.rivtabp21.GetEmployeeIncludingProtectedPersonResponderInterface;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.employee.getemployeeincludingprotectedpersonresponder.v4.GetEmployeeIncludingProtectedPersonResponseType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.employee.getemployeeincludingprotectedpersonresponder.v4.GetEmployeeIncludingProtectedPersonType;
 
 @ExtendWith(MockitoExtension.class)
 class HsaEmployeeClientTest {

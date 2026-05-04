@@ -23,7 +23,7 @@ import static se.inera.intyg.intygproxyservice.integration.common.TypeConverterH
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.Unit;
-import se.riv.infrastructure.directory.organization.getunitresponder.v5.UnitType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.getunitresponder.v5.UnitType;
 
 @Service
 @RequiredArgsConstructor

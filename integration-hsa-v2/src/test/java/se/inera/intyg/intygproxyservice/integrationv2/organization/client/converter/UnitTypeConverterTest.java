@@ -37,10 +37,10 @@ import se.inera.intyg.intygproxyservice.integration.api.organization.model.Addre
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.BusinessClassification;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.GeoCoordRt90;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.GeoCoordSweref99;
-import se.riv.infrastructure.directory.organization.getunitresponder.v5.BusinessClassificationType;
-import se.riv.infrastructure.directory.organization.getunitresponder.v5.GeoCoordRt90Type;
-import se.riv.infrastructure.directory.organization.getunitresponder.v5.GeoCoordSWEREF99Type;
-import se.riv.infrastructure.directory.organization.getunitresponder.v5.UnitType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.getunitresponder.v5.BusinessClassificationType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.getunitresponder.v5.GeoCoordRt90Type;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.getunitresponder.v5.GeoCoordSWEREF99Type;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.getunitresponder.v5.UnitType;
 
 @ExtendWith(MockitoExtension.class)
 class UnitTypeConverterTest {

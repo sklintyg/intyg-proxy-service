@@ -33,9 +33,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import se.riv.infrastructure.directory.employee.v4.HealthCareProfessionalLicenceSpecialityType;
-import se.riv.infrastructure.directory.employee.v4.PaTitleType;
-import se.riv.infrastructure.directory.employee.v4.PersonInformationType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.employee.v4.HealthCareProfessionalLicenceSpecialityType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.employee.v4.PaTitleType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.employee.v4.PersonInformationType;
 
 @ExtendWith(MockitoExtension.class)
 class PersonInformationTypeConverterTest {

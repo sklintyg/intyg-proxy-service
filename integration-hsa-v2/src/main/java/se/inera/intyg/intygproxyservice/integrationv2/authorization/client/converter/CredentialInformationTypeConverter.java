@@ -21,8 +21,8 @@ package se.inera.intyg.intygproxyservice.integrationv2.authorization.client.conv
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import se.inera.intyg.intygproxyservice.integration.api.authorization.model.CredentialInformation;
-import se.riv.infrastructure.directory.authorizationmanagement.v2.CredentialInformationType;
-import se.riv.infrastructure.directory.authorizationmanagement.v2.IIType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.authorizationmanagement.v2.CredentialInformationType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.authorizationmanagement.v2.IIType;
 
 @Component
 @RequiredArgsConstructor

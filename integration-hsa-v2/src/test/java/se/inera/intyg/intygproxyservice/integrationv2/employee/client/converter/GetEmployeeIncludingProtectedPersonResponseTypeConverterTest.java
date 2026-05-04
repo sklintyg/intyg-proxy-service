@@ -34,8 +34,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.intygproxyservice.integration.api.employee.Employee;
 import se.inera.intyg.intygproxyservice.integration.api.employee.PersonInformation;
-import se.riv.infrastructure.directory.employee.getemployeeincludingprotectedpersonresponder.v4.GetEmployeeIncludingProtectedPersonResponseType;
-import se.riv.infrastructure.directory.employee.v4.PersonInformationType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.employee.getemployeeincludingprotectedpersonresponder.v4.GetEmployeeIncludingProtectedPersonResponseType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.employee.v4.PersonInformationType;
 
 @ExtendWith(MockitoExtension.class)
 class GetEmployeeIncludingProtectedPersonResponseTypeConverterTest {

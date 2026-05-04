@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.GeoCoordSweref99;
-import se.riv.infrastructure.directory.organization.getunitresponder.v5.GeoCoordSWEREF99Type;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.getunitresponder.v5.GeoCoordSWEREF99Type;
 
 class GeoCoordSweref99TypeConverterTest {
 

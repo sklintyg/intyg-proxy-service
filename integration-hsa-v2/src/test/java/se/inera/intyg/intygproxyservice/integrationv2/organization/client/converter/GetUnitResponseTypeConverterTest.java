@@ -29,8 +29,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.Unit;
-import se.riv.infrastructure.directory.organization.getunitresponder.v5.GetUnitResponseType;
-import se.riv.infrastructure.directory.organization.getunitresponder.v5.UnitType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.getunitresponder.v5.GetUnitResponseType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.getunitresponder.v5.UnitType;
 
 @ExtendWith(MockitoExtension.class)
 class GetUnitResponseTypeConverterTest {
