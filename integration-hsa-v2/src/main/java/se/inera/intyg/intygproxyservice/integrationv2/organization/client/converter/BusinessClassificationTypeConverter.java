@@ -20,7 +20,7 @@ package se.inera.intyg.intygproxyservice.integrationv2.organization.client.conve
 
 import org.springframework.stereotype.Component;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.BusinessClassification;
-import se.riv.infrastructure.directory.organization.getunitresponder.v5.BusinessClassificationType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.getunitresponder.v5.BusinessClassificationType;
 
 @Component
 public class BusinessClassificationTypeConverter {

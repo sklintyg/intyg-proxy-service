@@ -28,8 +28,8 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import riv.infrastructure.directory.organization._5.StructuredPostalAddressType;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.Address;
-import se.riv.infrastructure.directory.organization.getunitresponder.v5.UnitType;
-import se.riv.infrastructure.directory.organization.v2.AddressType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.getunitresponder.v5.UnitType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.v2.AddressType;
 
 @Component
 @RequiredArgsConstructor

@@ -35,12 +35,12 @@ import se.inera.intyg.intygproxyservice.integration.api.authorization.model.Cred
 import se.inera.intyg.intygproxyservice.integration.api.authorization.model.HCPSpecialityCodes;
 import se.inera.intyg.intygproxyservice.integration.api.authorization.model.HsaSystemRole;
 import se.inera.intyg.intygproxyservice.integration.api.authorization.model.NursePrescriptionRight;
-import se.riv.infrastructure.directory.authorizationmanagement.v2.CommissionType;
-import se.riv.infrastructure.directory.authorizationmanagement.v2.CredentialInformationType;
-import se.riv.infrastructure.directory.authorizationmanagement.v2.HCPSpecialityCodesType;
-import se.riv.infrastructure.directory.authorizationmanagement.v2.HsaSystemRoleType;
-import se.riv.infrastructure.directory.authorizationmanagement.v2.IIType;
-import se.riv.infrastructure.directory.authorizationmanagement.v2.NursePrescriptionRightType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.authorizationmanagement.v2.CommissionType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.authorizationmanagement.v2.CredentialInformationType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.authorizationmanagement.v2.HCPSpecialityCodesType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.authorizationmanagement.v2.HsaSystemRoleType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.authorizationmanagement.v2.IIType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.authorizationmanagement.v2.NursePrescriptionRightType;
 
 @ExtendWith(MockitoExtension.class)
 class CredentialInformationTypeConverterTest {

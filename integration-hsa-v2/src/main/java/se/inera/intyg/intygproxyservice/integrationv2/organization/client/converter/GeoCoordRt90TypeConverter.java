@@ -20,7 +20,7 @@ package se.inera.intyg.intygproxyservice.integrationv2.organization.client.conve
 
 import org.springframework.stereotype.Component;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.GeoCoordRt90;
-import se.riv.infrastructure.directory.organization.getunitresponder.v5.GeoCoordRt90Type;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.getunitresponder.v5.GeoCoordRt90Type;
 
 @Component
 public class GeoCoordRt90TypeConverter {

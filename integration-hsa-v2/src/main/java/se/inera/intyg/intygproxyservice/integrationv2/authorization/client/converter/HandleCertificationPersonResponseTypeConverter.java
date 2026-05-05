@@ -20,7 +20,7 @@ package se.inera.intyg.intygproxyservice.integrationv2.authorization.client.conv
 
 import org.springframework.stereotype.Component;
 import se.inera.intyg.intygproxyservice.integration.api.authorization.model.Result;
-import se.riv.infrastructure.directory.authorizationmanagement.handlehospcertificationpersonresponder.v1.HandleHospCertificationPersonResponseType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.authorizationmanagement.handlehospcertificationpersonresponder.v1.HandleHospCertificationPersonResponseType;
 
 @Component
 public class HandleCertificationPersonResponseTypeConverter {

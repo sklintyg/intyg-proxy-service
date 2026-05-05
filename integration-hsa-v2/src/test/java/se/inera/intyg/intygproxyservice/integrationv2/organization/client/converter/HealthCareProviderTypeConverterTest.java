@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import se.riv.infrastructure.directory.organization.gethealthcareunitmembersresponder.v2.HealthCareProviderType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.gethealthcareunitmembersresponder.v2.HealthCareProviderType;
 
 @ExtendWith(MockitoExtension.class)
 class HealthCareProviderTypeConverterTest {
@@ -179,12 +179,12 @@ class HealthCareProviderTypeConverterTest {
           truncateToSeconds(response.getHealthCareProviderStartDate()));
     }
 
-    private se.riv.infrastructure.directory.organization.gethealthcareproviderresponder.v1
-            .HealthCareProviderType
+    private se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization
+            .gethealthcareproviderresponder.v1.HealthCareProviderType
         getType() {
       final var type =
-          new se.riv.infrastructure.directory.organization.gethealthcareproviderresponder.v1
-              .HealthCareProviderType();
+          new se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization
+              .gethealthcareproviderresponder.v1.HealthCareProviderType();
       type.setArchivedHealthCareProvider(true);
       type.setFeignedHealthCareProvider(true);
       type.setHealthCareProviderName("PROVIDER_NAME");

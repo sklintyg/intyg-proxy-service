@@ -25,7 +25,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.intygproxyservice.integration.api.authorization.model.HealthCareProfessionalLicence;
-import se.riv.infrastructure.directory.authorizationmanagement.v2.HealthCareProfessionalLicenceType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.authorizationmanagement.v2.HealthCareProfessionalLicenceType;
 
 @ExtendWith(MockitoExtension.class)
 class HealthCareProfessionalLicenceTypeConverterTest {

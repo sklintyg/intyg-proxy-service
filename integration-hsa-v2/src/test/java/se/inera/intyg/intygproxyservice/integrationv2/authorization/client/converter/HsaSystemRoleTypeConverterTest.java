@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 import se.inera.intyg.intygproxyservice.integration.api.authorization.model.HsaSystemRole;
-import se.riv.infrastructure.directory.authorizationmanagement.v2.HsaSystemRoleType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.authorizationmanagement.v2.HsaSystemRoleType;
 
 class HsaSystemRoleTypeConverterTest {
 
