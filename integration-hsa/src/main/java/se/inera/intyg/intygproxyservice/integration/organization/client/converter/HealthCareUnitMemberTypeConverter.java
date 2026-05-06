@@ -30,6 +30,7 @@ import se.riv.infrastructure.directory.organization.gethealthcareunitmembersresp
 public class HealthCareUnitMemberTypeConverter {
 
   private final AddressTypeConverter addressTypeConverter;
+  private final StructuredAddressConverter structuredAddressConverter;
 
   public HealthCareUnitMember convert(HealthCareUnitMemberType type) {
     return HealthCareUnitMember.builder()
@@ -45,6 +46,10 @@ public class HealthCareUnitMemberTypeConverter {
         .healthCareUnitMemberpostalAddress(
             addressTypeConverter.convertV2(type.getHealthCareUnitMemberpostalAddress()))
         .healthCareUnitMemberpostalCode(type.getHealthCareUnitMemberpostalCode())
+        .address(
+            structuredAddressConverter.convertV2(
+                type.getHealthCareUnitMemberpostalAddress(),
+                type.getHealthCareUnitMemberpostalCode()))
         .build();
   }
 }

@@ -32,6 +32,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import se.inera.intyg.intygproxyservice.integration.api.organization.model.Address;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.BusinessClassification;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.GeoCoordRt90;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.GeoCoordSweref99;
@@ -51,6 +52,8 @@ class UnitTypeConverterTest {
   @Mock private GeoCoordSweref99TypeConverter geoCoordSweref99TypeConverter;
 
   @Mock private BusinessClassificationTypeConverter businessClassificationTypeConverter;
+
+  @Mock private StructuredAddressConverter structuredAddressConverter;
 
   @InjectMocks private UnitTypeConverter unitTypeConverter;
 
@@ -160,6 +163,18 @@ class UnitTypeConverterTest {
     final var response = unitTypeConverter.convert(type);
 
     assertEquals(type.getMail(), response.getMail());
+  }
+
+  @Test
+  void shouldConvertStructuredAddress() {
+    final var type = new UnitType();
+    final var structuredAddress =
+        Address.builder().address("STREET 1").zipCode("12345").city("CITY").build();
+    when(structuredAddressConverter.convertV3(type)).thenReturn(structuredAddress);
+
+    final var response = unitTypeConverter.convert(type);
+
+    assertEquals(structuredAddress, response.getAddress());
   }
 
   @Test

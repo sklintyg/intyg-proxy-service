@@ -36,6 +36,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import se.inera.intyg.intygproxyservice.integration.api.organization.model.Address;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.HealthCareProvider;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.HealthCareUnitMember;
 import se.riv.infrastructure.directory.organization.gethealthcareunitmembersresponder.v2.HealthCareProviderType;
@@ -52,6 +53,7 @@ class HealthCareUnitMembersTypeConverterTest {
   @Mock HealthCareProviderTypeConverter healthCareProviderTypeConverter;
   @Mock HealthCareUnitMemberTypeConverter healthCareUnitMemberTypeConverter;
   @Mock AddressTypeConverter addressTypeConverter;
+  @Mock StructuredAddressConverter structuredAddressConverter;
 
   @InjectMocks HealthCareUnitMembersTypeConverter healthCareUnitMembersTypeConverter;
 
@@ -193,6 +195,22 @@ class HealthCareUnitMembersTypeConverterTest {
     final var response = healthCareUnitMembersTypeConverter.convert(type);
 
     assertEquals(address, response.getPostalAddress());
+  }
+
+  @Test
+  void shouldConvertToStructuredAddress() {
+    final var type = mock(HealthCareUnitMembersType.class);
+    final var addressType = mock(AddressType.class);
+    final var structuredAddress =
+        Address.builder().address("STREET 1").zipCode("12345").city("CITY").build();
+
+    when(type.getPostalAddress()).thenReturn(addressType);
+    when(structuredAddressConverter.convertV2(any(AddressType.class), any()))
+        .thenReturn(structuredAddress);
+
+    final var response = healthCareUnitMembersTypeConverter.convert(type);
+
+    assertEquals(structuredAddress, response.getAddress());
   }
 
   private HealthCareUnitMembersType getType() {
