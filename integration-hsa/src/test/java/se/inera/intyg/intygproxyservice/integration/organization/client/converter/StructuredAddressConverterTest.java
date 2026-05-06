@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Nested;
@@ -81,8 +82,11 @@ class StructuredAddressConverterTest {
 
       @Test
       void shouldFilterNullLinesFromStreet() {
-        when(addressTypeConverter.convertV2(any()))
-            .thenReturn(List.of("Street 1", null, "12345 City"));
+        final var list = new ArrayList<String>();
+        list.add("Street 1");
+        list.add(null);
+        list.add("12345 City");
+        when(addressTypeConverter.convertV2(any())).thenReturn(list);
 
         final var result = structuredAddressConverter.convertV2(new AddressType(), null);
 
