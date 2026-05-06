@@ -33,6 +33,7 @@ public class UnitTypeConverter {
   private final GeoCoordRt90TypeConverter geoCoordRt90TypeConverter;
   private final GeoCoordSweref99TypeConverter geoCoordSweref99TypeConverter;
   private final BusinessClassificationTypeConverter businessClassificationTypeConverter;
+  private final StructuredAddressConverter structuredAddressConverter;
 
   public Unit convert(UnitType type) {
     return Unit.builder()
@@ -49,6 +50,7 @@ public class UnitTypeConverter {
         .unitEndDate(toLocalDate(type.getUnitEndDate()))
         .postalCode(type.getPostalCode())
         .postalAddress(addressTypeConverter.convertV3(type.getPostalAddress()))
+        .address(structuredAddressConverter.convertV3(type))
         .careType(type.getCareType())
         .businessType(type.getBusinessType())
         .management(type.getManagement())
