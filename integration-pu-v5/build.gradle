@@ -1,5 +1,5 @@
 plugins {
-    id "com.yupzip.wsdl2java" version "3.0.0" apply true
+    id "com.yupzip.wsdl2java" version "4.1.0" apply true
 }
 
 dependencies {
@@ -32,9 +32,10 @@ dependencies {
 }
 
 wsdl2java {
-    wsdlDir = file("src/main/resources/schemas")
-    cxfVersion = project.getProperties().get("wsdlCxfVersion")
-    cxfPluginVersion = project.getProperties().get("wsdlCxfPluginVersion")
+    def schemasDir = "$projectDir/src/main/resources/schemas"
+    wsdlDir = schemasDir
+    cxfVersion = project.getProperties().get("cxfPluginVersion")
+    cxfPluginVersion = project.getProperties().get("cxfPluginVersion")
 
     def personVersion5 = "5.0"
 
@@ -58,6 +59,6 @@ wsdl2java {
                     "urn:riv:strategicresourcemanagement:persons:person:GetPersonsForProfile:5:rivtabp21=se.riv.strategicresourcemanagement.persons.person.getpersonsforprofile.v5.rivtabp21",
                     "-wsdlLocation",
                     "classpath:interactions/GetPersonsForProfileInteraction/GetPersonsForProfileInteraction_5.0_RIVTABP21.wsdl",
-                    "$wsdlDir/person/$personVersion5/interactions/GetPersonsForProfileInteraction/GetPersonsForProfileInteraction_5.0_RIVTABP21.wsdl"]
+                    "$schemasDir/person/$personVersion5/interactions/GetPersonsForProfileInteraction/GetPersonsForProfileInteraction_5.0_RIVTABP21.wsdl"]
     ]
 }

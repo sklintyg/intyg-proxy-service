@@ -1,5 +1,5 @@
 plugins {
-    id "com.yupzip.wsdl2java" version "3.0.0" apply true
+    id "com.yupzip.wsdl2java" version "4.1.0" apply true
 }
 
 dependencies {
@@ -33,10 +33,10 @@ dependencies {
 }
 
 wsdl2java {
-    wsdlDir = file("src/main/resources/schemas")
-    cxfVersion = project.getProperties().get("wsdlCxfVersion")
-    cxfPluginVersion = project.getProperties().get("wsdlCxfPluginVersion")
-    includeJava8XmlDependencies = false
+    def schemasDir = "$projectDir/src/main/resources/schemas"
+    wsdlDir = schemasDir
+    cxfVersion = project.getProperties().get("cxfPluginVersion")
+    cxfPluginVersion = project.getProperties().get("cxfPluginVersion")
 
     def authorizationManagementVersion = "2.4.5"
     def employeeVersion = "4.0"
@@ -84,7 +84,7 @@ wsdl2java {
                     "urn:riv:infrastructure:directory:authorizationmanagement:GetCredentialsForPersonIncludingProtectedPersonResponder:2.1=se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.authorizationmanagement.getcredentialsforpersonincludingprotectedpersonresponder.v2",
                     "-wsdlLocation",
                     "classpath:interactions/GetCredentialsForPersonIncludingProtectedPersonInteraction/GetCredentialsForPersonIncludingProtectedPersonInteraction_2.2_RIVTABP21.wsdl",
-                    "$wsdlDir/authorizationmanagement/$authorizationManagementVersion/interactions/GetCredentialsForPersonIncludingProtectedPersonInteraction/GetCredentialsForPersonIncludingProtectedPersonInteraction_2.2_RIVTABP21.wsdl"],
+                    "$schemasDir/authorizationmanagement/$authorizationManagementVersion/interactions/GetCredentialsForPersonIncludingProtectedPersonInteraction/GetCredentialsForPersonIncludingProtectedPersonInteraction_2.2_RIVTABP21.wsdl"],
 
             commonAuthorizationOptions + [
                     "-p",
@@ -93,7 +93,7 @@ wsdl2java {
                     "urn:riv:infrastructure:directory:authorizationmanagement:HandleHospCertificationPersonResponder:1=se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.authorizationmanagement.handlehospcertificationpersonresponder.v1",
                     "-wsdlLocation",
                     "classpath:interactions/HandleHospCertificationPersonInteraction/HandleHospCertificationPersonInteraction_1.0_RIVTABP21.wsdl",
-                    "$wsdlDir/authorizationmanagement/$authorizationManagementVersion/interactions/HandleHospCertificationPersonInteraction/HandleHospCertificationPersonInteraction_1.0_RIVTABP21.wsdl"],
+                    "$schemasDir/authorizationmanagement/$authorizationManagementVersion/interactions/HandleHospCertificationPersonInteraction/HandleHospCertificationPersonInteraction_1.0_RIVTABP21.wsdl"],
 
             commonAuthorizationOptions + [
                     "-p",
@@ -102,7 +102,7 @@ wsdl2java {
                     "urn:riv:infrastructure:directory:authorizationmanagement:GetHospCredentialsForPersonResponder:1=se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.authorizationmanagement.gethospcredentialsforpersonresponder.v1",
                     "-wsdlLocation",
                     "classpath:interactions/GetHospCredentialsForPersonInteraction/GetHospCredentialsForPersonInteraction_1.0_RIVTABP21.wsdl",
-                    "$wsdlDir/authorizationmanagement/$authorizationManagementVersion/interactions/GetHospCredentialsForPersonInteraction/GetHospCredentialsForPersonInteraction_1.0_RIVTABP21.wsdl"],
+                    "$schemasDir/authorizationmanagement/$authorizationManagementVersion/interactions/GetHospCredentialsForPersonInteraction/GetHospCredentialsForPersonInteraction_1.0_RIVTABP21.wsdl"],
 
             commonAuthorizationOptions + [
                     "-p",
@@ -111,7 +111,7 @@ wsdl2java {
                     "urn:riv:infrastructure:directory:authorizationmanagement:GetHospLastUpdateResponder:1=se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.authorizationmanagement.gethosplastupdateresponder.v1",
                     "-wsdlLocation",
                     "classpath:interactions/GetHospLastUpdate/GetHospLastUpdateInteraction_1.0_RIVTABP21.wsdl",
-                    "$wsdlDir/authorizationmanagement/$authorizationManagementVersion/interactions/GetHospLastUpdateInteraction/GetHospLastUpdateInteraction_1.0_RIVTABP21.wsdl"],
+                    "$schemasDir/authorizationmanagement/$authorizationManagementVersion/interactions/GetHospLastUpdateInteraction/GetHospLastUpdateInteraction_1.0_RIVTABP21.wsdl"],
 
             commonEmployeeOptions + [
                     "-p",
@@ -120,7 +120,7 @@ wsdl2java {
                     "urn:riv:infrastructure:directory:employee:GetEmployeeIncludingProtectedPersonResponder:4=se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.employee.getemployeeincludingprotectedpersonresponder.v4",
                     "-wsdlLocation",
                     "classpath:interactions/GetEmployeeIncludingProtectedPersonInteraction/GetEmployeeIncludingProtectedPersonInteraction_4.0_RIVTABP21.wsdl",
-                    "$wsdlDir/employee/$employeeVersion/interactions/GetEmployeeIncludingProtectedPersonInteraction/GetEmployeeIncludingProtectedPersonInteraction_4.0_RIVTABP21.wsdl"],
+                    "$schemasDir/employee/$employeeVersion/interactions/GetEmployeeIncludingProtectedPersonInteraction/GetEmployeeIncludingProtectedPersonInteraction_4.0_RIVTABP21.wsdl"],
 
             commonOrganizationOptions + [
                     "-p",
@@ -129,7 +129,7 @@ wsdl2java {
                     "urn:riv:infrastructure:directory:organization:GetHealthCareUnitResponder:2=se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.gethealthcareunitresponder.v2",
                     "-wsdlLocation",
                     "classpath:interactions/GetHealthCareUnitInteraction/GetHealthCareUnitInteraction_2.0_RIVTABP21.wsdl",
-                    "$wsdlDir/organization/$organizationVersion/interactions/GetHealthCareUnitInteraction/GetHealthCareUnitInteraction_2.0_RIVTABP21.wsdl"],
+                    "$schemasDir/organization/$organizationVersion/interactions/GetHealthCareUnitInteraction/GetHealthCareUnitInteraction_2.0_RIVTABP21.wsdl"],
 
             commonOrganizationOptions + [
                     "-p",
@@ -138,7 +138,7 @@ wsdl2java {
                     "urn:riv:infrastructure:directory:organization:GetHealthCareUnitMembersResponder:2=se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.gethealthcareunitmembersresponder.v2",
                     "-wsdlLocation",
                     "classpath:interactions/GetHealthCareUnitMembersInteraction/GetHealthCareUnitMembersInteraction_2.1_RIVTABP21.wsdl",
-                    "$wsdlDir/organization/$organizationVersion/interactions/GetHealthCareUnitMembersInteraction/GetHealthCareUnitMembersInteraction_2.1_RIVTABP21.wsdl"],
+                    "$schemasDir/organization/$organizationVersion/interactions/GetHealthCareUnitMembersInteraction/GetHealthCareUnitMembersInteraction_2.1_RIVTABP21.wsdl"],
 
             commonOrganizationOptions + [
                     "-p",
@@ -149,7 +149,7 @@ wsdl2java {
                     "urn:riv:infrastructure:directory:organization:GetUnitResponder:5.0=se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.getunitresponder.v5",
                     "-wsdlLocation",
                     "classpath:interactions/GetUnitInteraction/GetUnitInteraction_5.0_RIVTABP21.wsdl",
-                    "$wsdlDir/organization/$organizationVersion/interactions/GetUnitInteraction/GetUnitInteraction_5.0_RIVTABP21.wsdl"],
+                    "$schemasDir/organization/$organizationVersion/interactions/GetUnitInteraction/GetUnitInteraction_5.0_RIVTABP21.wsdl"],
 
             commonOrganizationOptions + [
                     "-p",
@@ -158,6 +158,6 @@ wsdl2java {
                     "urn:riv:infrastructure:directory:organization:GetHealthCareProviderResponder:1=se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.gethealthcareproviderresponder.v1",
                     "-wsdlLocation",
                     "classpath:interactions/GetHealthCareProviderInteraction/GetHealthCareProviderInteraction_1.0_RIVTABP21.wsdl",
-                    "$wsdlDir/organization/$organizationVersion/interactions/GetHealthCareProviderInteraction/GetHealthCareProviderInteraction_1.0_RIVTABP21.wsdl"]
+                    "$schemasDir/organization/$organizationVersion/interactions/GetHealthCareProviderInteraction/GetHealthCareProviderInteraction_1.0_RIVTABP21.wsdl"]
     ]
 }

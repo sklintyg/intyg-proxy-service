@@ -105,6 +105,9 @@ subprojects {
     tasks.matching { it.name == "cyclonedxDirectBom" }.configureEach { t ->
         t.includeConfigs = ['^runtimeClasspath$']
     }
+    afterEvaluate {
+        tasks.findByName('cyclonedxDirectBom')
+    }
 }
 
 reporting {

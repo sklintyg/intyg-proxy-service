@@ -27,8 +27,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -50,6 +48,8 @@ import se.inera.intyg.intygproxyservice.person.dto.PersonRequest;
 import se.inera.intyg.intygproxyservice.person.dto.StatusDTOType;
 import se.inera.intyg.intygproxyservice.person.service.PersonDTOMapper;
 import se.inera.intyg.intygproxyservice.person.service.PersonService;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.json.JsonMapper;
 
 @ExtendWith(MockitoExtension.class)
 class PersonServiceTest {
@@ -62,7 +62,7 @@ class PersonServiceTest {
   private static final PersonDTO PERSON_DTO = PersonDTO.builder().personnummer(PERSON_ID).build();
 
   @Mock private PuService puService;
-  @Mock private ObjectMapper objectMapper;
+  @Mock private JsonMapper jsonMapper;
   @Mock private CacheManager cacheManager;
   @Mock private Cache cache;
   @Mock private PersonDTOMapper personDTOMapper;
@@ -80,9 +80,9 @@ class PersonServiceTest {
       when(cacheManager.getCache(RedisConfig.PERSON_CACHE)).thenReturn(cache);
 
       try {
-        when(objectMapper.readValue(PERSON_RESPONSE.toString(), PuResponse.class))
+        when(jsonMapper.readValue(PERSON_RESPONSE.toString(), PuResponse.class))
             .thenReturn(PERSON_RESPONSE);
-      } catch (JsonProcessingException e) {
+      } catch (JacksonException e) {
         throw new RuntimeException(e);
       }
     }
