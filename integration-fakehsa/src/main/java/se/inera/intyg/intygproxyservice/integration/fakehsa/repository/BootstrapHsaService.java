@@ -20,7 +20,6 @@ package se.inera.intyg.intygproxyservice.integration.fakehsa.repository;
 
 import static se.inera.intyg.intygproxyservice.integration.api.constants.HsaConstants.FAKE_HSA_PROFILE;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.Arrays;
@@ -34,6 +33,7 @@ import org.springframework.stereotype.Service;
 import se.inera.intyg.intygproxyservice.integration.fakehsa.repository.model.ParsedCareProvider;
 import se.inera.intyg.intygproxyservice.integration.fakehsa.repository.model.ParsedCredentialInformation;
 import se.inera.intyg.intygproxyservice.integration.fakehsa.repository.model.ParsedHsaPerson;
+import tools.jackson.databind.json.JsonMapper;
 
 @Slf4j
 @Service
@@ -42,7 +42,7 @@ import se.inera.intyg.intygproxyservice.integration.fakehsa.repository.model.Par
 public class BootstrapHsaService {
 
   private final FakeHsaRepository fakeHsaRepository;
-  private final ObjectMapper objectMapper;
+  private final JsonMapper jsonMapper;
 
   @PostConstruct
   public void bootstrapVardgivare() throws IOException {
@@ -70,19 +70,19 @@ public class BootstrapHsaService {
 
   private void addCredentialInformation(Resource resource) throws IOException {
     final var parsedCredentialInformation =
-        objectMapper.readValue(resource.getInputStream(), ParsedCredentialInformation.class);
+        jsonMapper.readValue(resource.getInputStream(), ParsedCredentialInformation.class);
     fakeHsaRepository.addParsedCredentialInformation(parsedCredentialInformation);
   }
 
   private void addHsaPerson(Resource resource) throws IOException {
     final var parsedHsaPerson =
-        objectMapper.readValue(resource.getInputStream(), ParsedHsaPerson.class);
+        jsonMapper.readValue(resource.getInputStream(), ParsedHsaPerson.class);
     fakeHsaRepository.addParsedHsaPerson(parsedHsaPerson);
   }
 
   private void addCareProvider(Resource resource) throws IOException {
     final var careProvider =
-        objectMapper.readValue(resource.getInputStream(), ParsedCareProvider.class);
+        jsonMapper.readValue(resource.getInputStream(), ParsedCareProvider.class);
     fakeHsaRepository.addParsedCareProvider(careProvider);
   }
 

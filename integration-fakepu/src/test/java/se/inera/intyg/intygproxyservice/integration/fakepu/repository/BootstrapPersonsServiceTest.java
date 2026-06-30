@@ -20,9 +20,10 @@ package se.inera.intyg.intygproxyservice.integration.fakepu.repository;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import tools.jackson.databind.DeserializationFeature;
+import tools.jackson.databind.json.JsonMapper;
 
 class BootstrapPersonsServiceTest {
 
@@ -32,7 +33,12 @@ class BootstrapPersonsServiceTest {
   @BeforeEach
   void setUp() {
     fakePuRepository = new FakePuRepository();
-    bootstrapPersonService = new BootstrapPersonsService(fakePuRepository, new ObjectMapper());
+    bootstrapPersonService =
+        new BootstrapPersonsService(
+            fakePuRepository,
+            JsonMapper.builder()
+                .disable(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES)
+                .build());
   }
 
   @Test

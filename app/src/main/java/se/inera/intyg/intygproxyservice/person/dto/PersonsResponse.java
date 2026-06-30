@@ -18,12 +18,12 @@
  */
 package se.inera.intyg.intygproxyservice.person.dto;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import java.util.List;
 import lombok.Builder;
 import lombok.Value;
 import se.inera.intyg.intygproxyservice.person.dto.PersonsResponse.PersonsResponseBuilder;
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonPOJOBuilder;
 
 @JsonDeserialize(builder = PersonsResponseBuilder.class)
 @Value

@@ -20,7 +20,6 @@ package se.inera.intyg.intygproxyservice.person.service;
 
 import static se.inera.intyg.intygproxyservice.config.RedisConfig.PERSON_CACHE;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.CacheManager;
@@ -33,6 +32,7 @@ import se.inera.intyg.intygproxyservice.integration.api.pu.PuService;
 import se.inera.intyg.intygproxyservice.integration.api.pu.Status;
 import se.inera.intyg.intygproxyservice.person.dto.PersonRequest;
 import se.inera.intyg.intygproxyservice.person.dto.PersonResponse;
+import tools.jackson.databind.json.JsonMapper;
 
 @Service
 @RequiredArgsConstructor
@@ -41,7 +41,7 @@ public class PersonService {
   private final PuService puService;
   private final PersonDTOMapper personDTOMapper;
   private final CacheManager cacheManager;
-  private final ObjectMapper objectMapper;
+  private final JsonMapper jsonMapper;
 
   public PersonResponse findPerson(PersonRequest personRequest) {
     validateRequest(personRequest);
@@ -79,13 +79,13 @@ public class PersonService {
   private void savePersonInCache(PuResponse puResponse) {
     CacheUtility.save(
         cacheManager,
-        objectMapper,
+        jsonMapper,
         puResponse,
         HashUtility.hash(puResponse.person().getPersonnummer().id()),
         PERSON_CACHE);
   }
 
   private Optional<PuResponse> getPersonFromCache(String id) {
-    return CacheUtility.get(cacheManager, objectMapper, HashUtility.hash(id), PuResponse.class);
+    return CacheUtility.get(cacheManager, jsonMapper, HashUtility.hash(id), PuResponse.class);
   }
 }
