@@ -31,34 +31,28 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.resttestclient.TestRestTemplate;
+import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.containers.GenericContainer;
 import se.inera.intyg.intygproxyservice.integrationtest.util.ApiUtil;
 import se.inera.intyg.intygproxyservice.integrationtest.util.Containers;
 import se.inera.intyg.intygproxyservice.person.dto.PersonRequest;
 
 @ActiveProfiles({"integration-test", "dev"})
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@AutoConfigureTestRestTemplate
 class TestIndicatedClassificationIT {
-
-  private static final GenericContainer<?> redisContainer = Containers.getRedisContainer();
 
   @LocalServerPort private int port;
 
-  private final TestRestTemplate restTemplate;
+  @Autowired private TestRestTemplate restTemplate;
   private ApiUtil api;
-
-  @Autowired
-  public TestIndicatedClassificationIT(TestRestTemplate restTemplate) {
-    this.restTemplate = restTemplate;
-  }
 
   @DynamicPropertySource
   static void configureProperties(DynamicPropertyRegistry registry) {
@@ -71,7 +65,7 @@ class TestIndicatedClassificationIT {
 
   @AfterEach
   void tearDown() throws IOException, InterruptedException {
-    redisContainer.execInContainer("redis-cli", "flushall");
+    Containers.flushRedis();
   }
 
   @BeforeEach

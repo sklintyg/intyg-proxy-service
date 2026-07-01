@@ -18,12 +18,12 @@
  */
 package se.inera.intyg.intygproxyservice.integration.api.pu;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import java.io.Serializable;
 import lombok.Builder;
 import lombok.Value;
 import se.inera.intyg.intygproxyservice.integration.api.pu.Person.PersonBuilder;
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonPOJOBuilder;
 
 @Value
 @Builder

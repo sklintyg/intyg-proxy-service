@@ -29,8 +29,6 @@ import static se.inera.intyg.intygproxyservice.integrationtest.TestDataPatient.P
 import static se.inera.intyg.intygproxyservice.integrationtest.TestDataPatient.PROTECTED_PERSON_DTO;
 import static se.inera.intyg.intygproxyservice.integrationtest.TestDataPatient.TOLVAN;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
@@ -38,15 +36,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.resttestclient.TestRestTemplate;
+import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.containers.GenericContainer;
 import se.inera.intyg.intygproxyservice.common.HashUtility;
 import se.inera.intyg.intygproxyservice.integration.api.pu.PuResponse;
 import se.inera.intyg.intygproxyservice.integrationtest.util.ApiUtil;
@@ -55,22 +53,17 @@ import se.inera.intyg.intygproxyservice.person.dto.PersonDTO;
 import se.inera.intyg.intygproxyservice.person.dto.PersonRequest;
 import se.inera.intyg.intygproxyservice.person.dto.PersonsRequest;
 import se.inera.intyg.intygproxyservice.person.dto.StatusDTOType;
+import tools.jackson.databind.json.JsonMapper;
 
 @ActiveProfiles({"integration-test", "dev"})
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@AutoConfigureTestRestTemplate
 class GetPersonsForProfileV5IT {
-
-  private static final GenericContainer<?> redisContainer = Containers.getRedisContainer();
 
   @LocalServerPort private int port;
 
-  private final TestRestTemplate restTemplate;
+  @Autowired private TestRestTemplate restTemplate;
   private ApiUtil api;
-
-  @Autowired
-  public GetPersonsForProfileV5IT(TestRestTemplate restTemplate) {
-    this.restTemplate = restTemplate;
-  }
 
   @DynamicPropertySource
   static void configureProperties(DynamicPropertyRegistry registry) {
@@ -80,7 +73,7 @@ class GetPersonsForProfileV5IT {
 
   @AfterEach
   void tearDown() throws IOException, InterruptedException {
-    redisContainer.execInContainer("redis-cli", "flushall");
+    Containers.flushRedis();
   }
 
   @BeforeEach
@@ -150,19 +143,18 @@ class GetPersonsForProfileV5IT {
 
     @Test
     void shallReturnPatientFromCache() throws IOException, InterruptedException {
-      final var objectMapper = new ObjectMapper();
-      objectMapper.registerModule(new JavaTimeModule());
+      final var jsonMapper = new JsonMapper();
       final var cachedPuResponse = PuResponse.found(ATHENA_REACT_ANDERSSON);
-      final var cacheString =
-          objectMapper.writeValueAsString(cachedPuResponse).replace("\"", "\\\"");
+      final var cacheString = jsonMapper.writeValueAsString(cachedPuResponse).replace("\"", "\\\"");
 
-      redisContainer.execInContainer(
-          "redis-cli",
-          "set",
-          String.format(
-              "%s::%s",
-              PERSON_CACHE, HashUtility.hash(ATHENA_REACT_ANDERSSON.getPersonnummer().id())),
-          String.format("\"%s\"", cacheString));
+      Containers.getRedisContainer()
+          .execInContainer(
+              "redis-cli",
+              "set",
+              String.format(
+                  "%s::%s",
+                  PERSON_CACHE, HashUtility.hash(ATHENA_REACT_ANDERSSON.getPersonnummer().id())),
+              String.format("\"%s\"", cacheString));
 
       final var request =
           PersonRequest.builder().personId(ATHENA_REACT_ANDERSSON.getPersonnummer().id()).build();
@@ -233,18 +225,17 @@ class GetPersonsForProfileV5IT {
 
     @Test
     void shallReturnPatientInCacheAndFromPu() throws IOException, InterruptedException {
-      final var objectMapper = new ObjectMapper();
-      objectMapper.registerModule(new JavaTimeModule());
+      final var jsonMapper = new JsonMapper();
       final var cachedPuResponse = PuResponse.found(PROTECTED_PERSON);
-      final var cacheString =
-          objectMapper.writeValueAsString(cachedPuResponse).replace("\"", "\\\"");
+      final var cacheString = jsonMapper.writeValueAsString(cachedPuResponse).replace("\"", "\\\"");
 
-      redisContainer.execInContainer(
-          "redis-cli",
-          "set",
-          String.format(
-              "%s::%s", PERSON_CACHE, HashUtility.hash(PROTECTED_PERSON_DTO.getPersonnummer())),
-          String.format("\"%s\"", cacheString));
+      Containers.getRedisContainer()
+          .execInContainer(
+              "redis-cli",
+              "set",
+              String.format(
+                  "%s::%s", PERSON_CACHE, HashUtility.hash(PROTECTED_PERSON_DTO.getPersonnummer())),
+              String.format("\"%s\"", cacheString));
 
       final var request =
           PersonsRequest.builder()

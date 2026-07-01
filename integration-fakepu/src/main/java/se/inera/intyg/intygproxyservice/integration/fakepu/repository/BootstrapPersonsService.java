@@ -21,7 +21,6 @@ package se.inera.intyg.intygproxyservice.integration.fakepu.repository;
 import static se.inera.intyg.intygproxyservice.integration.api.constants.PuConstants.FAKE_PU_PROFILE;
 import static se.inera.intyg.intygproxyservice.integration.fakepu.repository.PersonConverter.convert;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.Arrays;
@@ -33,6 +32,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.intygproxyservice.integration.fakepu.repository.model.ParsedPerson;
+import tools.jackson.databind.json.JsonMapper;
 
 @Service
 @Slf4j
@@ -42,7 +42,7 @@ public class BootstrapPersonsService {
 
   public static final String LOCATION_PATTERN = "bootstrap-persons/*.json";
   private final FakePuRepository fakePuRepository;
-  private final ObjectMapper objectMapper;
+  private final JsonMapper jsonMapper;
 
   @PostConstruct
   public void bootstrapPersoner() {
@@ -69,7 +69,7 @@ public class BootstrapPersonsService {
   private void addPerson(Resource res) throws IOException {
     log.debug("Loading person from " + res.getFilename());
 
-    final var parsedPerson = objectMapper.readValue(res.getInputStream(), ParsedPerson.class);
+    final var parsedPerson = jsonMapper.readValue(res.getInputStream(), ParsedPerson.class);
     fakePuRepository.addPerson(convert(parsedPerson));
 
     log.debug("Loaded person " + parsedPerson.getPersonalIdentity().getExtension());

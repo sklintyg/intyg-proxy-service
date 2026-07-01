@@ -20,7 +20,6 @@ package se.inera.intyg.intygproxyservice.integration.fakehsa.repository;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,6 +30,8 @@ import se.inera.intyg.intygproxyservice.integration.fakehsa.converters.EmployeeC
 import se.inera.intyg.intygproxyservice.integration.fakehsa.converters.HealthCareUnitConverter;
 import se.inera.intyg.intygproxyservice.integration.fakehsa.converters.HealthCareUnitMembersConverter;
 import se.inera.intyg.intygproxyservice.integration.fakehsa.converters.UnitConverter;
+import tools.jackson.databind.DeserializationFeature;
+import tools.jackson.databind.json.JsonMapper;
 
 class BootstrapHsaServiceTest {
 
@@ -59,7 +60,12 @@ class BootstrapHsaServiceTest {
             credentialInformationConverter,
             careProviderConverter,
             credentialsForPersonConverter);
-    bootstrapHsaService = new BootstrapHsaService(fakeHsaRepository, new ObjectMapper());
+    bootstrapHsaService =
+        new BootstrapHsaService(
+            fakeHsaRepository,
+            JsonMapper.builder()
+                .disable(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES)
+                .build());
   }
 
   @Test

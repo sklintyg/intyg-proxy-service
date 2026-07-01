@@ -27,8 +27,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static se.inera.intyg.intygproxyservice.person.dto.StatusDTOType.FOUND;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -50,6 +48,8 @@ import se.inera.intyg.intygproxyservice.integration.api.pu.PuService;
 import se.inera.intyg.intygproxyservice.person.dto.PersonDTO;
 import se.inera.intyg.intygproxyservice.person.dto.PersonsRequest;
 import se.inera.intyg.intygproxyservice.person.dto.StatusDTOType;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.json.JsonMapper;
 
 @ExtendWith(MockitoExtension.class)
 class PersonsServiceTest {
@@ -65,7 +65,7 @@ class PersonsServiceTest {
       PuResponse.found(Person.builder().personnummer(PersonId.of(PERSON_ID_2)).build());
   private static final PuResponse NOT_FOUND = PuResponse.notFound(PERSON_ID_1);
 
-  @Mock private ObjectMapper objectMapper;
+  @Mock private JsonMapper jsonMapper;
   @Mock private PuService puService;
   @Mock private CacheManager cacheManager;
   @Mock private Cache cache;
@@ -87,9 +87,9 @@ class PersonsServiceTest {
       when(cache.get(HashUtility.hash(PERSON_ID_1), String.class))
           .thenReturn(PERSON_RESPONSE_1.toString());
       try {
-        when(objectMapper.readValue(PERSON_RESPONSE_1.toString(), PuResponse.class))
+        when(jsonMapper.readValue(PERSON_RESPONSE_1.toString(), PuResponse.class))
             .thenReturn(PERSON_RESPONSE_1);
-      } catch (JsonProcessingException e) {
+      } catch (JacksonException e) {
         throw new RuntimeException(e);
       }
     }
@@ -149,10 +149,9 @@ class PersonsServiceTest {
   }
 
   @Test
-  void shouldSaveFoundPatientInCache() throws JsonProcessingException {
+  void shouldSaveFoundPatientInCache() throws JacksonException {
     when(personDTOMapper.toDTO(PERSON_RESPONSE_1.person())).thenReturn(PERSON_DTO_1);
-    when(objectMapper.writeValueAsString(PERSON_RESPONSE_1))
-        .thenReturn(PERSON_RESPONSE_1.toString());
+    when(jsonMapper.writeValueAsString(PERSON_RESPONSE_1)).thenReturn(PERSON_RESPONSE_1.toString());
     when(puService.findPersons(any()))
         .thenReturn(PuPersonsResponse.builder().persons(List.of(PERSON_RESPONSE_1)).build());
 

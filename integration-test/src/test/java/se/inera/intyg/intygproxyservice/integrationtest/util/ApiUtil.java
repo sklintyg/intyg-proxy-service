@@ -21,7 +21,8 @@ package se.inera.intyg.intygproxyservice.integrationtest.util;
 import java.util.Collections;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.resttestclient.TestRestTemplate;
+import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -35,6 +36,7 @@ import se.inera.intyg.intygproxyservice.person.dto.PersonsResponse;
 
 @Slf4j
 @RequiredArgsConstructor
+@AutoConfigureTestRestTemplate
 public class ApiUtil {
 
   private final TestRestTemplate restTemplate;
