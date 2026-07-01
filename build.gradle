@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.com.diffplug.spotless)
     alias(libs.plugins.com.github.ben.manes.versions)
-    alias(libs.plugins.org.cyclonedx.bom)
     alias(libs.plugins.org.springframework.boot)
     alias(libs.plugins.org.sonarqube)
 }
@@ -104,9 +103,6 @@ subprojects {
 
     tasks.matching { it.name == "cyclonedxDirectBom" }.configureEach { t ->
         t.includeConfigs = ['^runtimeClasspath$']
-    }
-    afterEvaluate {
-        tasks.findByName('cyclonedxDirectBom')
     }
 }
 

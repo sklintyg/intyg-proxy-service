@@ -3,6 +3,13 @@ dependencies {
     implementation project(':integration-api')
 }
 
+sourceSets {
+    test {
+        java.setSrcDirs([])
+        resources.setSrcDirs([])
+    }
+}
+
 test {
     enabled = false
 }
