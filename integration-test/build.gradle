@@ -1,14 +1,6 @@
 dependencies {
     implementation project(':app')
     implementation project(':integration-api')
-
-    testCompileOnly 'org.projectlombok:lombok'
-    testAnnotationProcessor 'org.projectlombok:lombok'
-
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.boot:spring-boot-starter-web'
-    testImplementation 'org.springframework.boot:spring-boot-test'
-    testImplementation 'io.github.microcks:microcks-testcontainers'
 }
 
 test {
@@ -19,6 +11,20 @@ testing {
     suites {
         integrationTest(JvmTestSuite) {
             useJUnitJupiter()
+
+            dependencies {
+                compileOnly 'org.projectlombok:lombok'
+                annotationProcessor 'org.projectlombok:lombok'
+
+                implementation project(':app')
+                implementation project(':integration-api')
+                implementation 'org.springframework.boot:spring-boot-starter-test'
+                implementation 'org.springframework.boot:spring-boot-starter-web'
+                implementation 'org.springframework.boot:spring-boot-test'
+                implementation 'org.springframework.boot:spring-boot-restclient'
+                implementation 'org.springframework.boot:spring-boot-resttestclient'
+                implementation 'io.github.microcks:microcks-testcontainers'
+            }
 
             sources {
                 java {

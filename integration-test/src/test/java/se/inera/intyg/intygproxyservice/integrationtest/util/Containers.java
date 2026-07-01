@@ -19,6 +19,7 @@
 package se.inera.intyg.intygproxyservice.integrationtest.util;
 
 import io.github.microcks.testcontainers.MicrocksContainer;
+import java.io.IOException;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.testcontainers.containers.GenericContainer;
@@ -27,59 +28,64 @@ import org.testcontainers.utility.DockerImageName;
 
 public final class Containers {
 
-  private static final GenericContainer<?> REDIS_CONTAINER;
-  private static final MicrocksContainer PU_GET_PERSON_V5_CONTAINER;
+  private static GenericContainer<?> redisContainer;
+  private static MicrocksContainer puGetPersonV5Container;
 
   static {
-    REDIS_CONTAINER =
-        new GenericContainer<>(DockerImageName.parse("redis:8.6.0-alpine"))
-            .withExposedPorts(6379)
-            .withReuse(true);
-    REDIS_CONTAINER.start();
-
-    PU_GET_PERSON_V5_CONTAINER =
-        new MicrocksContainer(DockerImageName.parse("quay.io/microcks/microcks-uber:1.13.2"))
-            .withMainArtifacts("soapui/GetPersonsForProfileResponder-5.0.xml")
-            .withLogConsumer(new Slf4jLogConsumer(LoggerFactory.getLogger("MicrocksContainerLogs")))
-            .withReuse(true);
-    PU_GET_PERSON_V5_CONTAINER.start();
-
-    // Register shutdown hook to stop containers when JVM exits
-    Runtime.getRuntime()
-        .addShutdownHook(
-            new Thread(
-                () -> {
-                  if (REDIS_CONTAINER.isRunning()) {
-                    REDIS_CONTAINER.stop();
-                  }
-                  if (PU_GET_PERSON_V5_CONTAINER.isRunning()) {
-                    PU_GET_PERSON_V5_CONTAINER.stop();
-                  }
-                }));
+    Runtime.getRuntime().addShutdownHook(new Thread(Containers::stopContainers));
   }
 
   private Containers() {
     throw new IllegalStateException("Utility class");
   }
 
-  public static GenericContainer<?> getRedisContainer() {
-    return REDIS_CONTAINER;
+  public static synchronized GenericContainer<?> getRedisContainer() {
+    if (redisContainer == null) {
+      redisContainer =
+          new GenericContainer<>(DockerImageName.parse("redis:8.6.0-alpine"))
+              .withExposedPorts(6379)
+              .withReuse(true);
+      redisContainer.start();
+    }
+    return redisContainer;
   }
 
   public static String getRedisHost() {
-    return REDIS_CONTAINER.getHost();
+    return getRedisContainer().getHost();
   }
 
   public static Integer getRedisPort() {
-    return REDIS_CONTAINER.getMappedPort(6379);
+    return getRedisContainer().getMappedPort(6379);
   }
 
-  public static MicrocksContainer getPuGetPersonV5Container() {
-    return PU_GET_PERSON_V5_CONTAINER;
+  public static synchronized MicrocksContainer getPuGetPersonV5Container() {
+    if (puGetPersonV5Container == null) {
+      puGetPersonV5Container =
+          new MicrocksContainer(DockerImageName.parse("quay.io/microcks/microcks-uber:1.13.2"))
+              .withMainArtifacts("soapui/GetPersonsForProfileResponder-5.0.xml")
+              .withLogConsumer(
+                  new Slf4jLogConsumer(LoggerFactory.getLogger("MicrocksContainerLogs")))
+              .withReuse(true);
+      puGetPersonV5Container.start();
+    }
+    return puGetPersonV5Container;
   }
 
   public static String getGetPersonsForProfileEndpoint() {
-    return PU_GET_PERSON_V5_CONTAINER.getSoapMockEndpoint("GetPersonsForProfile", "5.0");
+    return getPuGetPersonV5Container().getSoapMockEndpoint("GetPersonsForProfile", "5.0");
+  }
+
+  public static synchronized void flushRedis() throws IOException, InterruptedException {
+    getRedisContainer().execInContainer("redis-cli", "flushall");
+  }
+
+  private static synchronized void stopContainers() {
+    if (redisContainer != null && redisContainer.isRunning()) {
+      redisContainer.stop();
+    }
+    if (puGetPersonV5Container != null && puGetPersonV5Container.isRunning()) {
+      puGetPersonV5Container.stop();
+    }
   }
 
   /**

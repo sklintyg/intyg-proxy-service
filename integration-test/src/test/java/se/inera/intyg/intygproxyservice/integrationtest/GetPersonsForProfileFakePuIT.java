@@ -26,6 +26,9 @@ import java.io.IOException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.resttestclient.TestRestTemplate;
+import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -33,21 +36,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import org.springframework.web.client.RestTemplate;
-import org.testcontainers.containers.GenericContainer;
 import se.inera.intyg.intygproxyservice.integrationtest.util.ApiUtil;
 import se.inera.intyg.intygproxyservice.integrationtest.util.Containers;
 import se.inera.intyg.intygproxyservice.person.dto.PersonRequest;
 
 @ActiveProfiles({"integration-test", FAKE_PU_PROFILE})
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@AutoConfigureTestRestTemplate
 class GetPersonsForProfileFakePuIT {
-
-  private static final GenericContainer<?> redisContainer = Containers.getRedisContainer();
 
   @LocalServerPort private int port;
 
-  private final RestTemplate restTemplate = new RestTemplate();
+  @Autowired private TestRestTemplate restTemplate;
   private ApiUtil api;
 
   @DynamicPropertySource
@@ -57,7 +57,7 @@ class GetPersonsForProfileFakePuIT {
 
   @AfterEach
   void tearDown() throws IOException, InterruptedException {
-    redisContainer.execInContainer("redis-cli", "flushall");
+    Containers.flushRedis();
   }
 
   @BeforeEach

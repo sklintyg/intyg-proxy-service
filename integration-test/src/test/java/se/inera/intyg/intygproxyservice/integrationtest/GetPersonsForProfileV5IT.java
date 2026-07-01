@@ -35,6 +35,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.resttestclient.TestRestTemplate;
+import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -42,8 +45,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import org.springframework.web.client.RestTemplate;
-import org.testcontainers.containers.GenericContainer;
 import se.inera.intyg.intygproxyservice.common.HashUtility;
 import se.inera.intyg.intygproxyservice.integration.api.pu.PuResponse;
 import se.inera.intyg.intygproxyservice.integrationtest.util.ApiUtil;
@@ -56,13 +57,12 @@ import tools.jackson.databind.json.JsonMapper;
 
 @ActiveProfiles({"integration-test", "dev"})
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@AutoConfigureTestRestTemplate
 class GetPersonsForProfileV5IT {
-
-  private static final GenericContainer<?> redisContainer = Containers.getRedisContainer();
 
   @LocalServerPort private int port;
 
-  private final RestTemplate restTemplate = new RestTemplate();
+  @Autowired private TestRestTemplate restTemplate;
   private ApiUtil api;
 
   @DynamicPropertySource
@@ -73,7 +73,7 @@ class GetPersonsForProfileV5IT {
 
   @AfterEach
   void tearDown() throws IOException, InterruptedException {
-    redisContainer.execInContainer("redis-cli", "flushall");
+    Containers.flushRedis();
   }
 
   @BeforeEach
@@ -147,13 +147,14 @@ class GetPersonsForProfileV5IT {
       final var cachedPuResponse = PuResponse.found(ATHENA_REACT_ANDERSSON);
       final var cacheString = jsonMapper.writeValueAsString(cachedPuResponse).replace("\"", "\\\"");
 
-      redisContainer.execInContainer(
-          "redis-cli",
-          "set",
-          String.format(
-              "%s::%s",
-              PERSON_CACHE, HashUtility.hash(ATHENA_REACT_ANDERSSON.getPersonnummer().id())),
-          String.format("\"%s\"", cacheString));
+      Containers.getRedisContainer()
+          .execInContainer(
+              "redis-cli",
+              "set",
+              String.format(
+                  "%s::%s",
+                  PERSON_CACHE, HashUtility.hash(ATHENA_REACT_ANDERSSON.getPersonnummer().id())),
+              String.format("\"%s\"", cacheString));
 
       final var request =
           PersonRequest.builder().personId(ATHENA_REACT_ANDERSSON.getPersonnummer().id()).build();
@@ -228,12 +229,13 @@ class GetPersonsForProfileV5IT {
       final var cachedPuResponse = PuResponse.found(PROTECTED_PERSON);
       final var cacheString = jsonMapper.writeValueAsString(cachedPuResponse).replace("\"", "\\\"");
 
-      redisContainer.execInContainer(
-          "redis-cli",
-          "set",
-          String.format(
-              "%s::%s", PERSON_CACHE, HashUtility.hash(PROTECTED_PERSON_DTO.getPersonnummer())),
-          String.format("\"%s\"", cacheString));
+      Containers.getRedisContainer()
+          .execInContainer(
+              "redis-cli",
+              "set",
+              String.format(
+                  "%s::%s", PERSON_CACHE, HashUtility.hash(PROTECTED_PERSON_DTO.getPersonnummer())),
+              String.format("\"%s\"", cacheString));
 
       final var request =
           PersonsRequest.builder()
