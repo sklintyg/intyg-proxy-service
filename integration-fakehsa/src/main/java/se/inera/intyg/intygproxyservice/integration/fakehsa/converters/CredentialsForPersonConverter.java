@@ -41,13 +41,13 @@ public class CredentialsForPersonConverter {
         .personalPrescriptionCode(parsedHsaPerson.getPersonalPrescriptionCode())
         .educationCode(parsedHsaPerson.getEducationCodes())
         .restrictions(
-            parsedHsaPerson.getRestrictions().stream().map(restrictionConverter::convert).toList())
+            parsedHsaPerson.getRestrictions() != null ? parsedHsaPerson.getRestrictions().stream().map(restrictionConverter::convert).toList() : null)
         .healthCareProfessionalLicenceSpeciality(
-            parsedHsaPerson.getSpecialities().stream().map(specialitiesConverter::convert).toList())
+            parsedHsaPerson.getSpecialities() != null ? parsedHsaPerson.getSpecialities().stream().map(specialitiesConverter::convert).toList() : null)
         .healthCareProfessionalLicence(
-            parsedHsaPerson.getHealthCareProfessionalLicenceType().stream()
+            parsedHsaPerson.getHealthCareProfessionalLicenceType() != null ? parsedHsaPerson.getHealthCareProfessionalLicenceType().stream()
                 .map(licenceTypeConverter::convert)
-                .toList())
+                .toList() : null)
         .build();
   }
 }
