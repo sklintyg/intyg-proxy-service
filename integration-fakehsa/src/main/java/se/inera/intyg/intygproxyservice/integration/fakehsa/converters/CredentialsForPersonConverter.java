@@ -44,10 +44,12 @@ public class CredentialsForPersonConverter {
         .educationCode(parsedHsaPerson.getEducationCodes())
         .restrictions(
             nullSafe(parsedHsaPerson.getRestrictions()).stream()
-                .map(restrictionConverter::convert).toList())
+                .map(restrictionConverter::convert)
+                .toList())
         .healthCareProfessionalLicenceSpeciality(
             nullSafe(parsedHsaPerson.getSpecialities()).stream()
-                .map(specialitiesConverter::convert).toList())
+                .map(specialitiesConverter::convert)
+                .toList())
         .healthCareProfessionalLicence(
             nullSafe(parsedHsaPerson.getHealthCareProfessionalLicenceType()).stream()
                 .map(licenceTypeConverter::convert)
