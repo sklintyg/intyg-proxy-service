@@ -18,6 +18,8 @@
  */
 package se.inera.intyg.intygproxyservice.integration.fakehsa.converters;
 
+import java.util.Collections;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import se.inera.intyg.intygproxyservice.integration.api.authorization.model.CredentialsForPerson;
@@ -41,13 +43,19 @@ public class CredentialsForPersonConverter {
         .personalPrescriptionCode(parsedHsaPerson.getPersonalPrescriptionCode())
         .educationCode(parsedHsaPerson.getEducationCodes())
         .restrictions(
-            parsedHsaPerson.getRestrictions().stream().map(restrictionConverter::convert).toList())
+            nullSafe(parsedHsaPerson.getRestrictions()).stream()
+                .map(restrictionConverter::convert).toList())
         .healthCareProfessionalLicenceSpeciality(
-            parsedHsaPerson.getSpecialities().stream().map(specialitiesConverter::convert).toList())
+            nullSafe(parsedHsaPerson.getSpecialities()).stream()
+                .map(specialitiesConverter::convert).toList())
         .healthCareProfessionalLicence(
-            parsedHsaPerson.getHealthCareProfessionalLicenceType().stream()
+            nullSafe(parsedHsaPerson.getHealthCareProfessionalLicenceType()).stream()
                 .map(licenceTypeConverter::convert)
                 .toList())
         .build();
+  }
+
+  private <T> List<T> nullSafe(List<T> list) {
+    return list != null ? list : Collections.emptyList();
   }
 }
