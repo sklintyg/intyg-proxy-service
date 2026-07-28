@@ -35,12 +35,12 @@ import se.inera.intyg.intygproxyservice.integration.api.authorization.model.HCPS
 import se.inera.intyg.intygproxyservice.integration.api.authorization.model.HealthCareProfessionalLicence;
 import se.inera.intyg.intygproxyservice.integration.api.authorization.model.NursePrescriptionRight;
 import se.inera.intyg.intygproxyservice.integration.api.authorization.model.Restriction;
-import se.riv.infrastructure.directory.authorizationmanagement.gethospcredentialsforpersonresponder.v1.GetHospCredentialsForPersonResponseType;
-import se.riv.infrastructure.directory.authorizationmanagement.v2.HCPSpecialityCodesType;
-import se.riv.infrastructure.directory.authorizationmanagement.v2.HealthCareProfessionalLicenceType;
-import se.riv.infrastructure.directory.authorizationmanagement.v2.IIType;
-import se.riv.infrastructure.directory.authorizationmanagement.v2.NursePrescriptionRightType;
-import se.riv.infrastructure.directory.authorizationmanagement.v2.RestrictionType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.authorizationmanagement.gethospcredentialsforpersonresponder.v1.GetHospCredentialsForPersonResponseType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.authorizationmanagement.v2.HCPSpecialityCodesType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.authorizationmanagement.v2.HealthCareProfessionalLicenceType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.authorizationmanagement.v2.IIType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.authorizationmanagement.v2.NursePrescriptionRightType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.authorizationmanagement.v2.RestrictionType;
 
 @ExtendWith(MockitoExtension.class)
 class GetCredentialsForPersonResponseTypeConverterTest {
@@ -110,7 +110,7 @@ class GetCredentialsForPersonResponseTypeConverterTest {
 
     final var response = getCredentialsForPersonResponseTypeConverter.convert(type);
 
-    assertEquals(expected, response.getNursePrescriptionRight().get(0));
+    assertEquals(expected, response.getNursePrescriptionRight().getFirst());
   }
 
   @Test
@@ -122,7 +122,7 @@ class GetCredentialsForPersonResponseTypeConverterTest {
 
     final var response = getCredentialsForPersonResponseTypeConverter.convert(type);
 
-    assertEquals(expected, response.getRestrictions().get(0));
+    assertEquals(expected, response.getRestrictions().getFirst());
   }
 
   @Test
@@ -136,7 +136,7 @@ class GetCredentialsForPersonResponseTypeConverterTest {
 
     final var response = getCredentialsForPersonResponseTypeConverter.convert(type);
 
-    assertEquals(expected, response.getHealthCareProfessionalLicenceSpeciality().get(0));
+    assertEquals(expected, response.getHealthCareProfessionalLicenceSpeciality().getFirst());
   }
 
   @Test
@@ -151,7 +151,7 @@ class GetCredentialsForPersonResponseTypeConverterTest {
 
     final var response = getCredentialsForPersonResponseTypeConverter.convert(type);
 
-    assertEquals(expected, response.getHealthCareProfessionalLicence().get(0));
+    assertEquals(expected, response.getHealthCareProfessionalLicence().getFirst());
   }
 
   @Test

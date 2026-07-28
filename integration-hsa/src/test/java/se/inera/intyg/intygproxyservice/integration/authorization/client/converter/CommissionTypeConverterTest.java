@@ -37,8 +37,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.intygproxyservice.integration.api.authorization.model.Commission;
 import se.inera.intyg.intygproxyservice.integration.api.authorization.model.CommissionRight;
-import se.riv.infrastructure.directory.authorizationmanagement.v2.CommissionRightType;
-import se.riv.infrastructure.directory.authorizationmanagement.v2.CommissionType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.authorizationmanagement.v2.CommissionRightType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.authorizationmanagement.v2.CommissionType;
 
 @ExtendWith(MockitoExtension.class)
 class CommissionTypeConverterTest {

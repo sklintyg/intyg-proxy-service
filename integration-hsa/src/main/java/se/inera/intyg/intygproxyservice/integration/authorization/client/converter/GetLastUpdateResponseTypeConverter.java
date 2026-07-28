@@ -23,7 +23,7 @@ import static se.inera.intyg.intygproxyservice.integration.common.TypeConverterH
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import se.riv.infrastructure.directory.authorizationmanagement.gethosplastupdateresponder.v1.GetHospLastUpdateResponseType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.authorizationmanagement.gethosplastupdateresponder.v1.GetHospLastUpdateResponseType;
 
 @Component
 @RequiredArgsConstructor

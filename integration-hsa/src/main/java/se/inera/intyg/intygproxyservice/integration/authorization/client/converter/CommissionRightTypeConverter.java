@@ -20,7 +20,7 @@ package se.inera.intyg.intygproxyservice.integration.authorization.client.conver
 
 import org.springframework.stereotype.Component;
 import se.inera.intyg.intygproxyservice.integration.api.authorization.model.CommissionRight;
-import se.riv.infrastructure.directory.authorizationmanagement.v2.CommissionRightType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.authorizationmanagement.v2.CommissionRightType;
 
 @Component
 public class CommissionRightTypeConverter {

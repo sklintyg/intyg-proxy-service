@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import org.springframework.stereotype.Component;
-import se.riv.infrastructure.directory.organization.v2.AddressType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.v2.AddressType;
 
 @Component
 public class AddressTypeConverter {
@@ -31,9 +31,8 @@ public class AddressTypeConverter {
     return convert(type, AddressType::getAddressLine);
   }
 
-  public List<String> convertV3(se.riv.infrastructure.directory.organization.v3.AddressType type) {
-    return convert(
-        type, se.riv.infrastructure.directory.organization.v3.AddressType::getAddressLine);
+  public List<String> convertV5(riv.infrastructure.directory.organization._5.AddressType type) {
+    return convert(type, riv.infrastructure.directory.organization._5.AddressType::getAddressLine);
   }
 
   private <T> List<String> convert(T type, Function<T, List<String>> getValues) {

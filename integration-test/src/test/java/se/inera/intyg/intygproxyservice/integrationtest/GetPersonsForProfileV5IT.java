@@ -55,7 +55,7 @@ import se.inera.intyg.intygproxyservice.person.dto.PersonsRequest;
 import se.inera.intyg.intygproxyservice.person.dto.StatusDTOType;
 import tools.jackson.databind.json.JsonMapper;
 
-@ActiveProfiles({"integration-test", "dev"})
+@ActiveProfiles({"integration-test"})
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestRestTemplate
 class GetPersonsForProfileV5IT {

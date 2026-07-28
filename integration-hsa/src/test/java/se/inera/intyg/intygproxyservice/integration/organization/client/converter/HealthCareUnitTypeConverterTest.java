@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import se.riv.infrastructure.directory.organization.gethealthcareunitresponder.v2.HealthCareUnitType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.gethealthcareunitresponder.v2.HealthCareUnitType;
 
 @ExtendWith(MockitoExtension.class)
 class HealthCareUnitTypeConverterTest {

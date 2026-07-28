@@ -37,7 +37,6 @@ import org.springframework.context.annotation.FilterType;
       @Filter(
           type = FilterType.REGEX,
           pattern = {
-            "se\\.inera\\.intyg\\.intygproxyservice\\.integrationv2\\..*",
             "se\\.inera\\.intyg\\.intygproxyservice\\.integration\\.configuration\\..*",
             "se\\.inera\\.intyg\\.intygproxyservice\\.integration\\.employee\\..*",
             "se\\.inera\\.intyg\\.intygproxyservice\\.integration\\.organization\\..*",
@@ -46,7 +45,7 @@ import org.springframework.context.annotation.FilterType;
     })
 public class IntygProxyServiceApplication {
 
-  public static void main(String[] args) {
+  static void main(String[] args) {
     SpringApplication.run(IntygProxyServiceApplication.class, args);
   }
 }

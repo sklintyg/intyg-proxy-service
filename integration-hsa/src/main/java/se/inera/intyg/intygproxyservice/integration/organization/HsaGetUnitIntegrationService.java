@@ -19,7 +19,6 @@
 package se.inera.intyg.intygproxyservice.integration.organization;
 
 import static se.inera.intyg.intygproxyservice.integration.api.constants.HsaConstants.FAKE_HSA_PROFILE;
-import static se.inera.intyg.intygproxyservice.integration.api.constants.HsaConstants.HSA_V2_PROFILE;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
@@ -30,7 +29,7 @@ import se.inera.intyg.intygproxyservice.integration.api.organization.GetUnitInte
 import se.inera.intyg.intygproxyservice.integration.organization.client.HsaOrganizationClient;
 
 @Service
-@Profile("!" + FAKE_HSA_PROFILE + " & !" + HSA_V2_PROFILE)
+@Profile("!" + FAKE_HSA_PROFILE)
 @RequiredArgsConstructor
 public class HsaGetUnitIntegrationService implements GetUnitIntegrationService {
 

@@ -19,14 +19,13 @@
 package se.inera.intyg.intygproxyservice.config;
 
 import static se.inera.intyg.intygproxyservice.integration.api.constants.HsaConstants.FAKE_HSA_PROFILE;
-import static se.inera.intyg.intygproxyservice.integration.api.constants.HsaConstants.HSA_V2_PROFILE;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 @Configuration
-@Profile("!" + FAKE_HSA_PROFILE + " & !" + HSA_V2_PROFILE)
+@Profile("!" + FAKE_HSA_PROFILE)
 @ComponentScan({
   "se.inera.intyg.intygproxyservice.integration.configuration",
   "se.inera.intyg.intygproxyservice.integration.employee",

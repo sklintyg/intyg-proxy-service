@@ -22,7 +22,7 @@ import static se.inera.intyg.intygproxyservice.integration.common.TypeConverterH
 
 import org.springframework.stereotype.Service;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.HealthCareProvider;
-import se.riv.infrastructure.directory.organization.gethealthcareunitmembersresponder.v2.HealthCareProviderType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.gethealthcareunitmembersresponder.v2.HealthCareProviderType;
 
 @Service
 public class HealthCareProviderTypeConverter {
@@ -40,8 +40,8 @@ public class HealthCareProviderTypeConverter {
   }
 
   public HealthCareProvider convertV1(
-      se.riv.infrastructure.directory.organization.gethealthcareproviderresponder.v1
-              .HealthCareProviderType
+      se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization
+              .gethealthcareproviderresponder.v1.HealthCareProviderType
           type) {
     return HealthCareProvider.builder()
         .archivedHealthCareProvider(type.isArchivedHealthCareProvider())

@@ -20,7 +20,7 @@ package se.inera.intyg.intygproxyservice.integration.authorization.client.conver
 
 import org.springframework.stereotype.Component;
 import se.inera.intyg.intygproxyservice.integration.api.authorization.model.HCPSpecialityCodes;
-import se.riv.infrastructure.directory.authorizationmanagement.v2.HCPSpecialityCodesType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.authorizationmanagement.v2.HCPSpecialityCodesType;
 
 @Component
 public class HCPSpecialityCodeTypeConverter {

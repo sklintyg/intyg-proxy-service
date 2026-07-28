@@ -25,7 +25,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.inera.intyg.intygproxyservice.integration.api.authorization.model.Restriction;
-import se.riv.infrastructure.directory.authorizationmanagement.v2.RestrictionType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.authorizationmanagement.v2.RestrictionType;
 
 @ExtendWith(MockitoExtension.class)
 class RestrictionTypeConverterTest {

@@ -22,7 +22,7 @@ import static se.inera.intyg.intygproxyservice.integration.common.TypeConverterH
 
 import org.springframework.stereotype.Service;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.HealthCareUnit;
-import se.riv.infrastructure.directory.organization.gethealthcareunitresponder.v2.HealthCareUnitType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.gethealthcareunitresponder.v2.HealthCareUnitType;
 
 @Service
 public class HealthCareUnitTypeConverter {

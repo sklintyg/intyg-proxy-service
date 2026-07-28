@@ -21,12 +21,15 @@ package se.inera.intyg.intygproxyservice.integration.organization.client.convert
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
+import riv.infrastructure.directory.organization._5.StructuredPostalAddressType;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.Address;
-import se.riv.infrastructure.directory.organization.getunitresponder.v4.UnitType;
-import se.riv.infrastructure.directory.organization.v2.AddressType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.getunitresponder.v5.UnitType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.v2.AddressType;
 
 @Component
 @RequiredArgsConstructor
@@ -35,23 +38,76 @@ public class StructuredAddressConverter {
   private static final int CITY_START_INDEX = 6;
   private final AddressTypeConverter addressTypeConverter;
 
-  public Address convertV3(UnitType type) {
+  public Address convertV5(UnitType type) {
     if (type == null) {
       throw new IllegalArgumentException("Unit type is null");
     }
-    final var addressLines = addressTypeConverter.convertV3(type.getPostalAddress());
-    return Address.builder()
-        .address(convertPostalAddress(addressLines))
-        .zipCode(convertZipCode(addressLines, type.getPostalCode()))
-        .city(convertCity(addressLines))
-        .build();
+
+    return type.getStructuredPostalAddress() == null
+        ? convertAddressV5(type)
+        : Address.builder()
+            .address(convertAddressLineV5(type.getStructuredPostalAddress()))
+            .zipCode(type.getStructuredPostalAddress().getPostCode())
+            .city(type.getStructuredPostalAddress().getTown())
+            .build();
   }
 
-  public Address convertV2(AddressType postalAddress, String postalCode) {
+  public Address convertV2(
+      AddressType postalAddress,
+      String postalCode,
+      riv.infrastructure.directory.organization._2.StructuredPostalAddressType
+          structuredPostalAddress) {
+    return structuredPostalAddress == null
+        ? convertAddressV2(postalAddress, postalCode)
+        : Address.builder()
+            .address(convertAddressLineV2(structuredPostalAddress))
+            .zipCode(structuredPostalAddress.getPostCode())
+            .city(structuredPostalAddress.getTown())
+            .build();
+  }
+
+  private Address convertAddressV2(AddressType postalAddress, String postalCode) {
     final var addressLines = addressTypeConverter.convertV2(postalAddress);
     return Address.builder()
         .address(convertPostalAddress(addressLines))
         .zipCode(convertZipCode(addressLines, postalCode))
+        .city(convertCity(addressLines))
+        .build();
+  }
+
+  private String convertAddressLineV2(
+      riv.infrastructure.directory.organization._2.StructuredPostalAddressType
+          structuredPostalAddress) {
+    if (!StringUtils.hasText(structuredPostalAddress.getStreet())) {
+      return null;
+    }
+
+    return Stream.of(
+            structuredPostalAddress.getStreet(),
+            structuredPostalAddress.getPremisesNumber(),
+            structuredPostalAddress.getPremisesLetter())
+        .filter(StringUtils::hasText)
+        .collect(Collectors.joining(" "));
+  }
+
+  private String convertAddressLineV5(StructuredPostalAddressType structuredPostalAddress) {
+    if (!StringUtils.hasText(structuredPostalAddress.getStreet())) {
+      return null;
+    }
+
+    return Stream.of(
+            structuredPostalAddress.getStreet(),
+            structuredPostalAddress.getPremisesNumber(),
+            structuredPostalAddress.getPremisesLetter())
+        .filter(StringUtils::hasText)
+        .collect(Collectors.joining(" "));
+  }
+
+  private Address convertAddressV5(UnitType type) {
+    final var addressLines = addressTypeConverter.convertV5(type.getPostalAddress());
+    return Address.builder()
+        .address(convertPostalAddress(addressLines))
+        .zipCode(convertZipCode(addressLines, type.getPostalCode()))
         .city(convertCity(addressLines))
         .build();
   }

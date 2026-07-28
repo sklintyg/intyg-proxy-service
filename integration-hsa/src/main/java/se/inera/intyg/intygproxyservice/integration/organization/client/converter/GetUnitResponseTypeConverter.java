@@ -21,7 +21,7 @@ package se.inera.intyg.intygproxyservice.integration.organization.client.convert
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.Unit;
-import se.riv.infrastructure.directory.organization.getunitresponder.v4.GetUnitResponseType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.getunitresponder.v5.GetUnitResponseType;
 
 @Service
 @RequiredArgsConstructor

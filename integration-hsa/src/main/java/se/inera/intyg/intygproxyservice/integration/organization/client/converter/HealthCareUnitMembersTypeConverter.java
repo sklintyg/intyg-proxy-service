@@ -23,7 +23,7 @@ import static se.inera.intyg.intygproxyservice.integration.common.TypeConverterH
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.HealthCareUnitMembers;
-import se.riv.infrastructure.directory.organization.gethealthcareunitmembersresponder.v2.HealthCareUnitMembersType;
+import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.gethealthcareunitmembersresponder.v2.HealthCareUnitMembersType;
 
 @Service
 @RequiredArgsConstructor
@@ -48,7 +48,8 @@ public class HealthCareUnitMembersTypeConverter {
         .telephoneNumber(type.getTelephoneNumber())
         .postalAddress(addressTypeConverter.convertV2(type.getPostalAddress()))
         .address(
-            structuredAddressConverter.convertV2(type.getPostalAddress(), type.getPostalCode()))
+            structuredAddressConverter.convertV2(
+                type.getPostalAddress(), type.getPostalCode(), type.getStructuredPostalAddress()))
         .healthCareUnitMember(
             type.getHealthCareUnitMember().stream()
                 .map(healthCareUnitMemberTypeConverter::convert)
