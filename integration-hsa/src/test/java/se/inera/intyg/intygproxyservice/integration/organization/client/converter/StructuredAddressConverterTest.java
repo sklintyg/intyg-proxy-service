@@ -18,219 +18,376 @@
  */
 package se.inera.intyg.intygproxyservice.integration.organization.client.converter;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import se.riv.infrastructure.directory.organization.getunitresponder.v4.UnitType;
-import se.riv.infrastructure.directory.organization.v2.AddressType;
+import se.inera.intyg.intygproxyservice.integration.api.organization.model.Address;
+import se.riv.infrastructure.directory.organization.getunitresponder.v5.UnitType;
+import se.riv.infrastructure.directory.organization.v5.AddressType;
+import se.riv.infrastructure.directory.organization.v5.StructuredPostalAddressType;
 
 @ExtendWith(MockitoExtension.class)
 class StructuredAddressConverterTest {
 
-  @Mock AddressTypeConverter addressTypeConverter;
-
-  @InjectMocks StructuredAddressConverter structuredAddressConverter;
+  @Mock private AddressTypeConverter addressTypeConverter;
+  @InjectMocks private StructuredAddressConverter addressConverter;
 
   @Nested
-  class ConvertV2 {
+  class ConvertV5 {
 
-    @Nested
-    class Address {
+    @Test
+    void shouldConvertAddressWhenStructuredPostalAddressExists() {
+      final var type = mock(UnitType.class);
+      final var structuredPostalAddress = createStructuredPostalAddressType();
+      final var expected =
+          Address.builder().address("Test Street 1 A").zipCode("12345").city("Test town").build();
+      when(type.getStructuredPostalAddress()).thenReturn(structuredPostalAddress);
 
-      @Test
-      void shouldReturnNullAddressWhenAddressLinesEmpty() {
-        when(addressTypeConverter.convertV2(any())).thenReturn(Collections.emptyList());
+      final var result = addressConverter.convertV5(type);
 
-        final var result = structuredAddressConverter.convertV2(new AddressType(), null);
-
-        assertNull(result.address());
-      }
-
-      @Test
-      void shouldReturnStreetFromAllLinesExceptLast() {
-        when(addressTypeConverter.convertV2(any()))
-            .thenReturn(List.of("Street 1", "Street 2", "12345 City"));
-
-        final var result = structuredAddressConverter.convertV2(new AddressType(), null);
-
-        assertEquals("Street 1 Street 2", result.address());
-      }
-
-      @Test
-      void shouldReturnEmptyStringWhenOnlyOneAddressLine() {
-        when(addressTypeConverter.convertV2(any())).thenReturn(List.of("12345 City"));
-
-        final var result = structuredAddressConverter.convertV2(new AddressType(), null);
-
-        assertEquals("", result.address());
-      }
-
-      @Test
-      void shouldFilterNullLinesFromStreet() {
-        final var list = new ArrayList<String>();
-        list.add("Street 1");
-        list.add(null);
-        list.add("12345 City");
-        when(addressTypeConverter.convertV2(any())).thenReturn(list);
-
-        final var result = structuredAddressConverter.convertV2(new AddressType(), null);
-
-        assertEquals("Street 1", result.address());
-      }
+      assertEquals(expected, result);
     }
 
-    @Nested
-    class ZipCode {
+    @Test
+    void shouldConvertAddressWhenStructuredPostalAddressIsMissing() {
+      final var type = mock(UnitType.class);
+      final var postalAddress = mock(AddressType.class);
+      when(type.getStructuredPostalAddress()).thenReturn(null);
+      when(type.getPostalAddress()).thenReturn(postalAddress);
+      when(type.getPostalCode()).thenReturn(null);
+      when(addressTypeConverter.convertV5(postalAddress))
+          .thenReturn(List.of("Test Street 1", "12345 Test town"));
 
-      @ParameterizedTest
-      @CsvSource({
-        "54321, 54321",
-        "'  54321  ', 54321",
-      })
-      void shouldReturnTrimmedPostalCodeParameterWhenProvided(String postalCode, String expected) {
-        when(addressTypeConverter.convertV2(any())).thenReturn(Collections.emptyList());
+      final var result = addressConverter.convertV5(type);
 
-        final var result = structuredAddressConverter.convertV2(new AddressType(), postalCode);
-
-        assertEquals(expected, result.zipCode());
-      }
-
-      @ParameterizedTest
-      @NullAndEmptySource
-      void shouldExtractZipCodeFromLastLineWhenPostalCodeIs(String postalCode) {
-        when(addressTypeConverter.convertV2(any())).thenReturn(List.of("Street 1", "12345 City"));
-
-        final var result = structuredAddressConverter.convertV2(new AddressType(), postalCode);
-
-        assertEquals("12345", result.zipCode());
-      }
-
-      @Test
-      void shouldReturnNullZipCodeWhenLastLineDoesNotStartWithDigit() {
-        when(addressTypeConverter.convertV2(any())).thenReturn(List.of("Street 1", "City"));
-
-        final var result = structuredAddressConverter.convertV2(new AddressType(), null);
-
-        assertNull(result.zipCode());
-      }
-
-      @Test
-      void shouldReturnNullZipCodeWhenAddressLinesEmpty() {
-        when(addressTypeConverter.convertV2(any())).thenReturn(Collections.emptyList());
-
-        final var result = structuredAddressConverter.convertV2(new AddressType(), null);
-
-        assertNull(result.zipCode());
-      }
+      assertAll(
+          () -> assertEquals("Test Street 1", result.address()),
+          () -> assertEquals("12345", result.zipCode()),
+          () -> assertEquals("Test town", result.city()));
     }
 
-    @Nested
-    class City {
+    @Test
+    void shouldUsePostalCodeWhenPresentAndTrimmed() {
+      final var type = mock(UnitType.class);
+      final var postalAddress = mock(AddressType.class);
+      when(type.getStructuredPostalAddress()).thenReturn(null);
+      when(type.getPostalAddress()).thenReturn(postalAddress);
+      when(type.getPostalCode()).thenReturn(" 54321 ");
+      when(addressTypeConverter.convertV5(postalAddress))
+          .thenReturn(List.of("Test Street 1", "11111 Test town"));
 
-      @Test
-      void shouldExtractCityFromLastLineWhenItStartsWithDigits() {
-        when(addressTypeConverter.convertV2(any()))
-            .thenReturn(List.of("Street 1", "12345 Stockholm"));
+      final var result = addressConverter.convertV5(type);
 
-        final var result = structuredAddressConverter.convertV2(new AddressType(), null);
+      assertEquals("54321", result.zipCode());
+    }
 
-        assertEquals("Stockholm", result.city());
-      }
+    @Test
+    void shouldIgnoreBlankPostalCodeAndExtractZipFromAddressLines() {
+      final var type = mock(UnitType.class);
+      final var postalAddress = mock(AddressType.class);
+      when(type.getStructuredPostalAddress()).thenReturn(null);
+      when(type.getPostalAddress()).thenReturn(postalAddress);
+      when(type.getPostalCode()).thenReturn("   ");
+      when(addressTypeConverter.convertV5(postalAddress))
+          .thenReturn(List.of("Test Street 1", "12345 Test town"));
 
-      @Test
-      void shouldReturnLastLineAsCityWhenItDoesNotStartWithDigit() {
-        when(addressTypeConverter.convertV2(any())).thenReturn(List.of("Street 1", "Stockholm"));
+      final var result = addressConverter.convertV5(type);
 
-        final var result = structuredAddressConverter.convertV2(new AddressType(), null);
+      assertEquals("12345", result.zipCode());
+    }
 
-        assertEquals("Stockholm", result.city());
-      }
+    @Test
+    void shouldHandleMissingAddressLines() {
+      final var type = mock(UnitType.class);
+      final var postalAddress = mock(AddressType.class);
+      when(type.getStructuredPostalAddress()).thenReturn(null);
+      when(type.getPostalAddress()).thenReturn(postalAddress);
+      when(type.getPostalCode()).thenReturn(null);
+      when(addressTypeConverter.convertV5(postalAddress)).thenReturn(List.of());
 
-      @Test
-      void shouldTrimCityValue() {
-        when(addressTypeConverter.convertV2(any())).thenReturn(List.of("  Stockholm  "));
+      final var result = addressConverter.convertV5(type);
 
-        final var result = structuredAddressConverter.convertV2(new AddressType(), null);
+      assertNull(result.address());
+      assertNull(result.zipCode());
+      assertNull(result.city());
+    }
 
-        assertEquals("Stockholm", result.city());
-      }
+    @ParameterizedTest
+    @NullAndEmptySource
+    void shouldReturnNullAddressWhenStreetIsMissing(String street) {
+      final var type = mock(UnitType.class);
+      final var structuredAddress = createStructuredPostalAddressType();
+      structuredAddress.setStreet(street);
+      when(type.getStructuredPostalAddress()).thenReturn(structuredAddress);
 
-      @Test
-      void shouldReturnNullCityWhenAddressLinesEmpty() {
-        when(addressTypeConverter.convertV2(any())).thenReturn(Collections.emptyList());
+      final var result = addressConverter.convertV5(type);
 
-        final var result = structuredAddressConverter.convertV2(new AddressType(), null);
+      assertNull(result.address());
+    }
 
-        assertNull(result.city());
-      }
+    @Test
+    void shouldThrowExceptionWhenTypeIsNull() {
+      assertThrows(IllegalArgumentException.class, () -> addressConverter.convertV5(null));
+    }
+
+    @Test
+    void shouldExtractCityFromLastLineWhenNoZipPrefix() {
+      final var type = mock(UnitType.class);
+      final var postalAddress = mock(AddressType.class);
+      when(type.getStructuredPostalAddress()).thenReturn(null);
+      when(type.getPostalAddress()).thenReturn(postalAddress);
+      when(type.getPostalCode()).thenReturn(null);
+      when(addressTypeConverter.convertV5(postalAddress))
+          .thenReturn(List.of("Test Street 1", "Test town"));
+
+      final var result = addressConverter.convertV5(type);
+
+      assertAll(
+          () -> assertEquals("Test Street 1", result.address()),
+          () -> assertNull(result.zipCode()),
+          () -> assertEquals("Test town", result.city()));
+    }
+
+    @Test
+    void shouldReturnEmptyAddressWhenOnlyLastLinePresent() {
+      final var type = mock(UnitType.class);
+      final var postalAddress = mock(AddressType.class);
+      when(type.getStructuredPostalAddress()).thenReturn(null);
+      when(type.getPostalAddress()).thenReturn(postalAddress);
+      when(type.getPostalCode()).thenReturn(null);
+      when(addressTypeConverter.convertV5(postalAddress)).thenReturn(List.of("12345 Test town"));
+
+      final var result = addressConverter.convertV5(type);
+
+      assertAll(
+          () -> assertEquals("", result.address()),
+          () -> assertEquals("12345", result.zipCode()),
+          () -> assertEquals("Test town", result.city()));
+    }
+
+    @Test
+    void shouldJoinMultipleStreetLines() {
+      final var type = mock(UnitType.class);
+      final var postalAddress = mock(AddressType.class);
+      when(type.getStructuredPostalAddress()).thenReturn(null);
+      when(type.getPostalAddress()).thenReturn(postalAddress);
+      when(type.getPostalCode()).thenReturn(null);
+      when(addressTypeConverter.convertV5(postalAddress))
+          .thenReturn(List.of("Line 1", "Line 2", "12345 Test town"));
+
+      final var result = addressConverter.convertV5(type);
+
+      assertEquals("Line 1 Line 2", result.address());
+    }
+
+    @Test
+    void shouldConvertStructuredAddressWithStreetOnly() {
+      final var type = mock(UnitType.class);
+      final var structuredAddress = new StructuredPostalAddressType();
+      structuredAddress.setStreet("Only Street");
+      structuredAddress.setPostCode("11111");
+      structuredAddress.setTown("Only Town");
+      when(type.getStructuredPostalAddress()).thenReturn(structuredAddress);
+
+      final var result = addressConverter.convertV5(type);
+
+      assertEquals("Only Street", result.address());
+    }
+
+    @Test
+    void shouldConvertStructuredAddressWithStreetAndPremisesNumberOnly() {
+      final var type = mock(UnitType.class);
+      final var structuredAddress = new StructuredPostalAddressType();
+      structuredAddress.setStreet("Test Street");
+      structuredAddress.setPremisesNumber("5");
+      structuredAddress.setPostCode("12345");
+      structuredAddress.setTown("Test town");
+      when(type.getStructuredPostalAddress()).thenReturn(structuredAddress);
+
+      final var result = addressConverter.convertV5(type);
+
+      assertEquals("Test Street 5", result.address());
+    }
+
+    private StructuredPostalAddressType createStructuredPostalAddressType() {
+      final var type = new StructuredPostalAddressType();
+      type.setStreet("Test Street");
+      type.setPremisesNumber("1");
+      type.setPremisesLetter("A");
+      type.setPostCode("12345");
+      type.setTown("Test town");
+      return type;
     }
   }
 
   @Nested
-  class ConvertV3 {
+  class ConvertV2 {
 
     @Test
-    void shouldThrowIllegalArgumentExceptionWhenUnitTypeIsNull() {
-      assertThrows(
-          IllegalArgumentException.class, () -> structuredAddressConverter.convertV3(null));
+    void shouldConvertAddressWhenStructuredPostalAddressExists() {
+      final var structuredPostalAddress = createV2StructuredPostalAddressType();
+      final var expected =
+          Address.builder().address("Test Street 1 A").zipCode("12345").city("Test town").build();
+
+      final var result = addressConverter.convertV2(null, null, structuredPostalAddress);
+
+      assertEquals(expected, result);
     }
 
     @Test
-    void shouldExtractStreetFromAllLinesExceptLast() {
-      final var unitType = new UnitType();
-      when(addressTypeConverter.convertV3(any()))
-          .thenReturn(List.of("Street 1", "Street 2", "12345 City"));
+    void shouldConvertAddressWhenStructuredPostalAddressIsMissing() {
+      final var postalAddress =
+          mock(se.riv.infrastructure.directory.organization.v2.AddressType.class);
+      when(addressTypeConverter.convertV2(postalAddress))
+          .thenReturn(List.of("Test Street 1", "12345 Test town"));
 
-      final var result = structuredAddressConverter.convertV3(unitType);
+      final var result = addressConverter.convertV2(postalAddress, null, null);
 
-      assertEquals("Street 1 Street 2", result.address());
+      assertAll(
+          () -> assertEquals("Test Street 1", result.address()),
+          () -> assertEquals("12345", result.zipCode()),
+          () -> assertEquals("Test town", result.city()));
     }
 
     @Test
-    void shouldExtractZipCodeFromUnitPostalCode() {
-      final var unitType = new UnitType();
-      unitType.setPostalCode("12345");
-      when(addressTypeConverter.convertV3(any())).thenReturn(List.of("Street 1", "67890 City"));
+    void shouldUsePostalCodeWhenPresentAndTrimmed() {
+      final var postalAddress =
+          mock(se.riv.infrastructure.directory.organization.v2.AddressType.class);
+      when(addressTypeConverter.convertV2(postalAddress))
+          .thenReturn(List.of("Test Street 1", "11111 Test town"));
 
-      final var result = structuredAddressConverter.convertV3(unitType);
+      final var result = addressConverter.convertV2(postalAddress, " 54321 ", null);
+
+      assertEquals("54321", result.zipCode());
+    }
+
+    @Test
+    void shouldHandleMissingAddressLines() {
+      final var postalAddress =
+          mock(se.riv.infrastructure.directory.organization.v2.AddressType.class);
+      when(addressTypeConverter.convertV2(postalAddress)).thenReturn(List.of());
+
+      final var result = addressConverter.convertV2(postalAddress, null, null);
+
+      assertNull(result.address());
+      assertNull(result.zipCode());
+      assertNull(result.city());
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    void shouldReturnNullAddressWhenStreetIsMissing(String street) {
+      final var structuredAddress = createV2StructuredPostalAddressType();
+      structuredAddress.setStreet(street);
+
+      final var result = addressConverter.convertV2(null, null, structuredAddress);
+
+      assertNull(result.address());
+    }
+
+    @Test
+    void shouldExtractCityFromLastLineWhenNoZipPrefix() {
+      final var postalAddress =
+          mock(se.riv.infrastructure.directory.organization.v2.AddressType.class);
+      when(addressTypeConverter.convertV2(postalAddress))
+          .thenReturn(List.of("Test Street 1", "Test town"));
+
+      final var result = addressConverter.convertV2(postalAddress, null, null);
+
+      assertAll(
+          () -> assertEquals("Test Street 1", result.address()),
+          () -> assertNull(result.zipCode()),
+          () -> assertEquals("Test town", result.city()));
+    }
+
+    @Test
+    void shouldReturnEmptyAddressWhenOnlyLastLinePresent() {
+      final var postalAddress =
+          mock(se.riv.infrastructure.directory.organization.v2.AddressType.class);
+      when(addressTypeConverter.convertV2(postalAddress)).thenReturn(List.of("12345 Test town"));
+
+      final var result = addressConverter.convertV2(postalAddress, null, null);
+
+      assertAll(
+          () -> assertEquals("", result.address()),
+          () -> assertEquals("12345", result.zipCode()),
+          () -> assertEquals("Test town", result.city()));
+    }
+
+    @Test
+    void shouldJoinMultipleStreetLines() {
+      final var postalAddress =
+          mock(se.riv.infrastructure.directory.organization.v2.AddressType.class);
+      when(addressTypeConverter.convertV2(postalAddress))
+          .thenReturn(List.of("Line 1", "Line 2", "12345 Test town"));
+
+      final var result = addressConverter.convertV2(postalAddress, null, null);
+
+      assertEquals("Line 1 Line 2", result.address());
+    }
+
+    @Test
+    void shouldIgnoreBlankPostalCodeAndExtractZipFromAddressLines() {
+      final var postalAddress =
+          mock(se.riv.infrastructure.directory.organization.v2.AddressType.class);
+      when(addressTypeConverter.convertV2(postalAddress))
+          .thenReturn(List.of("Test Street 1", "12345 Test town"));
+
+      final var result = addressConverter.convertV2(postalAddress, "   ", null);
 
       assertEquals("12345", result.zipCode());
     }
 
     @Test
-    void shouldExtractZipCodeFromLastLineWhenUnitPostalCodeIsNull() {
-      final var unitType = new UnitType();
-      when(addressTypeConverter.convertV3(any())).thenReturn(List.of("Street 1", "12345 City"));
+    void shouldConvertStructuredAddressWithStreetOnly() {
+      final var structuredAddress =
+          new se.riv.infrastructure.directory.organization.v2.StructuredPostalAddressType();
+      structuredAddress.setStreet("Only Street");
+      structuredAddress.setPostCode("11111");
+      structuredAddress.setTown("Only Town");
 
-      final var result = structuredAddressConverter.convertV3(unitType);
+      final var result = addressConverter.convertV2(null, null, structuredAddress);
 
-      assertEquals("12345", result.zipCode());
+      assertEquals("Only Street", result.address());
     }
 
     @Test
-    void shouldExtractCityFromLastLine() {
-      final var unitType = new UnitType();
-      when(addressTypeConverter.convertV3(any()))
-          .thenReturn(List.of("Street 1", "12345 Stockholm"));
+    void shouldConvertStructuredAddressWithStreetAndPremisesNumberOnly() {
+      final var structuredAddress =
+          new se.riv.infrastructure.directory.organization.v2.StructuredPostalAddressType();
+      structuredAddress.setStreet("Test Street");
+      structuredAddress.setPremisesNumber("5");
+      structuredAddress.setPostCode("12345");
+      structuredAddress.setTown("Test town");
 
-      final var result = structuredAddressConverter.convertV3(unitType);
+      final var result = addressConverter.convertV2(null, null, structuredAddress);
 
-      assertEquals("Stockholm", result.city());
+      assertEquals("Test Street 5", result.address());
+    }
+
+    private se.riv.infrastructure.directory.organization.v2.StructuredPostalAddressType
+        createV2StructuredPostalAddressType() {
+      final var type =
+          new se.riv.infrastructure.directory.organization.v2.StructuredPostalAddressType();
+      type.setStreet("Test Street");
+      type.setPremisesNumber("1");
+      type.setPremisesLetter("A");
+      type.setPostCode("12345");
+      type.setTown("Test town");
+      return type;
     }
   }
 }

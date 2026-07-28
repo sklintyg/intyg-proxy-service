@@ -51,29 +51,29 @@ class HealthCareUnitMembersServiceTest {
   @Mock
   private GetHealthCareUnitMembersIntegrationService getHealthCareUnitMembersIntegrationService;
 
-  @InjectMocks private HealthCareUnitMembersService HealthCareUnitMembersService;
+  @InjectMocks private HealthCareUnitMembersService healthCareUnitMembersService;
 
   @Test
   void shouldThrowIllegalArgumentExceptionIfRequestIsNull() {
-    assertThrows(IllegalArgumentException.class, () -> HealthCareUnitMembersService.get(null));
+    assertThrows(IllegalArgumentException.class, () -> healthCareUnitMembersService.get(null));
   }
 
   @Test
   void shouldThrowIllegalArgumentExceptionIfHsaIdIsNull() {
     final var request = HealthCareUnitMembersRequest.builder().build();
-    assertThrows(IllegalArgumentException.class, () -> HealthCareUnitMembersService.get(request));
+    assertThrows(IllegalArgumentException.class, () -> healthCareUnitMembersService.get(request));
   }
 
   @Test
   void shouldThrowIllegalArgumentExceptionIfHsaIdIsEmpty() {
     final var request = HealthCareUnitMembersRequest.builder().hsaId("").build();
-    assertThrows(IllegalArgumentException.class, () -> HealthCareUnitMembersService.get(request));
+    assertThrows(IllegalArgumentException.class, () -> healthCareUnitMembersService.get(request));
   }
 
   @Test
   void shouldThrowIllegalArgumentExceptionIfHsaIdIsBlank() {
     final var request = HealthCareUnitMembersRequest.builder().hsaId(" ").build();
-    assertThrows(IllegalArgumentException.class, () -> HealthCareUnitMembersService.get(request));
+    assertThrows(IllegalArgumentException.class, () -> healthCareUnitMembersService.get(request));
   }
 
   @Nested
@@ -88,14 +88,14 @@ class HealthCareUnitMembersServiceTest {
 
     @Test
     void shallReturnUnit() {
-      final var response = HealthCareUnitMembersService.get(REQUEST);
+      final var response = healthCareUnitMembersService.get(REQUEST);
 
       assertEquals(RESPONSE.getHealthCareUnitMembers(), response.getHealthCareUnitMembers());
     }
 
     @Test
     void shallSetHsaIdInRequest() {
-      HealthCareUnitMembersService.get(REQUEST);
+      healthCareUnitMembersService.get(REQUEST);
 
       final var captor = ArgumentCaptor.forClass(GetHealthCareUnitMembersIntegrationRequest.class);
       verify(getHealthCareUnitMembersIntegrationService).get(captor.capture());

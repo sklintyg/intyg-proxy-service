@@ -23,17 +23,17 @@ import static se.inera.intyg.intygproxyservice.integration.common.TypeConverterH
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.Unit;
-import se.riv.infrastructure.directory.organization.getunitresponder.v4.UnitType;
+import se.riv.infrastructure.directory.organization.getunitresponder.v5.UnitType;
 
 @Service
 @RequiredArgsConstructor
 public class UnitTypeConverter {
 
   private final AddressTypeConverter addressTypeConverter;
+  private final StructuredAddressConverter structuredAddressConverter;
   private final GeoCoordRt90TypeConverter geoCoordRt90TypeConverter;
   private final GeoCoordSweref99TypeConverter geoCoordSweref99TypeConverter;
   private final BusinessClassificationTypeConverter businessClassificationTypeConverter;
-  private final StructuredAddressConverter structuredAddressConverter;
 
   public Unit convert(UnitType type) {
     return Unit.builder()
@@ -49,8 +49,8 @@ public class UnitTypeConverter {
         .unitStartDate(toLocalDate(type.getUnitStartDate()))
         .unitEndDate(toLocalDate(type.getUnitEndDate()))
         .postalCode(type.getPostalCode())
-        .postalAddress(addressTypeConverter.convertV3(type.getPostalAddress()))
-        .address(structuredAddressConverter.convertV3(type))
+        .postalAddress(addressTypeConverter.convertV5(type.getPostalAddress()))
+        .address(structuredAddressConverter.convertV5(type))
         .careType(type.getCareType())
         .businessType(type.getBusinessType())
         .management(type.getManagement())

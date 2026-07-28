@@ -31,9 +31,9 @@ public class AddressTypeConverter {
     return convert(type, AddressType::getAddressLine);
   }
 
-  public List<String> convertV3(se.riv.infrastructure.directory.organization.v3.AddressType type) {
+  public List<String> convertV5(se.riv.infrastructure.directory.organization.v5.AddressType type) {
     return convert(
-        type, se.riv.infrastructure.directory.organization.v3.AddressType::getAddressLine);
+        type, se.riv.infrastructure.directory.organization.v5.AddressType::getAddressLine);
   }
 
   private <T> List<String> convert(T type, Function<T, List<String>> getValues) {

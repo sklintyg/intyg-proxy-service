@@ -59,8 +59,8 @@ class LocalDateAdapterTest {
   @BeforeEach
   void setGMTTimeZone() {
     systemTimeZone = TimeZone.getDefault();
-    TimeZone GMT = TimeZone.getTimeZone("GMT");
-    TimeZone.setDefault(GMT);
+    TimeZone gmt = TimeZone.getTimeZone("GMT");
+    TimeZone.setDefault(gmt);
   }
 
   @AfterEach

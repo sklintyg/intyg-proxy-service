@@ -110,7 +110,7 @@ class GetCredentialsForPersonResponseTypeConverterTest {
 
     final var response = getCredentialsForPersonResponseTypeConverter.convert(type);
 
-    assertEquals(expected, response.getNursePrescriptionRight().get(0));
+    assertEquals(expected, response.getNursePrescriptionRight().getFirst());
   }
 
   @Test
@@ -122,7 +122,7 @@ class GetCredentialsForPersonResponseTypeConverterTest {
 
     final var response = getCredentialsForPersonResponseTypeConverter.convert(type);
 
-    assertEquals(expected, response.getRestrictions().get(0));
+    assertEquals(expected, response.getRestrictions().getFirst());
   }
 
   @Test
@@ -136,7 +136,7 @@ class GetCredentialsForPersonResponseTypeConverterTest {
 
     final var response = getCredentialsForPersonResponseTypeConverter.convert(type);
 
-    assertEquals(expected, response.getHealthCareProfessionalLicenceSpeciality().get(0));
+    assertEquals(expected, response.getHealthCareProfessionalLicenceSpeciality().getFirst());
   }
 
   @Test
@@ -151,7 +151,7 @@ class GetCredentialsForPersonResponseTypeConverterTest {
 
     final var response = getCredentialsForPersonResponseTypeConverter.convert(type);
 
-    assertEquals(expected, response.getHealthCareProfessionalLicence().get(0));
+    assertEquals(expected, response.getHealthCareProfessionalLicence().getFirst());
   }
 
   @Test

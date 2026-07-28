@@ -127,20 +127,6 @@ class HealthCareUnitMemberTypeConverterTest {
     }
 
     @Test
-    void shouldConvertStructuredAddress() {
-      final var addressType = mock(AddressType.class);
-      final var structuredAddress =
-          Address.builder().address("STREET 1").zipCode("12345").city("CITY").build();
-      when(type.getHealthCareUnitMemberpostalAddress()).thenReturn(addressType);
-      when(structuredAddressConverter.convertV2(any(AddressType.class), any()))
-          .thenReturn(structuredAddress);
-
-      final var response = healthCareUnitMemberTypeConverter.convert(type);
-
-      assertEquals(structuredAddress, response.getAddress());
-    }
-
-    @Test
     void shouldConvertAddress() {
       final var address = List.of("ADDRESS", "ADDRESS_2");
       final var addressType = mock(AddressType.class);
@@ -150,6 +136,17 @@ class HealthCareUnitMemberTypeConverterTest {
       final var response = healthCareUnitMemberTypeConverter.convert(type);
 
       assertEquals(address, response.getHealthCareUnitMemberpostalAddress());
+    }
+
+    @Test
+    void shouldConvertStructuredAddress() {
+      final var expected =
+          Address.builder().address("Street 1").zipCode("12345").city("City").build();
+      when(structuredAddressConverter.convertV2(any(), any(), any())).thenReturn(expected);
+
+      final var response = healthCareUnitMemberTypeConverter.convert(type);
+
+      assertEquals(expected, response.getAddress());
     }
 
     @Test

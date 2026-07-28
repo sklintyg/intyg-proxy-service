@@ -49,7 +49,8 @@ public class HealthCareUnitMemberTypeConverter {
         .address(
             structuredAddressConverter.convertV2(
                 type.getHealthCareUnitMemberpostalAddress(),
-                type.getHealthCareUnitMemberpostalCode()))
+                type.getHealthCareUnitMemberpostalCode(),
+                type.getHealthCareUnitMemberstructuredPostalAddress()))
         .build();
   }
 }

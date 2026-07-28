@@ -68,6 +68,6 @@ class GetHealthCareProviderResponseTypeConverterTest {
     final var response = getHealthCareProviderResponseTypeConverter.convert(type);
 
     assertEquals(2, response.size());
-    assertEquals(expected, response.get(0));
+    assertEquals(expected, response.getFirst());
   }
 }

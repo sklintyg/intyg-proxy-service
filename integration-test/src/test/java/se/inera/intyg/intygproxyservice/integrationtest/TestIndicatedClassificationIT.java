@@ -44,7 +44,7 @@ import se.inera.intyg.intygproxyservice.integrationtest.util.ApiUtil;
 import se.inera.intyg.intygproxyservice.integrationtest.util.Containers;
 import se.inera.intyg.intygproxyservice.person.dto.PersonRequest;
 
-@ActiveProfiles({"integration-test", "dev"})
+@ActiveProfiles({"integration-test"})
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestRestTemplate
 class TestIndicatedClassificationIT {

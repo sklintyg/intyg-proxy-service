@@ -48,7 +48,8 @@ public class HealthCareUnitMembersTypeConverter {
         .telephoneNumber(type.getTelephoneNumber())
         .postalAddress(addressTypeConverter.convertV2(type.getPostalAddress()))
         .address(
-            structuredAddressConverter.convertV2(type.getPostalAddress(), type.getPostalCode()))
+            structuredAddressConverter.convertV2(
+                type.getPostalAddress(), type.getPostalCode(), type.getStructuredPostalAddress()))
         .healthCareUnitMember(
             type.getHealthCareUnitMember().stream()
                 .map(healthCareUnitMemberTypeConverter::convert)

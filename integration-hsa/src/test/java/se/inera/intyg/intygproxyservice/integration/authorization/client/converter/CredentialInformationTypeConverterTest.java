@@ -213,7 +213,7 @@ class CredentialInformationTypeConverterTest {
 
     final var response = credentialInformationTypeConverter.convert(type);
 
-    assertEquals(expectedCommission, response.getCommission().get(0));
+    assertEquals(expectedCommission, response.getCommission().getFirst());
   }
 
   @Test
@@ -226,7 +226,7 @@ class CredentialInformationTypeConverterTest {
 
     final var response = credentialInformationTypeConverter.convert(type);
 
-    assertEquals(expected, response.getNursePrescriptionRight().get(0));
+    assertEquals(expected, response.getNursePrescriptionRight().getFirst());
   }
 
   @Test
@@ -240,7 +240,7 @@ class CredentialInformationTypeConverterTest {
 
     final var response = credentialInformationTypeConverter.convert(type);
 
-    assertEquals(expected, response.getHealthCareProfessionalLicenceSpeciality().get(0));
+    assertEquals(expected, response.getHealthCareProfessionalLicenceSpeciality().getFirst());
   }
 
   @Test
@@ -252,7 +252,7 @@ class CredentialInformationTypeConverterTest {
 
     final var response = credentialInformationTypeConverter.convert(type);
 
-    assertEquals(expected, response.getHsaSystemRole().get(0));
+    assertEquals(expected, response.getHsaSystemRole().getFirst());
   }
 
   private CredentialInformationType getType() {

@@ -57,9 +57,9 @@ import se.riv.infrastructure.directory.organization.gethealthcareunitmembersresp
 import se.riv.infrastructure.directory.organization.gethealthcareunitmembersresponder.v2.GetHealthCareUnitMembersType;
 import se.riv.infrastructure.directory.organization.gethealthcareunitresponder.v2.GetHealthCareUnitResponseType;
 import se.riv.infrastructure.directory.organization.gethealthcareunitresponder.v2.GetHealthCareUnitType;
-import se.riv.infrastructure.directory.organization.getunit.v4.rivtabp21.GetUnitResponderInterface;
-import se.riv.infrastructure.directory.organization.getunitresponder.v4.GetUnitResponseType;
-import se.riv.infrastructure.directory.organization.getunitresponder.v4.GetUnitType;
+import se.riv.infrastructure.directory.organization.getunit.v5.rivtabp21.GetUnitResponderInterface;
+import se.riv.infrastructure.directory.organization.getunitresponder.v5.GetUnitResponseType;
+import se.riv.infrastructure.directory.organization.getunitresponder.v5.GetUnitType;
 
 @ExtendWith(MockitoExtension.class)
 class HsaOrganizationClientTest {
@@ -346,7 +346,7 @@ class HsaOrganizationClientTest {
 
         verify(getUnitResponderInterface).getUnit(anyString(), captor.capture());
 
-        assertEquals("basic", captor.getValue().getProfile().get(0));
+        assertEquals("basic", captor.getValue().getProfile().getFirst());
       }
     }
   }

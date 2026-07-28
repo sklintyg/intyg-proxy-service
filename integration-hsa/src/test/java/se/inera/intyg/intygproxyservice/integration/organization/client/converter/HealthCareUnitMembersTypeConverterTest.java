@@ -170,7 +170,7 @@ class HealthCareUnitMembersTypeConverterTest {
         .convert(any(HealthCareUnitMemberType.class));
 
     assertEquals(2, response.getHealthCareUnitMember().size());
-    assertEquals(member, response.getHealthCareUnitMember().get(0));
+    assertEquals(member, response.getHealthCareUnitMember().getFirst());
   }
 
   @Test
@@ -198,19 +198,16 @@ class HealthCareUnitMembersTypeConverterTest {
   }
 
   @Test
-  void shouldConvertToStructuredAddress() {
+  void shouldConvertStructuredAddress() {
     final var type = mock(HealthCareUnitMembersType.class);
-    final var addressType = mock(AddressType.class);
-    final var structuredAddress =
-        Address.builder().address("STREET 1").zipCode("12345").city("CITY").build();
+    final var expected =
+        Address.builder().address("Street 1").zipCode("12345").city("City").build();
 
-    when(type.getPostalAddress()).thenReturn(addressType);
-    when(structuredAddressConverter.convertV2(any(AddressType.class), any()))
-        .thenReturn(structuredAddress);
+    when(structuredAddressConverter.convertV2(any(), any(), any())).thenReturn(expected);
 
     final var response = healthCareUnitMembersTypeConverter.convert(type);
 
-    assertEquals(structuredAddress, response.getAddress());
+    assertEquals(expected, response.getAddress());
   }
 
   private HealthCareUnitMembersType getType() {

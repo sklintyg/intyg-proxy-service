@@ -25,9 +25,9 @@ import org.springframework.stereotype.Service;
 import se.inera.intyg.intygproxyservice.integration.api.employee.HCPSpecialityCode;
 import se.inera.intyg.intygproxyservice.integration.api.employee.PersonInformation;
 import se.inera.intyg.intygproxyservice.integration.api.employee.PersonInformation.PaTitle;
-import se.riv.infrastructure.directory.employee.v3.HealthCareProfessionalLicenceSpecialityType;
-import se.riv.infrastructure.directory.employee.v3.PaTitleType;
-import se.riv.infrastructure.directory.employee.v3.PersonInformationType;
+import se.riv.infrastructure.directory.employee.v4.HealthCareProfessionalLicenceSpecialityType;
+import se.riv.infrastructure.directory.employee.v4.PaTitleType;
+import se.riv.infrastructure.directory.employee.v4.PersonInformationType;
 
 @Service
 public class PersonInformationTypeConverter {

@@ -33,9 +33,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import se.riv.infrastructure.directory.employee.v3.HealthCareProfessionalLicenceSpecialityType;
-import se.riv.infrastructure.directory.employee.v3.PaTitleType;
-import se.riv.infrastructure.directory.employee.v3.PersonInformationType;
+import se.riv.infrastructure.directory.employee.v4.HealthCareProfessionalLicenceSpecialityType;
+import se.riv.infrastructure.directory.employee.v4.PaTitleType;
+import se.riv.infrastructure.directory.employee.v4.PersonInformationType;
 
 @ExtendWith(MockitoExtension.class)
 class PersonInformationTypeConverterTest {
@@ -158,8 +158,8 @@ class PersonInformationTypeConverterTest {
 
     final var response = personInformationTypeConverter.convert(type);
 
-    assertEquals(pa1.getPaTitleCode(), response.getPaTitle().get(0).getPaTitleCode());
-    assertEquals(pa1.getPaTitleName(), response.getPaTitle().get(0).getPaTitleName());
+    assertEquals(pa1.getPaTitleCode(), response.getPaTitle().getFirst().getPaTitleCode());
+    assertEquals(pa1.getPaTitleName(), response.getPaTitle().getFirst().getPaTitleName());
   }
 
   @Test
@@ -209,8 +209,8 @@ class PersonInformationTypeConverterTest {
       final var response = personInformationTypeConverter.convert(type);
 
       assertEquals(
-          type.getHealthCareProfessionalLicenceSpeciality().get(0).getSpecialityCode(),
-          response.getHealthCareProfessionalLicenceSpeciality().get(0).getSpecialityCode());
+          type.getHealthCareProfessionalLicenceSpeciality().getFirst().getSpecialityCode(),
+          response.getHealthCareProfessionalLicenceSpeciality().getFirst().getSpecialityCode());
     }
 
     @Test
@@ -218,8 +218,8 @@ class PersonInformationTypeConverterTest {
       final var response = personInformationTypeConverter.convert(type);
 
       assertEquals(
-          type.getHealthCareProfessionalLicenceSpeciality().get(0).getSpecialityName(),
-          response.getHealthCareProfessionalLicenceSpeciality().get(0).getSpecialityName());
+          type.getHealthCareProfessionalLicenceSpeciality().getFirst().getSpecialityName(),
+          response.getHealthCareProfessionalLicenceSpeciality().getFirst().getSpecialityName());
     }
 
     @Test
@@ -228,11 +228,11 @@ class PersonInformationTypeConverterTest {
 
       assertEquals(
           type.getHealthCareProfessionalLicenceSpeciality()
-              .get(0)
+              .getFirst()
               .getHealthCareProfessionalLicence(),
           response
               .getHealthCareProfessionalLicenceSpeciality()
-              .get(0)
+              .getFirst()
               .getHealthCareProfessionalLicenceCode());
     }
   }
