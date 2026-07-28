@@ -74,7 +74,7 @@ class AddressTypeConverterTest {
     @Test
     void shouldConvertAddressType() {
       final var address = List.of("A1", "A2");
-      final var type = mock(riv.infrastructure.directory.organization._5.AddressType.class);
+      final var type = mock(se.riv.infrastructure.directory.organization.v5.AddressType.class);
       when(type.getAddressLine()).thenReturn(address);
 
       final var response = addressTypeConverter.convertV5(type);
@@ -84,7 +84,7 @@ class AddressTypeConverterTest {
 
     @Test
     void shouldReturnEmptyListIfAddressLineIsNull() {
-      final var type = mock(riv.infrastructure.directory.organization._5.AddressType.class);
+      final var type = mock(se.riv.infrastructure.directory.organization.v5.AddressType.class);
       when(type.getAddressLine()).thenReturn(null);
 
       final var response = addressTypeConverter.convertV5(type);

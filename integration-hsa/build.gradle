@@ -71,6 +71,10 @@ wsdl2java {
             "-p",
             "urn:riv:infrastructure:directory:organization:2.1=se.riv.infrastructure.directory.organization.v2",
             "-p",
+            "urn:riv:infrastructure:directory:organization:2.2=se.riv.infrastructure.directory.organization.v2",
+            "-p",
+            "urn:riv:infrastructure:directory:organization:5=se.riv.infrastructure.directory.organization.v5",
+            "-p",
             "urn:riv:infrastructure:directory:organization:5.0=se.riv.infrastructure.directory.organization.v5",
     ]
 
@@ -136,6 +140,8 @@ wsdl2java {
                     "urn:riv:infrastructure:directory:organization:GetHealthCareUnitMembers:2:rivtabp21=se.riv.infrastructure.directory.organization.gethealthcareunitmembers.v2.rivtabp21",
                     "-p",
                     "urn:riv:infrastructure:directory:organization:GetHealthCareUnitMembersResponder:2=se.riv.infrastructure.directory.organization.gethealthcareunitmembersresponder.v2",
+                    "-p",
+                    "urn:riv:infrastructure:directory:organization:GetHealthCareUnitMembersResponder:2.1=se.riv.infrastructure.directory.organization.gethealthcareunitmembersresponder.v2",
                     "-wsdlLocation",
                     "classpath:interactions/GetHealthCareUnitMembersInteraction/GetHealthCareUnitMembersInteraction_2.1_RIVTABP21.wsdl",
                     "$schemasDir/organization/$organizationVersion/interactions/GetHealthCareUnitMembersInteraction/GetHealthCareUnitMembersInteraction_2.1_RIVTABP21.wsdl"],

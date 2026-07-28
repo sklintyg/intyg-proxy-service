@@ -26,10 +26,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
-import riv.infrastructure.directory.organization._5.StructuredPostalAddressType;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.Address;
 import se.riv.infrastructure.directory.organization.getunitresponder.v5.UnitType;
 import se.riv.infrastructure.directory.organization.v2.AddressType;
+import se.riv.infrastructure.directory.organization.v5.StructuredPostalAddressType;
 
 @Component
 @RequiredArgsConstructor
@@ -55,7 +55,7 @@ public class StructuredAddressConverter {
   public Address convertV2(
       AddressType postalAddress,
       String postalCode,
-      riv.infrastructure.directory.organization._2.StructuredPostalAddressType
+      se.riv.infrastructure.directory.organization.v2.StructuredPostalAddressType
           structuredPostalAddress) {
     return structuredPostalAddress == null
         ? convertAddressV2(postalAddress, postalCode)
@@ -76,7 +76,7 @@ public class StructuredAddressConverter {
   }
 
   private String convertAddressLineV2(
-      riv.infrastructure.directory.organization._2.StructuredPostalAddressType
+      se.riv.infrastructure.directory.organization.v2.StructuredPostalAddressType
           structuredPostalAddress) {
     if (!StringUtils.hasText(structuredPostalAddress.getStreet())) {
       return null;

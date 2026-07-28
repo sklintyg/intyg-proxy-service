@@ -34,10 +34,10 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import riv.infrastructure.directory.organization._5.AddressType;
-import riv.infrastructure.directory.organization._5.StructuredPostalAddressType;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.Address;
 import se.riv.infrastructure.directory.organization.getunitresponder.v5.UnitType;
+import se.riv.infrastructure.directory.organization.v5.AddressType;
+import se.riv.infrastructure.directory.organization.v5.StructuredPostalAddressType;
 
 @ExtendWith(MockitoExtension.class)
 class StructuredAddressConverterTest {
@@ -354,7 +354,7 @@ class StructuredAddressConverterTest {
     @Test
     void shouldConvertStructuredAddressWithStreetOnly() {
       final var structuredAddress =
-          new riv.infrastructure.directory.organization._2.StructuredPostalAddressType();
+          new se.riv.infrastructure.directory.organization.v2.StructuredPostalAddressType();
       structuredAddress.setStreet("Only Street");
       structuredAddress.setPostCode("11111");
       structuredAddress.setTown("Only Town");
@@ -367,7 +367,7 @@ class StructuredAddressConverterTest {
     @Test
     void shouldConvertStructuredAddressWithStreetAndPremisesNumberOnly() {
       final var structuredAddress =
-          new riv.infrastructure.directory.organization._2.StructuredPostalAddressType();
+          new se.riv.infrastructure.directory.organization.v2.StructuredPostalAddressType();
       structuredAddress.setStreet("Test Street");
       structuredAddress.setPremisesNumber("5");
       structuredAddress.setPostCode("12345");
@@ -378,10 +378,10 @@ class StructuredAddressConverterTest {
       assertEquals("Test Street 5", result.address());
     }
 
-    private riv.infrastructure.directory.organization._2.StructuredPostalAddressType
+    private se.riv.infrastructure.directory.organization.v2.StructuredPostalAddressType
         createV2StructuredPostalAddressType() {
       final var type =
-          new riv.infrastructure.directory.organization._2.StructuredPostalAddressType();
+          new se.riv.infrastructure.directory.organization.v2.StructuredPostalAddressType();
       type.setStreet("Test Street");
       type.setPremisesNumber("1");
       type.setPremisesLetter("A");

@@ -32,7 +32,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import riv.infrastructure.directory.organization._5.AddressType;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.Address;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.BusinessClassification;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.GeoCoordRt90;
@@ -41,6 +40,7 @@ import se.riv.infrastructure.directory.organization.getunitresponder.v5.Business
 import se.riv.infrastructure.directory.organization.getunitresponder.v5.GeoCoordRt90Type;
 import se.riv.infrastructure.directory.organization.getunitresponder.v5.GeoCoordSWEREF99Type;
 import se.riv.infrastructure.directory.organization.getunitresponder.v5.UnitType;
+import se.riv.infrastructure.directory.organization.v5.AddressType;
 
 @ExtendWith(MockitoExtension.class)
 class UnitTypeConverterTest {
