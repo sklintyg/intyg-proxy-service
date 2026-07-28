@@ -47,7 +47,7 @@ public class TestData {
   public static final boolean PROTECTED_PERSON = true;
   public static final boolean TEST_INDICATED = true;
 
-  public static Person PERSON =
+  public static final Person PERSON =
       Person.builder()
           .personnummer(PersonId.of(PERSON_ID_AS_PERSONNUMMER))
           .fornamn(GIVEN_NAME)

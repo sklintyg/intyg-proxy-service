@@ -48,15 +48,15 @@ class LocalDateXmlAdapterTest {
   private LocalDateXmlAdapter localDateXmlAdapter;
 
   @BeforeEach
-  public void setGMTTimeZone() {
+  void setGMTTimeZone() {
     systemTimeZone = TimeZone.getDefault();
-    TimeZone GMT = TimeZone.getTimeZone("GMT");
-    TimeZone.setDefault(GMT);
+    TimeZone gmt = TimeZone.getTimeZone("GMT");
+    TimeZone.setDefault(gmt);
     localDateXmlAdapter = new LocalDateXmlAdapter();
   }
 
   @AfterEach
-  public void restoreTimeZone() {
+  void restoreTimeZone() {
     TimeZone.setDefault(systemTimeZone);
   }
 
