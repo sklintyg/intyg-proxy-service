@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import org.springframework.stereotype.Component;
-import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.v2.AddressType;
+import se.riv.infrastructure.directory.organization.v2.AddressType;
 
 @Component
 public class AddressTypeConverter {

@@ -37,7 +37,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import riv.infrastructure.directory.organization._5.AddressType;
 import riv.infrastructure.directory.organization._5.StructuredPostalAddressType;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.Address;
-import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.getunitresponder.v5.UnitType;
+import se.riv.infrastructure.directory.organization.getunitresponder.v5.UnitType;
 
 @ExtendWith(MockitoExtension.class)
 class StructuredAddressConverterTest {
@@ -250,9 +250,7 @@ class StructuredAddressConverterTest {
     @Test
     void shouldConvertAddressWhenStructuredPostalAddressIsMissing() {
       final var postalAddress =
-          mock(
-              se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.v2
-                  .AddressType.class);
+          mock(se.riv.infrastructure.directory.organization.v2.AddressType.class);
       when(addressTypeConverter.convertV2(postalAddress))
           .thenReturn(List.of("Test Street 1", "12345 Test town"));
 
@@ -267,9 +265,7 @@ class StructuredAddressConverterTest {
     @Test
     void shouldUsePostalCodeWhenPresentAndTrimmed() {
       final var postalAddress =
-          mock(
-              se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.v2
-                  .AddressType.class);
+          mock(se.riv.infrastructure.directory.organization.v2.AddressType.class);
       when(addressTypeConverter.convertV2(postalAddress))
           .thenReturn(List.of("Test Street 1", "11111 Test town"));
 
@@ -281,9 +277,7 @@ class StructuredAddressConverterTest {
     @Test
     void shouldHandleMissingAddressLines() {
       final var postalAddress =
-          mock(
-              se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.v2
-                  .AddressType.class);
+          mock(se.riv.infrastructure.directory.organization.v2.AddressType.class);
       when(addressTypeConverter.convertV2(postalAddress)).thenReturn(List.of());
 
       final var result = addressConverter.convertV2(postalAddress, null, null);
@@ -307,9 +301,7 @@ class StructuredAddressConverterTest {
     @Test
     void shouldExtractCityFromLastLineWhenNoZipPrefix() {
       final var postalAddress =
-          mock(
-              se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.v2
-                  .AddressType.class);
+          mock(se.riv.infrastructure.directory.organization.v2.AddressType.class);
       when(addressTypeConverter.convertV2(postalAddress))
           .thenReturn(List.of("Test Street 1", "Test town"));
 
@@ -324,9 +316,7 @@ class StructuredAddressConverterTest {
     @Test
     void shouldReturnEmptyAddressWhenOnlyLastLinePresent() {
       final var postalAddress =
-          mock(
-              se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.v2
-                  .AddressType.class);
+          mock(se.riv.infrastructure.directory.organization.v2.AddressType.class);
       when(addressTypeConverter.convertV2(postalAddress)).thenReturn(List.of("12345 Test town"));
 
       final var result = addressConverter.convertV2(postalAddress, null, null);
@@ -340,9 +330,7 @@ class StructuredAddressConverterTest {
     @Test
     void shouldJoinMultipleStreetLines() {
       final var postalAddress =
-          mock(
-              se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.v2
-                  .AddressType.class);
+          mock(se.riv.infrastructure.directory.organization.v2.AddressType.class);
       when(addressTypeConverter.convertV2(postalAddress))
           .thenReturn(List.of("Line 1", "Line 2", "12345 Test town"));
 
@@ -354,9 +342,7 @@ class StructuredAddressConverterTest {
     @Test
     void shouldIgnoreBlankPostalCodeAndExtractZipFromAddressLines() {
       final var postalAddress =
-          mock(
-              se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.v2
-                  .AddressType.class);
+          mock(se.riv.infrastructure.directory.organization.v2.AddressType.class);
       when(addressTypeConverter.convertV2(postalAddress))
           .thenReturn(List.of("Test Street 1", "12345 Test town"));
 

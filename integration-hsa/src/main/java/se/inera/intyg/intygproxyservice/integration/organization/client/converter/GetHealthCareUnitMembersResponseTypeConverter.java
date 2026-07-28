@@ -21,7 +21,7 @@ package se.inera.intyg.intygproxyservice.integration.organization.client.convert
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import se.inera.intyg.intygproxyservice.integration.api.organization.model.HealthCareUnitMembers;
-import se.inera.intyg.intygproxyservice.se.riv.infrastructure.directory.organization.gethealthcareunitmembersresponder.v2.GetHealthCareUnitMembersResponseType;
+import se.riv.infrastructure.directory.organization.gethealthcareunitmembersresponder.v2.GetHealthCareUnitMembersResponseType;
 
 @Service
 @RequiredArgsConstructor
