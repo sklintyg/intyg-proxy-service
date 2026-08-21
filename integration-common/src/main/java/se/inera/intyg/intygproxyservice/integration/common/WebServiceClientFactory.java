@@ -70,7 +70,11 @@ public class WebServiceClientFactory {
 
       final var params = new TLSClientParameters();
       params.setSSLSocketFactory(sslContext.getSocketFactory());
-      params.setCipherSuites(cipherSuites);
+      params.setCipherSuites(
+          cipherSuites.stream()
+              .map(String::trim)
+              .filter(cipherSuite -> !cipherSuite.isEmpty())
+              .toList());
       return params;
     } catch (Exception ex) {
       log.error("Could not initialize sslContext!", ex);

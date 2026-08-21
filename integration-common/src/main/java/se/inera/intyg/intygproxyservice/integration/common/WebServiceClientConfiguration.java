@@ -52,8 +52,8 @@ public class WebServiceClientConfiguration {
       @Value("${integration.ntjp.client.keystore.path}") String keyStorePath,
       @Value("${integration.ntjp.client.truststore.password}") String trustStorePassword,
       @Value("${integration.ntjp.client.truststore.path}") String trustStorePath,
-      @Value("${integration.elva77.client.tls.version:TLS}") String tlsVersion,
-      @Value("${integration.elva77.client.tls.cipherSuites:}") List<String> tlsCipherSuites) {
+      @Value("${integration.elva77.client.tls.version}") String tlsVersion,
+      @Value("${integration.elva77.client.tls.cipherSuites}") List<String> tlsCipherSuites) {
     return new WebServiceClientFactory(
         keyStoreType,
         keyStorePassword,
