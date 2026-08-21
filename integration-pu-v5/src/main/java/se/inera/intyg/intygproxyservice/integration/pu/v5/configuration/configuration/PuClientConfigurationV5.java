@@ -18,8 +18,8 @@
  */
 package se.inera.intyg.intygproxyservice.integration.pu.v5.configuration.configuration;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,10 +28,14 @@ import se.riv.strategicresourcemanagement.persons.person.getpersonsforprofile.v5
 
 @Configuration
 @Slf4j
-@RequiredArgsConstructor
 public class PuClientConfigurationV5 {
 
   private final WebServiceClientFactory webServiceClientFactory;
+
+  public PuClientConfigurationV5(
+      @Qualifier("ntjpWebServiceClientFactory") WebServiceClientFactory webServiceClientFactory) {
+    this.webServiceClientFactory = webServiceClientFactory;
+  }
 
   @Value("${integration.pu.getpersonsforprofile.endpoint}")
   private String getPersonsForProfileEndpoint;

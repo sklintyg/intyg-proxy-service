@@ -20,36 +20,29 @@ package se.inera.intyg.intygproxyservice.integration.common;
 
 import java.io.FileInputStream;
 import java.security.KeyStore;
+import java.util.List;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.cxf.configuration.jsse.TLSClientParameters;
 import org.apache.cxf.frontend.ClientProxy;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.apache.cxf.transport.http.HTTPConduit;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
 
-@Component
 @Slf4j
+@RequiredArgsConstructor
 public class WebServiceClientFactory {
 
-  @Value("${integration.ntjp.client.keystore.type:PKCS12}")
-  private String keyStoreType;
-
-  @Value("${integration.ntjp.client.keystore.password}")
-  private String keyStorePassword;
-
-  @Value("${integration.ntjp.client.keystore.path}")
-  private String keyStorePath;
-
-  @Value("${integration.ntjp.client.truststore.password}")
-  private String trustStorePassword;
-
-  @Value("${integration.ntjp.client.truststore.path}")
-  private String trustStorePath;
+  private final String keyStoreType;
+  private final String keyStorePassword;
+  private final String keyStorePath;
+  private final String trustStorePassword;
+  private final String trustStorePath;
+  private final String tlsVersion;
+  private final List<String> cipherSuites;
 
   public <T> T create(Class<T> webserviceType, String endpoint) {
     final var jaxWsProxyFactoryBean = new JaxWsProxyFactoryBean();
@@ -72,11 +65,16 @@ public class WebServiceClientFactory {
       final var keyManagers = getKeyManagerFactory().getKeyManagers();
       final var trustManagers = getTrustManagerFactory().getTrustManagers();
 
-      final var sslContext = SSLContext.getInstance("TLS");
+      final var sslContext = SSLContext.getInstance(tlsVersion);
       sslContext.init(keyManagers, trustManagers, null);
 
       final var params = new TLSClientParameters();
       params.setSSLSocketFactory(sslContext.getSocketFactory());
+      params.setCipherSuites(
+          cipherSuites.stream()
+              .map(String::trim)
+              .filter(cipherSuite -> !cipherSuite.isEmpty())
+              .toList());
       return params;
     } catch (Exception ex) {
       log.error("Could not initialize sslContext!", ex);

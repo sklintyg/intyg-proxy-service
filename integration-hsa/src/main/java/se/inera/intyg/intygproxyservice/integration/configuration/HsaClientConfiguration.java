@@ -18,8 +18,8 @@
  */
 package se.inera.intyg.intygproxyservice.integration.configuration;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,10 +36,14 @@ import se.riv.infrastructure.directory.organization.getunit.v5.rivtabp21.GetUnit
 
 @Configuration
 @Slf4j
-@RequiredArgsConstructor
 public class HsaClientConfiguration {
 
   private final WebServiceClientFactory webServiceClientFactory;
+
+  public HsaClientConfiguration(
+      @Qualifier("ntjpWebServiceClientFactory") WebServiceClientFactory webServiceClientFactory) {
+    this.webServiceClientFactory = webServiceClientFactory;
+  }
 
   @Value("${integration.hsa.getemployeeincludingprotectedperson.endpoint}")
   private String getEmployeeIncludingProtectedPersonEndpoint;
