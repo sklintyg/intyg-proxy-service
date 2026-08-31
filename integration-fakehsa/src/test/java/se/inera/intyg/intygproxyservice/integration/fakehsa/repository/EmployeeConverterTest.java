@@ -106,7 +106,8 @@ class EmployeeConverterTest {
     void shouldConvertGivenName() {
       final var hsaPerson = ParsedHsaPerson.builder().givenName(VALUE).build();
       final var result = employeeConverter.convert(hsaPerson);
-      assertEquals(hsaPerson.getGivenName(), result.getPersonInformation().getFirst().getGivenName());
+      assertEquals(
+          hsaPerson.getGivenName(), result.getPersonInformation().getFirst().getGivenName());
     }
 
     @Test
@@ -163,7 +164,8 @@ class EmployeeConverterTest {
     void shouldNotConvertHealthCareProfessionalLicense() {
       final var hsaPerson = ParsedHsaPerson.builder().build();
       final var result = employeeConverter.convert(hsaPerson);
-      assertTrue(result.getPersonInformation().getFirst().getHealthCareProfessionalLicence().isEmpty());
+      assertTrue(
+          result.getPersonInformation().getFirst().getHealthCareProfessionalLicence().isEmpty());
     }
   }
 
@@ -195,7 +197,8 @@ class EmployeeConverterTest {
       final var hsaPerson = ParsedHsaPerson.builder().protectedPerson(false).build();
       final var result = employeeConverter.convert(hsaPerson);
       assertEquals(
-          hsaPerson.isProtectedPerson(), result.getPersonInformation().getFirst().getProtectedPerson());
+          hsaPerson.isProtectedPerson(),
+          result.getPersonInformation().getFirst().getProtectedPerson());
     }
 
     @Test
@@ -222,9 +225,7 @@ class EmployeeConverterTest {
     @Test
     void shouldFilterNullSpecialityCode() {
       final var hsaPerson =
-          ParsedHsaPerson.builder()
-              .specialities(List.of(Speciality.builder().build()))
-              .build();
+          ParsedHsaPerson.builder().specialities(List.of(Speciality.builder().build())).build();
       final var result = employeeConverter.convert(hsaPerson);
       assertTrue(result.getPersonInformation().getFirst().getSpecialityCode().isEmpty());
     }
@@ -260,9 +261,7 @@ class EmployeeConverterTest {
     @Test
     void shouldFilterNullSpecialityName() {
       final var hsaPerson =
-          ParsedHsaPerson.builder()
-              .specialities(List.of(Speciality.builder().build()))
-              .build();
+          ParsedHsaPerson.builder().specialities(List.of(Speciality.builder().build())).build();
       final var result = employeeConverter.convert(hsaPerson);
       assertTrue(result.getPersonInformation().getFirst().getSpecialityName().isEmpty());
     }
