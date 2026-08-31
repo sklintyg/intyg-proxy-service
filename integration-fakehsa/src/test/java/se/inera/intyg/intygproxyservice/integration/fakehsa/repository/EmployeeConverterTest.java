@@ -235,6 +235,13 @@ class EmployeeConverterTest {
       final var result = employeeConverter.convert(hsaPerson);
       assertTrue(result.getPersonInformation().getFirst().getSpecialityCode().isEmpty());
     }
+
+    @Test
+    void shouldReturnEmptyListWhenSpecialitiesIsNull() {
+      final var hsaPerson = ParsedHsaPerson.builder().specialities(null).build();
+      final var result = employeeConverter.convert(hsaPerson);
+      assertTrue(result.getPersonInformation().getFirst().getSpecialityCode().isEmpty());
+    }
   }
 
   @Nested
@@ -263,6 +270,13 @@ class EmployeeConverterTest {
     @Test
     void shouldNotConvertSpecialityName() {
       final var hsaPerson = ParsedHsaPerson.builder().build();
+      final var result = employeeConverter.convert(hsaPerson);
+      assertTrue(result.getPersonInformation().getFirst().getSpecialityName().isEmpty());
+    }
+
+    @Test
+    void shouldReturnEmptyListWhenSpecialitiesIsNull() {
+      final var hsaPerson = ParsedHsaPerson.builder().specialities(null).build();
       final var result = employeeConverter.convert(hsaPerson);
       assertTrue(result.getPersonInformation().getFirst().getSpecialityName().isEmpty());
     }
