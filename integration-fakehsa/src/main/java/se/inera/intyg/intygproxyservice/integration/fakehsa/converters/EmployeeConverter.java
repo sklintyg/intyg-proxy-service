@@ -20,6 +20,7 @@ package se.inera.intyg.intygproxyservice.integration.fakehsa.converters;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 import org.springframework.stereotype.Component;
 import se.inera.intyg.intygproxyservice.integration.api.employee.Employee;
@@ -48,6 +49,14 @@ public class EmployeeConverter {
                     .title(parsedHsaPerson.getTitle())
                     .healthCareProfessionalLicence(
                         parsedHsaPerson.getHealthCareProfessionalLicence())
+                    .specialityCode(parsedHsaPerson.getSpecialities().stream()
+                        .map(Speciality::getSpecialityCode)
+                        .filter(Objects::nonNull)
+                        .toList())
+                    .specialityName(parsedHsaPerson.getSpecialities().stream()
+                        .map(Speciality::getSpecialityName)
+                        .filter(Objects::nonNull)
+                        .toList())
                     .healthCareProfessionalLicenceSpeciality(getSpecialities(parsedHsaPerson))
                     .middleAndSurName(parsedHsaPerson.getMiddleAndSurname())
                     .protectedPerson(parsedHsaPerson.isProtectedPerson())
