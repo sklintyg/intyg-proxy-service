@@ -52,14 +52,14 @@ class EmployeeConverterTest {
     void shouldConvertHsaId() {
       final var hsaPerson = ParsedHsaPerson.builder().hsaId(VALUE).build();
       final var result = employeeConverter.convert(hsaPerson);
-      assertEquals(hsaPerson.getHsaId(), result.getPersonInformation().get(0).getPersonHsaId());
+      assertEquals(hsaPerson.getHsaId(), result.getPersonInformation().getFirst().getPersonHsaId());
     }
 
     @Test
     void shouldNotConvertHsaId() {
       final var hsaPerson = ParsedHsaPerson.builder().build();
       final var result = employeeConverter.convert(hsaPerson);
-      assertNull(result.getPersonInformation().get(0).getPersonHsaId());
+      assertNull(result.getPersonInformation().getFirst().getPersonHsaId());
     }
   }
 
@@ -70,14 +70,14 @@ class EmployeeConverterTest {
     void shouldConvertAge() {
       final var hsaPerson = ParsedHsaPerson.builder().age(VALUE).build();
       final var result = employeeConverter.convert(hsaPerson);
-      assertEquals(hsaPerson.getAge(), result.getPersonInformation().get(0).getAge());
+      assertEquals(hsaPerson.getAge(), result.getPersonInformation().getFirst().getAge());
     }
 
     @Test
     void shouldNotConvertAge() {
       final var hsaPerson = ParsedHsaPerson.builder().build();
       final var result = employeeConverter.convert(hsaPerson);
-      assertNull(result.getPersonInformation().get(0).getAge());
+      assertNull(result.getPersonInformation().getFirst().getAge());
     }
   }
 
@@ -88,14 +88,14 @@ class EmployeeConverterTest {
     void shouldConvertGender() {
       final var hsaPerson = ParsedHsaPerson.builder().gender(VALUE).build();
       final var result = employeeConverter.convert(hsaPerson);
-      assertEquals(hsaPerson.getGender(), result.getPersonInformation().get(0).getGender());
+      assertEquals(hsaPerson.getGender(), result.getPersonInformation().getFirst().getGender());
     }
 
     @Test
     void shouldNotConvertGender() {
       final var hsaPerson = ParsedHsaPerson.builder().build();
       final var result = employeeConverter.convert(hsaPerson);
-      assertNull(result.getPersonInformation().get(0).getGender());
+      assertNull(result.getPersonInformation().getFirst().getGender());
     }
   }
 
@@ -106,14 +106,15 @@ class EmployeeConverterTest {
     void shouldConvertGivenName() {
       final var hsaPerson = ParsedHsaPerson.builder().givenName(VALUE).build();
       final var result = employeeConverter.convert(hsaPerson);
-      assertEquals(hsaPerson.getGivenName(), result.getPersonInformation().get(0).getGivenName());
+      assertEquals(
+          hsaPerson.getGivenName(), result.getPersonInformation().getFirst().getGivenName());
     }
 
     @Test
     void shouldNotConvertGivenName() {
       final var hsaPerson = ParsedHsaPerson.builder().build();
       final var result = employeeConverter.convert(hsaPerson);
-      assertNull(result.getPersonInformation().get(0).getGivenName());
+      assertNull(result.getPersonInformation().getFirst().getGivenName());
     }
   }
 
@@ -124,7 +125,7 @@ class EmployeeConverterTest {
     void shouldSetFeignedPersonToFalse() {
       final var hsaPerson = ParsedHsaPerson.builder().build();
       final var result = employeeConverter.convert(hsaPerson);
-      assertFalse(result.getPersonInformation().get(0).getFeignedPerson());
+      assertFalse(result.getPersonInformation().getFirst().getFeignedPerson());
     }
   }
 
@@ -135,14 +136,14 @@ class EmployeeConverterTest {
     void shouldConvertTitle() {
       final var hsaPerson = ParsedHsaPerson.builder().title(VALUE).build();
       final var result = employeeConverter.convert(hsaPerson);
-      assertEquals(hsaPerson.getTitle(), result.getPersonInformation().get(0).getTitle());
+      assertEquals(hsaPerson.getTitle(), result.getPersonInformation().getFirst().getTitle());
     }
 
     @Test
     void shouldNotConvertTitle() {
       final var hsaPerson = ParsedHsaPerson.builder().build();
       final var result = employeeConverter.convert(hsaPerson);
-      assertEquals(hsaPerson.getTitle(), result.getPersonInformation().get(0).getTitle());
+      assertEquals(hsaPerson.getTitle(), result.getPersonInformation().getFirst().getTitle());
     }
   }
 
@@ -156,14 +157,15 @@ class EmployeeConverterTest {
       final var result = employeeConverter.convert(hsaPerson);
       assertEquals(
           hsaPerson.getHealthCareProfessionalLicence(),
-          result.getPersonInformation().get(0).getHealthCareProfessionalLicence());
+          result.getPersonInformation().getFirst().getHealthCareProfessionalLicence());
     }
 
     @Test
     void shouldNotConvertHealthCareProfessionalLicense() {
       final var hsaPerson = ParsedHsaPerson.builder().build();
       final var result = employeeConverter.convert(hsaPerson);
-      assertTrue(result.getPersonInformation().get(0).getHealthCareProfessionalLicence().isEmpty());
+      assertTrue(
+          result.getPersonInformation().getFirst().getHealthCareProfessionalLicence().isEmpty());
     }
   }
 
@@ -176,14 +178,14 @@ class EmployeeConverterTest {
       final var result = employeeConverter.convert(hsaPerson);
       assertEquals(
           hsaPerson.getMiddleAndSurname(),
-          result.getPersonInformation().get(0).getMiddleAndSurName());
+          result.getPersonInformation().getFirst().getMiddleAndSurName());
     }
 
     @Test
     void shouldNotConvertHealthCareProfessionalLicense() {
       final var hsaPerson = ParsedHsaPerson.builder().build();
       final var result = employeeConverter.convert(hsaPerson);
-      assertNull(result.getPersonInformation().get(0).getMiddleAndSurName());
+      assertNull(result.getPersonInformation().getFirst().getMiddleAndSurName());
     }
   }
 
@@ -195,14 +197,87 @@ class EmployeeConverterTest {
       final var hsaPerson = ParsedHsaPerson.builder().protectedPerson(false).build();
       final var result = employeeConverter.convert(hsaPerson);
       assertEquals(
-          hsaPerson.isProtectedPerson(), result.getPersonInformation().get(0).getProtectedPerson());
+          hsaPerson.isProtectedPerson(),
+          result.getPersonInformation().getFirst().getProtectedPerson());
     }
 
     @Test
     void shouldSetProtectedPersonToFalseByDefault() {
       final var hsaPerson = ParsedHsaPerson.builder().build();
       final var result = employeeConverter.convert(hsaPerson);
-      assertFalse(result.getPersonInformation().get(0).getProtectedPerson());
+      assertFalse(result.getPersonInformation().getFirst().getProtectedPerson());
+    }
+  }
+
+  @Nested
+  class ConvertSpecialityCode {
+
+    @Test
+    void shouldConvertSpecialityCode() {
+      final var hsaPerson =
+          ParsedHsaPerson.builder()
+              .specialities(List.of(Speciality.builder().specialityCode(VALUE).build()))
+              .build();
+      final var result = employeeConverter.convert(hsaPerson);
+      assertEquals(List.of(VALUE), result.getPersonInformation().getFirst().getSpecialityCode());
+    }
+
+    @Test
+    void shouldFilterNullSpecialityCode() {
+      final var hsaPerson =
+          ParsedHsaPerson.builder().specialities(List.of(Speciality.builder().build())).build();
+      final var result = employeeConverter.convert(hsaPerson);
+      assertTrue(result.getPersonInformation().getFirst().getSpecialityCode().isEmpty());
+    }
+
+    @Test
+    void shouldNotConvertSpecialityCode() {
+      final var hsaPerson = ParsedHsaPerson.builder().build();
+      final var result = employeeConverter.convert(hsaPerson);
+      assertTrue(result.getPersonInformation().getFirst().getSpecialityCode().isEmpty());
+    }
+
+    @Test
+    void shouldReturnEmptyListWhenSpecialitiesIsNull() {
+      final var hsaPerson = ParsedHsaPerson.builder().specialities(null).build();
+      final var result = employeeConverter.convert(hsaPerson);
+      assertTrue(result.getPersonInformation().getFirst().getSpecialityCode().isEmpty());
+    }
+  }
+
+  @Nested
+  class ConvertSpecialityName {
+
+    @Test
+    void shouldConvertSpecialityName() {
+      final var hsaPerson =
+          ParsedHsaPerson.builder()
+              .specialities(List.of(Speciality.builder().specialityName(VALUE).build()))
+              .build();
+      final var result = employeeConverter.convert(hsaPerson);
+      assertEquals(List.of(VALUE), result.getPersonInformation().getFirst().getSpecialityName());
+    }
+
+    @Test
+    void shouldFilterNullSpecialityName() {
+      final var hsaPerson =
+          ParsedHsaPerson.builder().specialities(List.of(Speciality.builder().build())).build();
+      final var result = employeeConverter.convert(hsaPerson);
+      assertTrue(result.getPersonInformation().getFirst().getSpecialityName().isEmpty());
+    }
+
+    @Test
+    void shouldNotConvertSpecialityName() {
+      final var hsaPerson = ParsedHsaPerson.builder().build();
+      final var result = employeeConverter.convert(hsaPerson);
+      assertTrue(result.getPersonInformation().getFirst().getSpecialityName().isEmpty());
+    }
+
+    @Test
+    void shouldReturnEmptyListWhenSpecialitiesIsNull() {
+      final var hsaPerson = ParsedHsaPerson.builder().specialities(null).build();
+      final var result = employeeConverter.convert(hsaPerson);
+      assertTrue(result.getPersonInformation().getFirst().getSpecialityName().isEmpty());
     }
   }
 
@@ -221,7 +296,7 @@ class EmployeeConverterTest {
       final var result = employeeConverter.convert(hsaPerson);
       assertEquals(
           expectedResult,
-          result.getPersonInformation().get(0).getHealthCareProfessionalLicenceSpeciality());
+          result.getPersonInformation().getFirst().getHealthCareProfessionalLicenceSpeciality());
     }
 
     @Test
@@ -231,7 +306,7 @@ class EmployeeConverterTest {
       assertTrue(
           result
               .getPersonInformation()
-              .get(0)
+              .getFirst()
               .getHealthCareProfessionalLicenceSpeciality()
               .isEmpty());
     }
@@ -249,14 +324,14 @@ class EmployeeConverterTest {
       final var expectedResponse =
           List.of(PaTitle.builder().paTitleCode(VALUE).paTitleName(VALUE).build());
       final var result = employeeConverter.convert(hsaPerson);
-      assertEquals(expectedResponse, result.getPersonInformation().get(0).getPaTitle());
+      assertEquals(expectedResponse, result.getPersonInformation().getFirst().getPaTitle());
     }
 
     @Test
     void shouldNotConvertPaTitle() {
       final var hsaPerson = ParsedHsaPerson.builder().build();
       final var result = employeeConverter.convert(hsaPerson);
-      assertTrue(result.getPersonInformation().get(0).getPaTitle().isEmpty());
+      assertTrue(result.getPersonInformation().getFirst().getPaTitle().isEmpty());
     }
   }
 }
